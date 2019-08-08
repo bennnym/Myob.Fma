@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Myob.Fma.First
+namespace Myob.Fma.First.Programs
 {
     public class HelloWorld
     {

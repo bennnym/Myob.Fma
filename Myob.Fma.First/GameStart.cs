@@ -1,4 +1,5 @@
 using System;
+using Myob.Fma.First.Programs;
 
 namespace Myob.Fma.First
 {
@@ -50,6 +51,15 @@ namespace Myob.Fma.First
                 
                 case "3":
                     return new GreetIfAliceOrBob();
+                
+                case "4":
+                    return new SumToN();
+                
+                case "5":
+                    return new SumToNIfMultipleOf3Or5();
+                
+                case "6":
+                    return new SumOrProduct();
                 
                 default:
                     return new GreetName();
