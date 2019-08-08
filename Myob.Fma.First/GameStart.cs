@@ -3,19 +3,6 @@ using Myob.Fma.First.Programs;
 
 namespace Myob.Fma.First
 {
-    public enum Game
-    {
-        HelloWorld = 1,
-        GreetName, 
-        GreetAliceOrBob,
-        SumUpToN,
-        SumToNIfMultipleOf3Or5,
-        SumOrMultipleToN,
-        MultiplicationTable,
-        GuessingGame,
-        LeapYears
-    }
-    
     public class GameStart
     {
         public GameStart()
@@ -61,8 +48,17 @@ namespace Myob.Fma.First
                 case "6":
                     return new SumOrProduct();
                 
+                case "7":
+                    return new TimesTable();
+                
+                case "8":
+                    return new GuessingGame();
+                
+                case "9":
+                    return new LeapYears();
+                
                 default:
-                    return new GreetName();
+                    return new IncorrectInput();
             }
         }
     }

@@ -8,7 +8,7 @@ namespace Myob.Fma.First.MathOperations
         {
             int sum = 0;
 
-            for (int i = 1; i <= number; i++)
+            for (var i = 1; i <= number; i++)
             {
                 sum += i;
             }
@@ -20,7 +20,7 @@ namespace Myob.Fma.First.MathOperations
         {
             int sum = 0;
 
-            for (int i = 0; i <= number; i++)
+            for (var i = 0; i <= number; i++)
             {
                 sum += i % 3 == 0 || i % 5 == 0 ? i : 0;
             }
@@ -32,7 +32,7 @@ namespace Myob.Fma.First.MathOperations
         {
             long sum = 1;
 
-            for (int i = 1; i <= number; i++)
+            for (var i = 1; i <= number; i++)
             {
                 sum *= i;
             }

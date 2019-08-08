@@ -6,7 +6,7 @@
      {
          static void Main(string[] args)
          {
-             var game = new GameStart();
+             new GameStart();
          }
      }
  }

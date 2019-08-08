@@ -17,10 +17,5 @@ namespace Myob.Fma.First.Programs
             Maths.Sum(number);
         }
 
-        public SumToN(int number)
-        {
-            Maths.Sum(number);
-        }
-        
     }
 }
