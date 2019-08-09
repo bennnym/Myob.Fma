@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.FirstsTest", "Myob
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.AbcKata", "Myob.Fma.AbcKata\Myob.Fma.AbcKata.csproj", "{FF0B0172-16D4-4E7A-81D9-62CE18B3C703}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Foundational", "Myob.Fma.Foundational\Myob.Fma.Foundational.csproj", "{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{FF0B0172-16D4-4E7A-81D9-62CE18B3C703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF0B0172-16D4-4E7A-81D9-62CE18B3C703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF0B0172-16D4-4E7A-81D9-62CE18B3C703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

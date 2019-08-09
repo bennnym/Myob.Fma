@@ -1,11 +1,12 @@
 using System;
-using Myob.Fma.First.Programs;
+using Myob.Fma.Foundational.Games;
+using Myob.Fma.Foundational.ValidationHelpers;
 
-namespace Myob.Fma.First
+namespace Myob.Fma.Foundational
 {
-    public class GameStart
+    public class Game
     {
-        public GameStart()
+        public void Intro()
         {
             Console.WriteLine("Welcome to the Basic Coding Katas, please select a problem to execute below:");
             Console.WriteLine("[1] Write a program that prints ‘Hello World’ to the screen.");
@@ -19,48 +20,80 @@ namespace Myob.Fma.First
             Console.WriteLine("After every guess the program tells the user whether their number was too large or too small.");
             Console.WriteLine("At the end the number of tries needed should be printed. It counts only as one try if they input the same number multiple times consecutively.");
             Console.WriteLine("[9] Write a program that prints the next 20 leap years.");
-
-            var selection = Console.ReadLine();
-
-            IGame game = Start(selection);
-            game.Play();
-
+            
         }
 
-        public HelloWorld Start(string gameChoice)
+        public int GetUserGameSelection()
         {
-            switch (gameChoice)
+            var gameSelection = Console.ReadLine();
+            
+            var validInput = UserInputValidation.GameSelectionCheck(gameSelection);
+
+            if (!validInput)
             {
-                case "1":
+                Console.WriteLine("Please enter a valid number, try again:");
+                return GetUserGameSelection();
+            }
+            
+            return int.Parse(gameSelection);
+        }
+
+        public IGame Start(int selection)
+        {
+
+            switch (selection)
+            {
+                case 1:
                     return new HelloWorld();
-                
-                case "2":
+
+                case 2:
                     return new GreetName();
-                
-                case "3":
-                    return new GreetIfAliceOrBob();
-                
-                case "4":
-                    return new SumToN();
-                
-                case "5":
-                    return new SumToNIfMultipleOf3Or5();
-                
-                case "6":
-                    return new SumOrProduct();
-                
-                case "7":
+
+                case 3:
+                   return new GreetAliceOrBob();
+
+                case 4:
+                    return new SumNumbersFromOneToN();
+
+                case 5:
+                    return new SumIfMultiplesOf3Or5();
+
+                case 6:
+                    return new SumOrProductOfOneToN();
+
+                case 7:
                     return new TimesTable();
                 
-                case "8":
+                case 8:
                     return new GuessingGame();
                 
-                case "9":
-                    return new LeapYears();
-                
                 default:
-                    return new IncorrectInput();
+                    return new LeapYears();
             }
         }
+
+        public bool PlayAgain()
+        {
+            Console.WriteLine("Would you like to play again? (y/n)");
+            
+            var answer = Console.ReadLine().ToLower().Trim();
+
+            if (answer == "y")
+            {
+                return true;
+            }
+
+            if (answer == "n")
+            {
+                return false;
+            }
+
+            Console.WriteLine("Please enter y or n");
+            return PlayAgain();
+        }
+        
+        
+        
+        
     }
 }

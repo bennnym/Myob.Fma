@@ -1,7 +1,4 @@
-using System;
-using System.Runtime.InteropServices;
-
-namespace Myob.Fma.First.Programs
+namespace Myob.Fma.Foundational.Games
 {
     public class HelloWorld : IGame
     {

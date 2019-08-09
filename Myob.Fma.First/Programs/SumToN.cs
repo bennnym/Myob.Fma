@@ -3,9 +3,9 @@ using Myob.Fma.First.MathOperations;
 
 namespace Myob.Fma.First.Programs
 {
-    public class SumToN
+    public class SumToN : IGame
     {
-        public SumToN()
+        public void Play()
         {
             Console.WriteLine("Pick a number, any number and I will sum all the numbers from 1 to N!");
             
@@ -16,6 +16,5 @@ namespace Myob.Fma.First.Programs
             
             Maths.Sum(number);
         }
-
     }
 }
