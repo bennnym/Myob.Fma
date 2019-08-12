@@ -16,6 +16,15 @@ namespace Myob.Fma.ShoppingCart
             _cart.Add(product);
         }
 
+        public decimal ApplyCartDiscount(int discountPercentage)
+        {
+            var cartTotal = CartTotal();
+
+            var updatedCart = cartTotal - (cartTotal * (discountPercentage / 100M));
+
+            return decimal.Round(updatedCart, 2);
+        }
+
         public decimal CartTotal()
         {
             decimal sum = 0;

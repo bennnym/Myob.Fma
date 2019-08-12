@@ -1,12 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.First", "Myob.Fma.First\Myob.Fma.First.csproj", "{03494678-F320-4AD3-AD62-1203BB34031E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.FirstsTest", "Myob.Fma.FirstsTest\Myob.Fma.FirstsTest.csproj", "{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.FoundationalTests", "Myob.Fma.FoundationalTests\Myob.Fma.FoundationalTests.csproj", "{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.AbcKata", "Myob.Fma.AbcKata\Myob.Fma.AbcKata.csproj", "{FF0B0172-16D4-4E7A-81D9-62CE18B3C703}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Foundational", "Myob.Fma.Foundational\Myob.Fma.Foundational.csproj", "{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Practice", "Myob.Fma.Practice\Myob.Fma.Practice.csproj", "{ACD51816-D3D4-4974-93D7-F234EF407A38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.ShoppingCart", "Myob.Fma.ShoppingCart\Myob.Fma.ShoppingCart.csproj", "{B0794A00-7BF1-4BB5-96CF-B467B244B84C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.FizzBuzz", "Myob.Fma.FizzBuzz\Myob.Fma.FizzBuzz.csproj", "{872B34E0-EC50-45F8-BECE-789E8223AD92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.MagicYear", "Myob.Fma.MagicYear\Myob.Fma.MagicYear.csproj", "{E5D797C2-DBCA-4188-B45C-1E8031A917E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.MagicYearTests", "Myob.Fma.MagicYearTests\Myob.Fma.MagicYearTests.csproj", "{5E2D5C21-0966-4C13-9615-E1F2344D8A9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{03494678-F320-4AD3-AD62-1203BB34031E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03494678-F320-4AD3-AD62-1203BB34031E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03494678-F320-4AD3-AD62-1203BB34031E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03494678-F320-4AD3-AD62-1203BB34031E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,5 +34,25 @@ Global
 		{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD51816-D3D4-4974-93D7-F234EF407A38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD51816-D3D4-4974-93D7-F234EF407A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD51816-D3D4-4974-93D7-F234EF407A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD51816-D3D4-4974-93D7-F234EF407A38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0794A00-7BF1-4BB5-96CF-B467B244B84C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0794A00-7BF1-4BB5-96CF-B467B244B84C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0794A00-7BF1-4BB5-96CF-B467B244B84C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0794A00-7BF1-4BB5-96CF-B467B244B84C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{872B34E0-EC50-45F8-BECE-789E8223AD92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{872B34E0-EC50-45F8-BECE-789E8223AD92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{872B34E0-EC50-45F8-BECE-789E8223AD92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{872B34E0-EC50-45F8-BECE-789E8223AD92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5D797C2-DBCA-4188-B45C-1E8031A917E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5D797C2-DBCA-4188-B45C-1E8031A917E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5D797C2-DBCA-4188-B45C-1E8031A917E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5D797C2-DBCA-4188-B45C-1E8031A917E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E2D5C21-0966-4C13-9615-E1F2344D8A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E2D5C21-0966-4C13-9615-E1F2344D8A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E2D5C21-0966-4C13-9615-E1F2344D8A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E2D5C21-0966-4C13-9615-E1F2344D8A9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

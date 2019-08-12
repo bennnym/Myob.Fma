@@ -7,8 +7,6 @@ namespace Myob.Fma.ShoppingCart
         string Name { get; set; }
         string Description { get; set; }
         PricingStatus PriceStatus { get; set; }
-        void ChangePrice(decimal updatedPrice);
-        void ChangeName(string updatedName);
-        void ChangeDescription(string updatedDescription);
+
     }
 }

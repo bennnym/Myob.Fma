@@ -19,10 +19,10 @@ namespace Myob.Fma.ShoppingCart
             Console.WriteLine(cart.GetPriceExGst());
             Console.WriteLine(cart.ShippingCost());
 
-         
-            bread.ApplyDiscount(PricingStatus.HalfPrice);
+            Console.WriteLine(cart.ApplyCartDiscount(50));
 
             Console.WriteLine(cart.CartTotal());
+
 
 
 

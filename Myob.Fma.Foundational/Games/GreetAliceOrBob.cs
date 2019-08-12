@@ -21,11 +21,11 @@ namespace Myob.Fma.Foundational.Games
 
         public string CheckForAliceOrBob(string name)
         {
-            
-            if (name.Substring(0,3) == "bob" || name.Substring(0,5) == "alice")
+            if (name.Length == 3 && name == "bob" || name.Length == 5 && name == "alice")
             {
                 return$"Hello {name}!";
             }
+
             return "I can't say hello to you, sorry!";
         }
     }

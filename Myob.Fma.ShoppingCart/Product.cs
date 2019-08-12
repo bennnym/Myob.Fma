@@ -16,21 +16,6 @@ namespace Myob.Fma.ShoppingCart
             PriceStatus = PricingStatus.FullPrice;
         }
 
-        public void ChangePrice(decimal updatedPrice)
-        {
-            Price = updatedPrice;
-        }
-
-        public void ChangeName(string updatedName)
-        {
-            Name = updatedName;
-        }
-
-        public void ChangeDescription(string updateDescription)
-        {
-            Description = updateDescription;
-        }
-
         public void ApplyDiscount(PricingStatus discount)
         {
             switch (discount)
@@ -40,25 +25,23 @@ namespace Myob.Fma.ShoppingCart
                     PriceStatus = PricingStatus.FullPrice;
                     break;
                 case PricingStatus.EndOfMonth:
-                    Discount = MoneySaved(10, Price);
+                    Discount = AdjustPrice(10, Price);
                     PriceStatus = PricingStatus.EndOfMonth;
                     break;
                 case PricingStatus.HalfPrice:
-                    Discount = MoneySaved(50, Price);
+                    Discount = AdjustPrice(50, Price);
                     PriceStatus = PricingStatus.HalfPrice;
                     break;
                 case PricingStatus.FlashSale:
-                    Discount = MoneySaved(70, Price);
+                    Discount = AdjustPrice(70, Price);
                     PriceStatus = PricingStatus.FlashSale;
                     break;
             }
         }
 
-        private decimal MoneySaved(decimal percentage, decimal price)
+        private decimal AdjustPrice(decimal percentage, decimal price)
         {
-            return decimal.Round(price * (percentage / 100), 2);
+            return decimal.Round(price * (percentage / 100M), 2);
         }
-        
-        
     }
 }

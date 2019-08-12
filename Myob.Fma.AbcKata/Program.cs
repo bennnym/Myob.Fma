@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Myob.Fma.AbcKata
@@ -7,7 +8,6 @@ namespace Myob.Fma.AbcKata
     {
         static void Main(string[] args)
         {
-            var blocks = new BlockCollection();
 
             var block1 = new Block('B', 'O');
             var block2 = new Block('X', 'K');
@@ -29,27 +29,13 @@ namespace Myob.Fma.AbcKata
             var block18 = new Block('L', 'Y');
             var block19 = new Block('P', 'C');
             var block20 = new Block('Z', 'M');
-
-            blocks.AddBlock(block1);
-            blocks.AddBlock(block2);
-            blocks.AddBlock(block3);
-            blocks.AddBlock(block4);
-            blocks.AddBlock(block5);
-            blocks.AddBlock(block6);
-            blocks.AddBlock(block7);
-            blocks.AddBlock(block8);
-            blocks.AddBlock(block9);
-            blocks.AddBlock(block10);
-            blocks.AddBlock(block11);
-            blocks.AddBlock(block12);
-            blocks.AddBlock(block13);
-            blocks.AddBlock(block14);
-            blocks.AddBlock(block15);
-            blocks.AddBlock(block16);
-            blocks.AddBlock(block17);
-            blocks.AddBlock(block18);
-            blocks.AddBlock(block19);
-            blocks.AddBlock(block20);
+            
+            var blocks = new List<Block>
+            {
+                block1, block2, block3, block4, block5, block6, block7, block8, block9,
+                block10, block11, block12, block13, block14, block15, block16, block17, block18,
+                block19, block20
+            };
             
 
             Console.WriteLine(CanMakeWord("A", blocks));
@@ -61,11 +47,11 @@ namespace Myob.Fma.AbcKata
             Console.WriteLine(CanMakeWord("CONFUSE", blocks));
         }
 
-        static bool CanMakeWord(string wordToCheck, BlockCollection blockCollection)
+        static bool CanMakeWord(string wordToCheck, List<Block> blockCollection)
         {
             var word = wordToCheck.ToCharArray().ToList();
 
-            foreach (var block in blockCollection.Blocks)
+            foreach (var block in blockCollection)
             {
                 var firstLetterIndex = word.IndexOf(block.Sides[0]);
                 var secondLetterIndex = word.IndexOf(block.Sides[1]);

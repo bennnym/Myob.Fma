@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Myob.Fma.Foundational\Myob.Fma.Foundational.csproj" />
+      <ProjectReference Include="..\Myob.Fma.MagicYear\Myob.Fma.MagicYear.csproj" />
     </ItemGroup>
 
 </Project>
