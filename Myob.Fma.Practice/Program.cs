@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Myob.Fma.Practice
 {
@@ -6,19 +8,29 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Math.Floor(5.6));
+            var dict = new Dictionary<Holidays, Discounts>();
+
+            dict.Add(Holidays.Christmas, Discounts.HalfPrice);
+
+            Console.WriteLine((int)dict[Holidays.Christmas]);
+
+            Console.WriteLine((int)Discounts.FullPrice);
         }
 
-        static int Sum(params int[] nums)
+        public enum Holidays
         {
-            int sum = 0;
-            
-            foreach (var number in nums)
-            {
-                sum += number;
-            }
+            Christmas,
+            BlackFriday,
+            NewYearsDay,
+            BoxingDay
+        }
 
-            return sum;
+        public enum Discounts
+        {
+            FullPrice = 100,
+            HalfPrice = 50,
+            Percent10 = 10,
+            Percent30 = 30
         }
     }
 }

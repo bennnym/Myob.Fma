@@ -1,47 +1,72 @@
+using System;
+using System.Collections.Generic;
+using Myob.Fma.ShoppingCart.Enums;
+
 namespace Myob.Fma.ShoppingCart
 {
     public class Product : IProduct
-    {
-        public decimal Price { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public PricingStatus PriceStatus { get; set; }
-        public decimal Discount { get; set; }
-  
-        public Product(string description, string name, decimal price)
+    { 
+        public Product(string description, string name, decimal price, int inventory = 0)
         {
             Description = description;
             Name = name;
             Price = price;
-            PriceStatus = PricingStatus.FullPrice;
+            Inventory = inventory;
+            AppliedOffers = new Dictionary<Holidays, AppliedDiscount>();
+        }
+        
+        public decimal Price { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public int Inventory { get; }
+        public Dictionary<Holidays, AppliedDiscount> AppliedOffers { get;  }
+        
+        public decimal DiscountPercentage { get; private set; }
+
+        public void UpdateOffers(Holidays holiday, AppliedDiscount discount)
+        {
+            if (AppliedOffers.ContainsKey(holiday))
+            {
+                AppliedOffers.Remove(holiday);
+            }
+            
+            AppliedOffers.Add(holiday, discount);
         }
 
-        public void ApplyDiscount(PricingStatus discount)
+        public void UpdateDailyOfferDiscount(DateTime today)
         {
-            switch (discount)
+
+            var xmas = new DateTime(2019,12,24);
+            var boxingDay = new DateTime(2019,12,26);
+            var blackFriday = new DateTime(2019,11,29);
+            var newYearsDay = new DateTime(2019,08,13);
+
+            if (xmas.Day == today.Day && xmas.Month == today.Month)
             {
-                case PricingStatus.FullPrice:
-                    Discount = 0;
-                    PriceStatus = PricingStatus.FullPrice;
-                    break;
-                case PricingStatus.EndOfMonth:
-                    Discount = AdjustPrice(10, Price);
-                    PriceStatus = PricingStatus.EndOfMonth;
-                    break;
-                case PricingStatus.HalfPrice:
-                    Discount = AdjustPrice(50, Price);
-                    PriceStatus = PricingStatus.HalfPrice;
-                    break;
-                case PricingStatus.FlashSale:
-                    Discount = AdjustPrice(70, Price);
-                    PriceStatus = PricingStatus.FlashSale;
-                    break;
+                DiscountPercentage = GetDiscount(Holidays.Christmas);
+            }
+            
+            if (boxingDay.Day == today.Day && boxingDay.Month == today.Month)
+            {
+                DiscountPercentage = GetDiscount(Holidays.Christmas);
+            }
+            
+            if (blackFriday.Day == today.Day && blackFriday.Month == today.Month)
+            {
+                DiscountPercentage = GetDiscount(Holidays.BlackFriday);
+            }
+            
+            if (newYearsDay.Day == today.Day && newYearsDay.Month == today.Month)
+            {
+                DiscountPercentage = GetDiscount(Holidays.NewYearsDay);
             }
         }
 
-        private decimal AdjustPrice(decimal percentage, decimal price)
+        private int GetDiscount(Holidays holiday)
         {
-            return decimal.Round(price * (percentage / 100M), 2);
+            return AppliedOffers.ContainsKey(holiday) ? (int) AppliedOffers[holiday] : 0;
         }
+        
     }
 }

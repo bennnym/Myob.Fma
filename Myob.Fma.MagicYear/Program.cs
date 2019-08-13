@@ -17,10 +17,10 @@ namespace Myob.Fma.MagicYear
             var lastName = Console.ReadLine();
 
             Console.WriteLine("Please input your annual salary:");
-            var salary = Salary(Console.ReadLine());
+            var salary = ProcessSalaryInput(Console.ReadLine());
 
             Console.WriteLine("Please input your work start year:");
-            var year = Year(Console.ReadLine());
+            var year = ProcessYearInput(Console.ReadLine());
 
             Console.WriteLine("Your magic details are:");
 
@@ -30,7 +30,7 @@ namespace Myob.Fma.MagicYear
             Console.WriteLine($"Magic Year: {year}");
         }
 
-        static int Year(string year)
+        static int ProcessYearInput(string year)
         {
             var inputValidation = int.TryParse(year, out int magicYear);
             
@@ -39,7 +39,7 @@ namespace Myob.Fma.MagicYear
             return 0;
         }
 
-        static int Salary(string salary)
+        static int ProcessSalaryInput(string salary)
         {
             var inputValidation = decimal.TryParse(salary, out decimal income);
             

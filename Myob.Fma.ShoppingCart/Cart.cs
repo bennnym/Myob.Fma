@@ -18,26 +18,31 @@ namespace Myob.Fma.ShoppingCart
 
         public decimal ApplyCartDiscount(int discountPercentage)
         {
-            var cartTotal = CartTotal();
+            var cartTotal = GetCartTotal();
 
             var updatedCart = cartTotal - (cartTotal * (discountPercentage / 100M));
 
             return decimal.Round(updatedCart, 2);
         }
 
-        public decimal CartTotal()
+        public decimal GetCartTotal()
         {
             decimal sum = 0;
 
-            _cart.ForEach(item => sum += (item.Price - item.Discount));
+            _cart.ForEach(item => sum += ApplyProductDiscount(item));
             
             return sum;
+        }
+        
+        private decimal ApplyProductDiscount(IProduct product)
+        {
+            return decimal.Round(product.Price * (product.DiscountPercentage / 100M), 2);
         }
 
 
         public decimal GetPriceExGst()
         {
-            var cartTotal = CartTotal();
+            var cartTotal = GetCartTotal();
 
             var exGst = (cartTotal / 110) * 100;
 
@@ -46,7 +51,7 @@ namespace Myob.Fma.ShoppingCart
 
         public decimal GetGst()
         {
-            var cartTotal = CartTotal();
+            var cartTotal = GetCartTotal();
 
             var gst = (cartTotal / 110) * 10;
 
@@ -55,7 +60,7 @@ namespace Myob.Fma.ShoppingCart
 
         public decimal ShippingCost()
         {
-            if (CartTotal() > 50)
+            if (GetCartTotal() > 50)
             {
                 return 0;
             }
