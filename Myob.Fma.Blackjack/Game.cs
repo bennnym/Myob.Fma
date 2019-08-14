@@ -17,10 +17,10 @@ namespace Myob.Fma.Blackjack
 
         public void StartGame()
         {
-            DealOpeningHands();
-            OpeningHandPrompt();
-            StartPlayerAndDealersTurn();
-            DetermineGameWinner();
+                DealOpeningHands();
+                PrintOpeningHandPrompt();
+                StartPlayerAndDealersTurn();
+        
         }
 
         private void StartPlayerAndDealersTurn()
@@ -45,6 +45,7 @@ namespace Myob.Fma.Blackjack
                     cardPlayer.PrintLastCard();
                 }
             }
+            DetermineGameWinner();
         }
 
         private void DealOpeningHands()
@@ -60,7 +61,7 @@ namespace Myob.Fma.Blackjack
             }
         }
 
-        private void OpeningHandPrompt()
+        private void PrintOpeningHandPrompt()
         {
             foreach (var cardPlayer in _players)
             {
@@ -87,21 +88,25 @@ namespace Myob.Fma.Blackjack
                 }
             }
 
+            Console.ForegroundColor = ConsoleColor.Green;
             if (playerScore > dealerScore || dealerBust)
-            {
+            {   
+                Console.WriteLine("====================================");
                 Console.WriteLine("You won, nice work!");
+                Console.WriteLine("====================================");
             }
             else if (dealerScore > playerScore)
             {
+                Console.WriteLine("====================================");
                 Console.WriteLine("Dealer wins, better luck next time!");
+                Console.WriteLine("====================================");
             }
             else
             {
+                Console.WriteLine("====================================");
                 Console.WriteLine("Game is a draw");
+                Console.WriteLine("====================================");
             }
-            
-            
-                
         }
     }
 }

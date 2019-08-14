@@ -20,11 +20,13 @@ namespace Myob.Fma.Blackjack
 
         public void ShowOpeningDeal()
         {
-            Console.WriteLine("----------------");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("====================================");
             Console.WriteLine(
                 $"Player has {_cards[0].Value} of {_cards[0].Suit}s and {_cards[1].Value} of {_cards[1].Suit}s");
             Console.WriteLine($"Player total: {GetHandTotal()}");
-            Console.WriteLine("----------------");
+            Console.WriteLine("====================================");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void GetCard(Card card)
@@ -35,17 +37,22 @@ namespace Myob.Fma.Blackjack
         public void PrintLastCard()
         {
             var lastCard = _cards[_cards.Count - 1];
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("====================================");
             Console.WriteLine($"You have been dealt a {lastCard.Value} of {lastCard.Suit}s");
             Console.WriteLine($"Player Total: {GetHandTotal()}");
-            Console.WriteLine("------------------");
+            Console.WriteLine("====================================");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public bool HitOrStand()
         {
             if (!PlayerCanPlayOn()) return false;
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Hit Or Stand? (h/s)");
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.White;
 
             var answer = Console.ReadLine().Trim().ToLower();
 
@@ -80,9 +87,11 @@ namespace Myob.Fma.Blackjack
 
             if (handTotal > 21)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("==================");
                 Console.WriteLine("|| Player Busts ||");
                 Console.WriteLine("==================");
+                Console.ForegroundColor = ConsoleColor.White;
                 Bust = true;
                 FinalScore = handTotal;
                 return false;

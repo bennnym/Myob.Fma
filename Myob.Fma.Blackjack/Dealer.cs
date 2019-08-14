@@ -22,9 +22,13 @@ namespace Myob.Fma.Blackjack
         public void PrintLastCard()
         {
             var lastCard = _cards[_cards.Count - 1];
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("====================================");
             Console.WriteLine($"Dealer has been dealt a {lastCard.Value} of {lastCard.Suit}s");
             Console.WriteLine($"Dealer total: {GetHandTotal()}");
+            Console.WriteLine("====================================");
             Thread.Sleep(3000);
+            Console.ForegroundColor = ConsoleColor.Black;
         }
 
         public void GetCard(Card card)
@@ -48,14 +52,18 @@ namespace Myob.Fma.Blackjack
             Bust = true;
             FinalScore = handTotal;
             return false;
+            
+            
 
         }
 
         public void ShowOpeningDeal()
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Dealer has {_cards[0].Value} of {_cards[0].Suit}s and a face down card.");
             Console.WriteLine($"Dealer total: {_cards[0].NumericalValue}");
-            Console.WriteLine("----------------");
+            Console.WriteLine("====================================");
+            Console.ForegroundColor = ConsoleColor.Red;
         }
         
         private int GetHandTotal()
