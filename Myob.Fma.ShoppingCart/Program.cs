@@ -7,26 +7,30 @@ namespace Myob.Fma.ShoppingCart
     {
         static void Main(string[] args)
         {
-            var deo = new Product("deodorant", "lynx", 4.99M);
+            var deodorant = new Product("deodorant", "lynx", 4.99M);
             var bread = new Product("bread", "Helgas", 12.99M, 100);
 
-            
+
             var cart = new Cart();
 
-            Console.WriteLine(deo.DiscountPercentage); // discount is 0%
-            
-            deo.UpdateOffers(Holidays.NewYearsDay, AppliedDiscount.HalfPrice);
-            
-            deo.UpdateDailyOfferDiscount(DateTime.Now);
+//            Console.WriteLine(deo.DiscountPercentage); // discount is 0%
+//            
+//            deo.UpdateOffers(Holidays.NewYearsDay, AppliedDiscount.HalfPrice);
+//            
+//            deo.UpdateDailyOfferDiscount(DateTime.Now);
+//
+//            Console.WriteLine(deo.DiscountPercentage);
 
-            Console.WriteLine(deo.DiscountPercentage);
-            
-            cart.AddProductToCart(deo);
+            cart.AddProductToCart(deodorant);
+            cart.AddProductToCart(bread);
+            Console.WriteLine($"cart total before discount: {cart.GetCartTotal()}");
 
-            Console.WriteLine(cart.GetCartTotal());
+//            Console.WriteLine(cart.GetCartTotal());
+//
+//            Console.WriteLine($"bread discount : {bread.DiscountPercentage}");
 
-            Console.WriteLine($"bread discount : {bread.DiscountPercentage}");
-
+            cart.ApplyCartDiscount(50);
+            Console.WriteLine($"cart total after discount: {cart.GetCartTotal()}");
 
 
 //            cart.AddProductToCart(deo);
@@ -40,10 +44,6 @@ namespace Myob.Fma.ShoppingCart
 //            Console.WriteLine(cart.ApplyCartDiscount(50));
 //
 //            Console.WriteLine(cart.GetCartTotal());
-
-
-
-
         }
     }
 }

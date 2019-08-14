@@ -80,9 +80,9 @@ namespace Myob.Fma.Blackjack
 
             if (handTotal > 21)
             {
-                Console.WriteLine("========");
+                Console.WriteLine("==================");
                 Console.WriteLine("|| Player Busts ||");
-                Console.WriteLine("========");
+                Console.WriteLine("==================");
                 Bust = true;
                 FinalScore = handTotal;
                 return false;

@@ -42,9 +42,9 @@ namespace Myob.Fma.Blackjack
                 FinalScore = handTotal;
                 return false;
             }
-            Console.WriteLine("========");
+            Console.WriteLine("==================");
             Console.WriteLine("|| Dealer Busts ||");
-            Console.WriteLine("========");
+            Console.WriteLine("==================");
             Bust = true;
             FinalScore = handTotal;
             return false;

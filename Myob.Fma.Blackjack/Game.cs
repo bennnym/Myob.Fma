@@ -25,24 +25,24 @@ namespace Myob.Fma.Blackjack
 
         private void StartPlayerAndDealersTurn()
         {
-            foreach (var player in _players)
+            foreach (var cardPlayer in _players)
             {
                 var play = true;
 
-                if (player.PlayerType == PlayerClassification.Dealer)
+                if (cardPlayer.PlayerType == PlayerClassification.Dealer)
                 {
-                    player.PrintLastCard();
+                    cardPlayer.PrintLastCard();
                 }
 
                 while (play)
                 {
-                    play = player.HitOrStand();
+                    play = cardPlayer.HitOrStand();
                 
-                    if (player.Bust) return;
+                    if (cardPlayer.Bust) return;
                     if (!play) break;
                 
-                    player.GetCard(_deck.DealCard());
-                    player.PrintLastCard();
+                    cardPlayer.GetCard(_deck.DealCard());
+                    cardPlayer.PrintLastCard();
                 }
             }
         }
@@ -62,9 +62,9 @@ namespace Myob.Fma.Blackjack
 
         private void OpeningHandPrompt()
         {
-            foreach (var player in _players)
+            foreach (var cardPlayer in _players)
             {
-                player.ShowOpeningDeal();
+                cardPlayer.ShowOpeningDeal();
             }
         }
 
@@ -74,16 +74,16 @@ namespace Myob.Fma.Blackjack
             var dealerScore = 0;
             var dealerBust = false;
             
-            foreach (var player in _players)
+            foreach (var cardPlayer in _players)
             {
-                if (player.PlayerType == PlayerClassification.Player)
+                if (cardPlayer.PlayerType == PlayerClassification.Player)
                 {
-                    playerScore = player.FinalScore;
+                    playerScore = cardPlayer.FinalScore;
                 }
                 else
                 {
-                    dealerScore = player.FinalScore;
-                    dealerBust = player.Bust;
+                    dealerScore = cardPlayer.FinalScore;
+                    dealerBust = cardPlayer.Bust;
                 }
             }
 

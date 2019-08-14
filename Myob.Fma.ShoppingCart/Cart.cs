@@ -4,37 +4,44 @@ namespace Myob.Fma.ShoppingCart
 {
     public class Cart
     {
-        private readonly List<IProduct> _cart;
+        private readonly List<IProduct> _products;
 
         public Cart()
         {
-            _cart = new List<IProduct>();
+            _products = new List<IProduct>();
         }
+
+        public decimal CartDiscount { get; private set; }
 
         public void AddProductToCart(IProduct product)
         {
-            _cart.Add(product);
+            _products.Add(product);
         }
 
-        public decimal ApplyCartDiscount(int discountPercentage)
+        public void ApplyCartDiscount(int discountPercentage)
         {
             var cartTotal = GetCartTotal();
 
-            var updatedCart = cartTotal - (cartTotal * (discountPercentage / 100M));
+            var updatedCart = cartTotal - (-cartTotal * (discountPercentage / 100M));
 
-            return decimal.Round(updatedCart, 2);
+            CartDiscount = decimal.Round(updatedCart, 2);
         }
 
         public decimal GetCartTotal()
         {
             decimal sum = 0;
 
-            _cart.ForEach(item => sum += ApplyProductDiscount(item));
+//            _products.ForEach(item => sum += ApplyProductDiscount(item));
             
-            return sum;
+            foreach (var product in _products)
+            {
+                sum += product.Price - CalculateProductDiscount(product);
+            }
+            
+            return sum - CartDiscount;
         }
         
-        private decimal ApplyProductDiscount(IProduct product)
+        private decimal CalculateProductDiscount(IProduct product)
         {
             return decimal.Round(product.Price * (product.DiscountPercentage / 100M), 2);
         }
