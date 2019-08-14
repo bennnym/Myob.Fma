@@ -6,15 +6,23 @@ namespace Myob.Fma.Blackjack
 {
     public class Deck
     {
-        private List<Card> _deck;
+        private readonly List<Card> _deck;
         
         public Deck()
         {
             _deck = new List<Card>();
             PopulateDeckWithCards();
+            ShuffleCards();
         }
 
-        public void ShuffleCards()
+        public Card DealCard()
+        {
+            var card = _deck[0];
+            _deck.Remove(card);
+            return card;
+        }
+
+        private void ShuffleCards()
         {
             // https://stackoverflow.com/questions/273313/randomize-a-listt
             // Fisher-Yates Shuffle
@@ -35,8 +43,8 @@ namespace Myob.Fma.Blackjack
 
         private void PopulateDeckWithCards()
         {
-            var suits = new [] {"HEART", "DIAMOND", "SPADES", "CLUB"};
-            var values = new [] {"ACE", "2", "3", "4", "5", "6", "7", "8", "9", "TEN", "JACK", "QUEEN", "KING"};
+            var suits = new [] {"Heart", "Diamond", "Spade", "Club"};
+            var values = new [] {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "Ten", "Jack", "Queen", "King"};
 
             foreach (var suit in suits)
             {
@@ -47,12 +55,12 @@ namespace Myob.Fma.Blackjack
             }
         }
 
-        public void PrintCards()
-        {
-            foreach (var card in _deck)
-            {
-                Console.WriteLine($"suit: {card.Suit}, value: {card.Value}");
-            }
-        }
+//        public void PrintCards()
+//        {
+//            foreach (var card in _deck)
+//            {
+//                Console.WriteLine($"suit: {card.Suit}, value: {card.Value}");
+//            }
+//        }
     }
 }

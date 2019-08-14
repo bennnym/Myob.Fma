@@ -1,28 +1,19 @@
-﻿using System;
-
-namespace Myob.Fma.Blackjack
+﻿namespace Myob.Fma.Blackjack
 {
     class Program
     {
         static void Main(string[] args)
-        {
-            var deck = new Deck();
+        {    
+            var player = new Player();
+//            player.GetCard(new Card("club", "9"));
+//            player.GetCard(new Card("club", "Ace"));
+//            player.GetCard(new Card("club", "6"));
+//            player.GetCard(new Card("club", "Ace"));
+            var dealer = new Dealer();
+            var game = new Game(player, dealer);
             
-            deck.PrintCards();
-
-            Console.WriteLine("-------SHUFFLED-----------");
-            Console.WriteLine("-------SHUFFLED-----------");
-            Console.WriteLine("-------SHUFFLED-----------");
-            Console.WriteLine("-------SHUFFLED-----------");
-            Console.WriteLine("-------SHUFFLED-----------");
+            game.StartGame();
             
-            deck.ShuffleCards();
-            
-            deck.PrintCards();
-            
-            var dealer = new Dealer(new Card("SPADE", "ACE"), new Card("Heart", "KING") );
-            
-            dealer.ShowOpeningDeal();
         }
     }
 }

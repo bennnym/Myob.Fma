@@ -4,32 +4,37 @@ namespace Myob.Fma.Blackjack
 {
     public class Card
     {
-        private Dictionary<string, int> pictureCards;
+        private Dictionary<string, int> pictureCardValues;
 
         public Card(string suit, string value)
         {
             Suit = suit;
             Value = value;
-            pictureCards = new Dictionary<string, int>()
+            pictureCardValues = new Dictionary<string, int>()
             {
-                {"ACE", 11},
-                {"JACK", 10},
-                {"QUEEN", 10},
-                {"KING", 10},
-                {"TEN", 10},
-            };
+                {"Ace", 11},
+                {"Jack", 10},
+                {"Queen", 10},
+                {"King", 10},
+                {"Ten", 10},
+            };    
             InitializeCardValue();
         }
-        
+
+        #region MyRegion
+
         public string Suit { get; }
         public string Value { get; }
         public int NumericalValue { get; private set; }
+
+        #endregion
+  
 
         private void InitializeCardValue()
         {
             var cardConversionSuccess = int.TryParse(Value, out int cardValue);
 
-            NumericalValue = cardConversionSuccess ? cardValue : pictureCards[Value];
+            NumericalValue = cardConversionSuccess ? cardValue : pictureCardValues[Value];
         }
     }
 }
