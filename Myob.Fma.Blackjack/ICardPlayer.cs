@@ -6,6 +6,7 @@ namespace Myob.Fma.Blackjack
         void PrintLastCard();
         void GetCard(Card card);
         bool HitOrStand();
+        void ClearLastHand();
         bool Bust { get; }
         int FinalScore { get; }
         PlayerClassification PlayerType { get; }

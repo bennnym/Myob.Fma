@@ -35,6 +35,11 @@ namespace Myob.Fma.Blackjack
         {
             _cards.Add(card);
         }
+        public void ClearLastHand()
+        {
+            _cards.Clear();
+            Bust = false;
+        }
 
         public bool HitOrStand()
         {

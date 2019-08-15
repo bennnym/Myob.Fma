@@ -34,6 +34,12 @@ namespace Myob.Fma.Blackjack
             _cards.Add(card);
         }
 
+        public void ClearLastHand()
+        {
+            _cards.Clear();
+            Bust = false;
+        }
+
         public void PrintLastCard()
         {
             var lastCard = _cards[_cards.Count - 1];
@@ -105,10 +111,6 @@ namespace Myob.Fma.Blackjack
             }
 
             return true;
-
-
-            // over 21 send bust
-            // under 21 continue
         }
     }
 }

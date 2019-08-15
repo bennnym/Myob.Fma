@@ -17,10 +17,16 @@ namespace Myob.Fma.Blackjack
 
         public void StartGame()
         {
+            var gamePlay = true;
+
+            while (gamePlay)
+            {
                 DealOpeningHands();
                 PrintOpeningHandPrompt();
                 StartPlayerAndDealersTurn();
-        
+                gamePlay = AskUserToPlayAgain();
+            }
+                
         }
 
         private void StartPlayerAndDealersTurn()
@@ -107,6 +113,23 @@ namespace Myob.Fma.Blackjack
                 Console.WriteLine("Game is a draw");
                 Console.WriteLine("====================================");
             }
+        }
+
+        private bool AskUserToPlayAgain()
+        {
+            Console.WriteLine("Play another hand? (y/n)");
+
+            var answer = Console.ReadLine().Trim().ToLower();
+
+            if (answer == "y")
+            {
+                foreach (var cardPlayer in _players)
+                {
+                    cardPlayer.ClearLastHand();
+                }
+            }
+            
+            return answer == "y";
         }
     }
 }
