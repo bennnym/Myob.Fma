@@ -100,6 +100,7 @@ namespace Myob.Fma.Blackjack
                 Console.WriteLine("|| Player Busts ||");
                 Console.WriteLine("==================");
                 Console.ForegroundColor = ConsoleColor.White;
+                BettingBank.ProcessLoss();
                 Bust = true;
                 FinalScore = handTotal;
                 return false;
@@ -107,7 +108,7 @@ namespace Myob.Fma.Blackjack
 
             if (handTotal == 21)
             {
-                Console.WriteLine("You scored 21, nice work!");
+//                Console.WriteLine("You scored 21, nice work!");
                 FinalScore = handTotal;
                 return false;
             }

@@ -7,6 +7,7 @@ namespace Myob.Fma.Blackjack
         void TakeBet();
         void ProcessWin();
         void ProcessLoss();
+        void ProcessDraw();
         void DepositFunds();
     }
 }
