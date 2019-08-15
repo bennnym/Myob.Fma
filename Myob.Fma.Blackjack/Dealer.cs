@@ -18,6 +18,7 @@ namespace Myob.Fma.Blackjack
         public int FinalScore { get; private set; }
         public bool Bust { get; private set; }
         public PlayerClassification PlayerType { get; }
+        public IBettingBank BettingBank { get; }
 
         public void PrintLastCard()
         {
@@ -27,7 +28,7 @@ namespace Myob.Fma.Blackjack
             Console.WriteLine($"Dealer has been dealt a {lastCard.Value} of {lastCard.Suit}s");
             Console.WriteLine($"Dealer total: {GetHandTotal()}");
             Console.WriteLine("====================================");
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.Black;
         }
 

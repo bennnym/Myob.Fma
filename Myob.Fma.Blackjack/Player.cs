@@ -12,10 +12,12 @@ namespace Myob.Fma.Blackjack
         {
             _cards = new List<Card>();
             PlayerType = PlayerClassification.Player;
+            BettingBank = new BettingBank();
         }
 
         public int FinalScore { get; private set; }
         public bool Bust { get; private set; }
+        public IBettingBank BettingBank { get; }
         public PlayerClassification PlayerType { get; }
 
         public void ShowOpeningDeal()
