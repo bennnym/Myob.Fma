@@ -19,6 +19,8 @@ namespace Myob.Fma.Blackjack
         {
             var gamePlay = true;
 
+            GetPlayerDeposit();
+
             while (gamePlay)
             {
                 DealOpeningHands();
@@ -26,7 +28,6 @@ namespace Myob.Fma.Blackjack
                 StartPlayerAndDealersTurn();
                 gamePlay = AskUserToPlayAgain();
             }
-                
         }
 
         private void StartPlayerAndDealersTurn()
@@ -43,21 +44,22 @@ namespace Myob.Fma.Blackjack
                 while (play)
                 {
                     play = cardPlayer.HitOrStand();
-                
+
                     if (cardPlayer.Bust) return;
                     if (!play) break;
-                
+
                     cardPlayer.GetCard(_deck.DealCard());
                     cardPlayer.PrintLastCard();
                 }
             }
+
             DetermineGameWinner();
         }
 
         private void DealOpeningHands()
         {
             var numberOfPlayers = _players.Count();
-            
+
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 foreach (var player in _players)
@@ -80,7 +82,7 @@ namespace Myob.Fma.Blackjack
             var playerScore = 0;
             var dealerScore = 0;
             var dealerBust = false;
-            
+
             foreach (var cardPlayer in _players)
             {
                 if (cardPlayer.PlayerType == PlayerClassification.Player)
@@ -96,7 +98,7 @@ namespace Myob.Fma.Blackjack
 
             Console.ForegroundColor = ConsoleColor.Green;
             if (playerScore > dealerScore || dealerBust)
-            {   
+            {
                 Console.WriteLine("====================================");
                 Console.WriteLine("You won, nice work!");
                 Console.WriteLine("====================================");
@@ -128,8 +130,19 @@ namespace Myob.Fma.Blackjack
                     cardPlayer.ClearLastHand();
                 }
             }
-            
+
             return answer == "y";
+        }
+
+        private void GetPlayerDeposit()
+        {
+            foreach (var cardPlayer in _players)
+            {
+                if (cardPlayer.PlayerType == PlayerClassification.Player)
+                {
+                    cardPlayer.BettingBank.DepositFunds();
+                }
+            }
         }
     }
 }
