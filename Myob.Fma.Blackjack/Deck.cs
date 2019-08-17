@@ -54,13 +54,6 @@ namespace Myob.Fma.Blackjack
                 }
             }
         }
-
-//        public void PrintCards()
-//        {
-//            foreach (var card in _deck)
-//            {
-//                Console.WriteLine($"suit: {card.Suit}, value: {card.Value}");
-//            }
-//        }
+        
     }
 }

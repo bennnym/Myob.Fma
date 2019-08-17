@@ -14,10 +14,11 @@ namespace Myob.Fma.Blackjack
             _cards = new List<Card>();
             PlayerType = PlayerClassification.Dealer;
         }
-        
+
         public int FinalScore { get; private set; }
         public bool Bust { get; private set; }
         public PlayerClassification PlayerType { get; }
+        public IBettingBank BettingBank { get; }
 
         public void PrintLastCard()
         {
@@ -27,7 +28,7 @@ namespace Myob.Fma.Blackjack
             Console.WriteLine($"Dealer has been dealt a {lastCard.Value} of {lastCard.Suit}s");
             Console.WriteLine($"Dealer total: {GetHandTotal()}");
             Console.WriteLine("====================================");
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.Black;
         }
 
@@ -35,6 +36,7 @@ namespace Myob.Fma.Blackjack
         {
             _cards.Add(card);
         }
+
         public void ClearLastHand()
         {
             _cards.Clear();
@@ -51,15 +53,13 @@ namespace Myob.Fma.Blackjack
                 FinalScore = handTotal;
                 return false;
             }
+
             Console.WriteLine("==================");
             Console.WriteLine("|| Dealer Busts ||");
             Console.WriteLine("==================");
             Bust = true;
             FinalScore = handTotal;
             return false;
-            
-            
-
         }
 
         public void ShowOpeningDeal()
@@ -70,7 +70,7 @@ namespace Myob.Fma.Blackjack
             Console.WriteLine("====================================");
             Console.ForegroundColor = ConsoleColor.Red;
         }
-        
+
         private int GetHandTotal()
         {
             var acesFound = _cards.FindAll(card => card.Value == "Ace").Count;

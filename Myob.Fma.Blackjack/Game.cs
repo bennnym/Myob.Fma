@@ -19,14 +19,17 @@ namespace Myob.Fma.Blackjack
         {
             var gamePlay = true;
 
+            GetPlayerDeposit();
+
             while (gamePlay)
             {
                 DealOpeningHands();
                 PrintOpeningHandPrompt();
                 StartPlayerAndDealersTurn();
+                if (!CheckIfPlayerHasEnoughFunds()) break;
+                    
                 gamePlay = AskUserToPlayAgain();
             }
-                
         }
 
         private void StartPlayerAndDealersTurn()
@@ -43,26 +46,27 @@ namespace Myob.Fma.Blackjack
                 while (play)
                 {
                     play = cardPlayer.HitOrStand();
-                
-                    if (cardPlayer.Bust) return;
+
+                    if (cardPlayer.Bust && cardPlayer.PlayerType == PlayerClassification.Player) return;
                     if (!play) break;
-                
+
                     cardPlayer.GetCard(_deck.DealCard());
                     cardPlayer.PrintLastCard();
                 }
             }
+
             DetermineGameWinner();
         }
 
         private void DealOpeningHands()
         {
             var numberOfPlayers = _players.Count();
-            
+
             for (int i = 0; i < numberOfPlayers; i++)
             {
-                foreach (var player in _players)
+                foreach (var cardPlayer in _players)
                 {
-                    player.GetCard(_deck.DealCard());
+                    cardPlayer.GetCard(_deck.DealCard());
                 }
             }
         }
@@ -71,6 +75,11 @@ namespace Myob.Fma.Blackjack
         {
             foreach (var cardPlayer in _players)
             {
+                if (cardPlayer.PlayerType == PlayerClassification.Player)
+                {
+                    cardPlayer.BettingBank.TakeBet();
+                }
+
                 cardPlayer.ShowOpeningDeal();
             }
         }
@@ -80,7 +89,7 @@ namespace Myob.Fma.Blackjack
             var playerScore = 0;
             var dealerScore = 0;
             var dealerBust = false;
-            
+
             foreach (var cardPlayer in _players)
             {
                 if (cardPlayer.PlayerType == PlayerClassification.Player)
@@ -94,29 +103,29 @@ namespace Myob.Fma.Blackjack
                 }
             }
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            if (playerScore > dealerScore || dealerBust)
-            {   
-                Console.WriteLine("====================================");
-                Console.WriteLine("You won, nice work!");
-                Console.WriteLine("====================================");
-            }
-            else if (dealerScore > playerScore)
+            foreach (var cardPlayer in _players)
             {
-                Console.WriteLine("====================================");
-                Console.WriteLine("Dealer wins, better luck next time!");
-                Console.WriteLine("====================================");
-            }
-            else
-            {
-                Console.WriteLine("====================================");
-                Console.WriteLine("Game is a draw");
-                Console.WriteLine("====================================");
+                if (cardPlayer.PlayerType == PlayerClassification.Player)
+                {
+                    if (playerScore > dealerScore || dealerBust)
+                    {
+                        cardPlayer.BettingBank.ProcessWin();
+                    }
+                    else if (dealerScore > playerScore)
+                    {
+                        cardPlayer.BettingBank.ProcessLoss();
+                    }
+                    else
+                    {
+                        cardPlayer.BettingBank.ProcessDraw();
+                    }
+                }
             }
         }
 
         private bool AskUserToPlayAgain()
         {
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Play another hand? (y/n)");
 
             var answer = Console.ReadLine().Trim().ToLower();
@@ -128,8 +137,36 @@ namespace Myob.Fma.Blackjack
                     cardPlayer.ClearLastHand();
                 }
             }
-            
+
             return answer == "y";
+        }
+
+        private void GetPlayerDeposit()
+        {
+            foreach (var cardPlayer in _players)
+            {
+                if (cardPlayer.PlayerType == PlayerClassification.Player)
+                {
+                    cardPlayer.BettingBank.DepositFunds();
+                }
+            }
+        }
+
+        private bool CheckIfPlayerHasEnoughFunds()
+        {
+            foreach (var cardPlayer in _players)
+            {
+                if (cardPlayer.PlayerType == PlayerClassification.Player && cardPlayer.BettingBank.BankBalance == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("====================================");
+                    Console.WriteLine("You have no money left, exiting game.");
+                    Console.WriteLine("====================================");
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
