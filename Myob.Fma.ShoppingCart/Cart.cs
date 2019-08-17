@@ -4,7 +4,7 @@ namespace Myob.Fma.ShoppingCart
 {
     public class Cart
     {
-        private readonly List<IProduct> _products;
+        protected readonly List<IProduct> _products;
 
         public Cart()
         {
@@ -25,6 +25,18 @@ namespace Myob.Fma.ShoppingCart
             var updatedCart = cartTotal - (-cartTotal * (discountPercentage / 100M));
 
             CartDiscount = decimal.Round(updatedCart, 2);
+        }
+
+        public virtual string GetAllProductDescriptions()
+        {
+            var products = string.Empty;
+
+            foreach (var product in _products)
+            {
+                products += $"{product}\n";
+            }
+
+            return products;
         }
 
         public decimal GetCartTotal()

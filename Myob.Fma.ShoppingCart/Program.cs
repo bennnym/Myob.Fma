@@ -9,9 +9,11 @@ namespace Myob.Fma.ShoppingCart
         {
             var deodorant = new Product("deodorant", "lynx", 4.99M);
             var bread = new Product("bread", "Helgas", 12.99M, 100);
+            
+            var movie = new EventProduct("movie-tickets","hoyts", 12.99M, 1000);
 
 
-            var cart = new Cart();
+            var cart = new EventCart();
 
 //            Console.WriteLine(deo.DiscountPercentage); // discount is 0%
 //            
@@ -23,14 +25,20 @@ namespace Myob.Fma.ShoppingCart
 
             cart.AddProductToCart(deodorant);
             cart.AddProductToCart(bread);
-            Console.WriteLine($"cart total before discount: {cart.GetCartTotal()}");
+            cart.AddProductToCart(movie);
+
+            Console.WriteLine(cart.GetAllProductDescriptions());
+            
+            
+            
+//            Console.WriteLine($"cart total before discount: {cart.GetCartTotal()}");
 
 //            Console.WriteLine(cart.GetCartTotal());
 //
 //            Console.WriteLine($"bread discount : {bread.DiscountPercentage}");
 
-            cart.ApplyCartDiscount(50);
-            Console.WriteLine($"cart total after discount: {cart.GetCartTotal()}");
+//            cart.ApplyCartDiscount(50);
+//            Console.WriteLine($"cart total after discount: {cart.GetCartTotal()}");
 
 
 //            cart.AddProductToCart(deo);
