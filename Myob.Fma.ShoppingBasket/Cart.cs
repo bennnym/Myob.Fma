@@ -21,8 +21,6 @@ namespace Myob.Fma.ShoppingBasket
             var productsString = "";
 
             foreach (var product in _cart)
-            {
-
                 if (product is ActionProduct)
                 {
                     var actionProd = product as ActionProduct;
@@ -32,9 +30,10 @@ namespace Myob.Fma.ShoppingBasket
                 {
                     productsString += $"{product.ProductType}\n";
                 }
-            }
 
             return productsString;
         }
+        
+            
     }
 }
