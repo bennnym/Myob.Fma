@@ -34,6 +34,6 @@ namespace Myob.Fma.ShoppingBasket
             return productsString;
         }
         
-            
+                
     }
 }

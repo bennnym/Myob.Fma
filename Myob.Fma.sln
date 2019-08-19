@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Blackjack", "Myob.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.ShoppingBasket", "Myob.Fma.ShoppingBasket\Myob.Fma.ShoppingBasket.csproj", "{F3A192D6-DD39-4978-9C12-F92635EA020A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.GameOfLife", "Myob.Fma.GameOfLife\Myob.Fma.GameOfLife.csproj", "{414ED349-E433-4172-86B3-FE28AA467A50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +68,9 @@ Global
 		{F3A192D6-DD39-4978-9C12-F92635EA020A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A192D6-DD39-4978-9C12-F92635EA020A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A192D6-DD39-4978-9C12-F92635EA020A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{414ED349-E433-4172-86B3-FE28AA467A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{414ED349-E433-4172-86B3-FE28AA467A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{414ED349-E433-4172-86B3-FE28AA467A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{414ED349-E433-4172-86B3-FE28AA467A50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
