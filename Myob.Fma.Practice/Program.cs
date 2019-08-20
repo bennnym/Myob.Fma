@@ -9,17 +9,40 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            var array2D = new int[4, 2] {{1,2},{3,4},{5,6},{7,8}};
-
-
-            Console.WriteLine(array2D[3,1]);
+            var array2D = new int[5, 5] {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15},{16,17,18,19,20},{21,22,23,24,25}};
             
+            var hashSet = new HashSet<int[]>();
+
+            var testing = new int[5, 10];
+            int i = 0;
+
+            Console.WriteLine(array2D[-1,4]);
 
 
-            for (int i = 0; i < array2D.Length; i++)
-            {
-                    Console.WriteLine($"row{i}");
-            }
+//            Console.WriteLine(array2D.GetLength(1));
+
+
+//            string longWord = string.Empty;
+//
+//            for (int i = 0; i < 100; i++)
+//            {
+
+//                longWord += i.ToString();
+//            }
+//            
+////            Console.WriteLine(array2D[3,1]);
+//            Console.WriteLine(longWord);
+//
+//
+//            foreach (var letter in longWord)
+//            {
+//                Thread.Sleep(1000);
+//                Console.WriteLine();
+//                Console.WriteLine($"doing something here");
+//                Console.WriteLine($"{letter}");
+//                Console.WriteLine($"doing something here");
+//                Console.CursorTop -= 4;
+//            }
         }
 
         public enum Holidays
