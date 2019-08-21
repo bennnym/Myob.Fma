@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Myob.Fma.Practice.ExtensionMethods;
 
 namespace Myob.Fma.Practice
 {
@@ -9,40 +10,9 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            var array2D = new int[5, 5] {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15},{16,17,18,19,20},{21,22,23,24,25}};
+            var name = "benjamin";
             
-            var hashSet = new HashSet<int[]>();
-
-            var testing = new int[5, 10];
-            int i = 0;
-
-            Console.WriteLine(array2D[-1,4]);
-
-
-//            Console.WriteLine(array2D.GetLength(1));
-
-
-//            string longWord = string.Empty;
-//
-//            for (int i = 0; i < 100; i++)
-//            {
-
-//                longWord += i.ToString();
-//            }
-//            
-////            Console.WriteLine(array2D[3,1]);
-//            Console.WriteLine(longWord);
-//
-//
-//            foreach (var letter in longWord)
-//            {
-//                Thread.Sleep(1000);
-//                Console.WriteLine();
-//                Console.WriteLine($"doing something here");
-//                Console.WriteLine($"{letter}");
-//                Console.WriteLine($"doing something here");
-//                Console.CursorTop -= 4;
-//            }
+            Console.WriteLine(name.Capitalize());
         }
 
         public enum Holidays
