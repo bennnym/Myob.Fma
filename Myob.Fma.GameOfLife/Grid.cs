@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using Myob.Fma.GameOfLife.Rules;
@@ -49,7 +47,7 @@ namespace Myob.Fma.GameOfLife
         {
             Console.WriteLine();
             PrintGrid();
-            UpdateStateOfCells();
+            UpdateStateOfGridsCells();
             Console.CursorTop -= _grid.GetLength(0) + 1;
             Thread.Sleep(500);
             StartGameOfLife();
@@ -114,7 +112,7 @@ namespace Myob.Fma.GameOfLife
             return new[] {x, y};
         }
 
-        private void UpdateStateOfCells()
+        private void UpdateStateOfGridsCells()
         {
             foreach (var cell in _grid)
             {
@@ -188,7 +186,7 @@ namespace Myob.Fma.GameOfLife
             return y;
         }
 
-        public int[] GetCornerIndex(int[] cellPosition)
+        private int[] GetCornerIndex(int[] cellPosition)
         {
             var x = cellPosition[0] - 1;
             var y = cellPosition[1] - 1;
