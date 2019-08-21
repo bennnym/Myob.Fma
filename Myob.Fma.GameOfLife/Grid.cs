@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
+using Myob.Fma.GameOfLife.Rules;
 
 namespace Myob.Fma.GameOfLife
 {
@@ -10,11 +12,13 @@ namespace Myob.Fma.GameOfLife
     {
         private readonly ICell[,] _grid;
         private readonly int _aliveCells;
-        
-        public Grid(int aliveCells, int rows, int columns)
+        private readonly IList<IRule> _rules;
+
+        public Grid(int aliveCells, int rows, int columns, IList<IRule> rules)
         {
-            _grid = new ICell[rows,columns];
+            _grid = new ICell[rows, columns];
             _aliveCells = aliveCells;
+            _rules = rules;
         }
 
         public void PopulateGrid()
@@ -29,7 +33,7 @@ namespace Myob.Fma.GameOfLife
                     var cell = new Cell(true);
                     var index = ConvertIntToCellIndex(i);
                     cell.Position = index;
-                    _grid[index[0],index[1]] = cell;
+                    _grid[index[0], index[1]] = cell;
                 }
                 else
                 {
@@ -59,7 +63,7 @@ namespace Myob.Fma.GameOfLife
             foreach (var cell in _grid)
             {
                 var cellRow = cell.Position[0];
-                
+
                 if (cellRow == gridLine)
                 {
                     gridSnapshot.Append(cell.Symbol);
@@ -68,7 +72,7 @@ namespace Myob.Fma.GameOfLife
                 {
                     gridLine = cellRow;
                     gridSnapshot.AppendLine();
-                    gridSnapshot.Append(cell.Symbol);    
+                    gridSnapshot.Append(cell.Symbol);
                 }
             }
 
@@ -80,12 +84,13 @@ namespace Myob.Fma.GameOfLife
             var randomNumbers = new HashSet<int>();
             var upperLimit = _grid.Length + 1;
 
-            while (randomNumbers.Count < _aliveCells )
+            while (randomNumbers.Count < _aliveCells)
             {
                 var randNumberGenerator = new Random();
                 var num = randNumberGenerator.Next(1, upperLimit);
                 randomNumbers.Add(num);
             }
+
             return randomNumbers;
         }
 
@@ -105,86 +110,90 @@ namespace Myob.Fma.GameOfLife
                 x = (index / columns) - 1;
                 y = columns - 1;
             }
-            
-            return new [] {x,y};
+
+            return new[] {x, y};
         }
 
         private void UpdateStateOfCells()
         {
             foreach (var cell in _grid)
             {
-                cell.NeighboursAlive = CalculateHowManySurroundingCellsAreAlive(cell.Position);
-                ApplyGameOfLifeRules(cell);
+                var cornerPosition = GetCornerIndex(cell.Position);
+                cell.NeighboursAlive = UpdateNeighbouringCellsAliveCount(cell.Position, cornerPosition);
+                ApplyeRules(cell);
             }
         }
 
-        private void ApplyGameOfLifeRules(ICell cell)
+        private void ApplyeRules(ICell cell)
         {
-            // interface needed!!!!
-            
-            if (cell.CellState)
+            foreach (var rule in _rules)
             {
-                if (cell.NeighboursAlive < 2)
-                {
-                    cell.CellState = false;
-                }
-                else if (cell.NeighboursAlive > 3)
-                {
-                    cell.CellState = false;
-                }
+                rule.Condition(cell);
+                cell.Symbol = cell.CellState ? " @ " : " . ";
             }
-            else if (!cell.CellState && cell.NeighboursAlive == 3)
-            {
-                cell.CellState = true;
-            }
-            
-            cell.Symbol = cell.CellState ? " @ " : " . ";
         }
 
-        private int CalculateHowManySurroundingCellsAreAlive(int[] cellPosition)
+        private int UpdateNeighbouringCellsAliveCount(int[] targetCell, int[] cornerPosition, int yAdjustment = 0,
+            int xAdjustment = 0)
         {
-            
-            var x = cellPosition[0];
-            var y = cellPosition[1];
-            var yStartingPosition = y - 1;
-            var aliveSurroundingCells = 0;
-            var gridRows = _grid.GetLength(0);
-            var gridCols = _grid.GetLength(1);
-            
-            // top row surrounding the cell
-            for (int i = 0; i < 3; i++)
+            if (yAdjustment == 3 && xAdjustment == 2)
             {
-                var rowPosition = x - 1 < 0 ? gridRows - 1 : x - 1; // upper overflow
-                var columnPosition = yStartingPosition + i < 0 ? gridCols - 1 : yStartingPosition + i; // left overflow
-                
-                columnPosition = yStartingPosition + i > gridCols - 1? 0 : columnPosition; // right overflow
+                return _grid[targetCell[0], targetCell[1]].CellState ? -1 : 0;
+            }
 
-                aliveSurroundingCells += _grid[rowPosition, columnPosition].CellState ? 1 : 0;
-            }
-            
-            // bottom row surrounding the cell
-            for (int i = 0; i < 3; i++)
+            if (yAdjustment == 3)
             {
-                var rowPosition = x + 1 > gridRows - 1 ? 0 : x + 1; // bottom overflow
-                var columnPosition = yStartingPosition + i < 0 ? gridCols - 1 : yStartingPosition + i; // left overflow
-                columnPosition = yStartingPosition + i > gridCols - 1 ? 0 : columnPosition; // right overflow
+                xAdjustment++;
+                yAdjustment = 0;
+            }
 
-                aliveSurroundingCells += _grid[rowPosition, columnPosition].CellState ? 1 : 0;
-            }
-            
-            // middle row
-            for (int i = 0; i < 3; i++)
-            {
-                var columnPosition = yStartingPosition + i < 0 ? gridCols - 1 : yStartingPosition + i; // left overflow
-                columnPosition = yStartingPosition + i > gridCols - 1 ? 0 : columnPosition; // right overflow
-                
-                if (columnPosition != y)
-                {
-                    aliveSurroundingCells += _grid[x, columnPosition].CellState ? 1 : 0;
-                }
-            }
-            return aliveSurroundingCells;
+            var x = ProcessXAxis(cornerPosition[0] + xAdjustment);
+            var y = ProcessYAxis(cornerPosition[1] + yAdjustment);
+
+            var alive = _grid[x, y].CellState ? 1 : 0;
+            yAdjustment++;
+
+            return alive + UpdateNeighbouringCellsAliveCount(targetCell, cornerPosition, yAdjustment, xAdjustment);
         }
-        
+
+        private int ProcessXAxis(int x)
+        {
+            var rows = _grid.GetLength(0) - 1;
+            if (x < 0)
+            {
+                return rows;
+            }
+
+            if (x > rows)
+            {
+                return x - rows - 1;
+            }
+
+            return x;
+        }
+
+        private int ProcessYAxis(int y)
+        {
+            var columns = _grid.GetLength(1) - 1;
+            if (y < 0)
+            {
+                return columns;
+            }
+
+            if (y > columns)
+            {
+                return y - columns - 1;
+            }
+
+            return y;
+        }
+
+        public int[] GetCornerIndex(int[] cellPosition)
+        {
+            var x = cellPosition[0] - 1;
+            var y = cellPosition[1] - 1;
+
+            return new[] {ProcessXAxis(x), ProcessYAxis(y)};
+        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Myob.Fma.GameOfLife.Rules;
 using Myob.Fma.GameOfLife.Validation;
 
 //https://stackoverflow.com/questions/12826760/printing-2d-array-in-matrix-format
@@ -13,13 +15,19 @@ namespace Myob.Fma.GameOfLife
         static void Main(string[] args)
         {
             int[] userInputs = PerformChecksOnUserInput(args);
-            
+
             if (Validate.InputIsValid(userInputs))
             {
                 // start game;
-                var grid = new Grid(userInputs[0], userInputs[1],userInputs[2]);
+                var rule1 = new OverPopulation();
+                var rule2 = new Reproduction();
+                var rule3 = new UnderPopulation();
+                var gameRules = new List<IRule> {rule1, rule2, rule3};
+                
+                var grid = new Grid(userInputs[0], userInputs[1], userInputs[2], gameRules);
                 grid.PopulateGrid();
                 grid.StartGameOfLife();
+
             }
             else
             {
@@ -29,16 +37,15 @@ namespace Myob.Fma.GameOfLife
                 Console.WriteLine($"Hint: Input must be a number greater than zero");
                 Console.WriteLine($"Hint: Number of live cells can not be larger than (rows * columns)");
             }
-
         }
 
         static int[] PerformChecksOnUserInput(string[] userArgs)
         {
             var rowsInt = Validate.StringsToNumbers(userArgs[1]);
             var columnsInt = Validate.StringsToNumbers(userArgs[2]);
-            var liveCellsInt = Validate.LiveCellsToNumbers(userArgs[0],rowsInt,columnsInt);
+            var liveCellsInt = Validate.LiveCellsToNumbers(userArgs[0], rowsInt, columnsInt);
 
-            return new [] {liveCellsInt, rowsInt, columnsInt};
+            return new[] {liveCellsInt, rowsInt, columnsInt};
         }
     }
 }
