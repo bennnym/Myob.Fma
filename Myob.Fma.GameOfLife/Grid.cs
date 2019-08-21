@@ -9,13 +9,16 @@ namespace Myob.Fma.GameOfLife
     public class Grid
     {
         private readonly ICell[,] _grid;
-        private readonly int _aliveCells;
+        private readonly int _aliveStartingCells;
         private readonly IList<IRule> _rules;
+        private int _aliveCells;
+        private int _deadCells;
 
-        public Grid(int aliveCells, int rows, int columns, IList<IRule> rules)
+
+        public Grid(int aliveStartingCells, int rows, int columns, IList<IRule> rules)
         {
             _grid = new ICell[rows, columns];
-            _aliveCells = aliveCells;
+            _aliveStartingCells = aliveStartingCells;
             _rules = rules;
         }
 
@@ -47,15 +50,15 @@ namespace Myob.Fma.GameOfLife
         {
             Console.WriteLine();
             PrintGrid();
-            UpdateStateOfGridsCells();
-            Console.CursorTop -= _grid.GetLength(0) + 1;
+            UpdateStateOfGridCells();
+            Console.CursorTop -= _grid.GetLength(0) + 4;
             Thread.Sleep(500);
             StartGameOfLife();
         }
 
         private void PrintGrid()
         {
-            var gridSnapshot = new StringBuilder();
+            var gridImage = new StringBuilder();
             var gridLine = 0;
 
             foreach (var cell in _grid)
@@ -64,17 +67,23 @@ namespace Myob.Fma.GameOfLife
 
                 if (cellRow == gridLine)
                 {
-                    gridSnapshot.Append(cell.Symbol);
+                    gridImage.Append(cell.Symbol);
                 }
                 else
                 {
                     gridLine = cellRow;
-                    gridSnapshot.AppendLine();
-                    gridSnapshot.Append(cell.Symbol);
+                    gridImage.AppendLine();
+                    gridImage.Append(cell.Symbol);
                 }
             }
 
-            Console.WriteLine(gridSnapshot.ToString());
+            gridImage.AppendLine();
+            gridImage.AppendLine();
+            gridImage.Append($"Life Count: {_aliveCells}");
+            gridImage.AppendLine();
+            gridImage.Append($"Death Count: {_deadCells}");
+
+            Console.WriteLine(gridImage.ToString());
         }
 
         private HashSet<int> GenerateRandomNumbersForAliveCells()
@@ -82,7 +91,7 @@ namespace Myob.Fma.GameOfLife
             var randomNumbers = new HashSet<int>();
             var upperLimit = _grid.Length + 1;
 
-            while (randomNumbers.Count < _aliveCells)
+            while (randomNumbers.Count < _aliveStartingCells)
             {
                 var randNumberGenerator = new Random();
                 var num = randNumberGenerator.Next(1, upperLimit);
@@ -112,14 +121,20 @@ namespace Myob.Fma.GameOfLife
             return new[] {x, y};
         }
 
-        private void UpdateStateOfGridsCells()
+        private void UpdateStateOfGridCells()
         {
+            var cellLifeCount = 0;
+            
             foreach (var cell in _grid)
             {
                 var cornerPosition = GetCornerIndex(cell.Position);
                 cell.NeighboursAlive = UpdateNeighbouringCellsAliveCount(cell.Position, cornerPosition);
                 ApplyeRules(cell);
+                cellLifeCount += cell.CellState ? 1 : 0;
             }
+
+            _aliveCells = cellLifeCount;
+            _deadCells = (_grid.GetLength(0) * _grid.GetLength(1)) - _aliveCells;
         }
 
         private void ApplyeRules(ICell cell)
