@@ -23,6 +23,7 @@ namespace Myob.Fma.GameOfLife.Validation
 
         public static bool InputIsValid(int[] inputs)
         {
+            // handle nulls
             return !inputs.Contains(-1);
         }
         

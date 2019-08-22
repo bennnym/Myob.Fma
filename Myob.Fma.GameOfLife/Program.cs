@@ -14,38 +14,29 @@ namespace Myob.Fma.GameOfLife
     {
         static void Main(string[] args)
         {
-            int[] userInputs = PerformChecksOnUserInput(args);
+            var userInputs = UserInputs.GenerateUserInput(args);
 
-            if (Validate.InputIsValid(userInputs))
-            {
+//            if (Validate.InputIsValid(userInputs))
+//            {
                 // start game;
                 var rule1 = new OverPopulation();
                 var rule2 = new Reproduction();
                 var rule3 = new UnderPopulation();
                 var gameRules = new List<IRule> {rule1, rule2, rule3};
                 
-                var grid = new Grid(userInputs[0], userInputs[1], userInputs[2], gameRules);
+                var grid = new Grid(userInputs.Lives, userInputs.Rows, userInputs.Columns, gameRules);
                 grid.PopulateGrid();
                 grid.StartGameOfLife();
 
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid Input:");
-                Console.WriteLine("Input needs to be in the format: 'number of live cells' 'rows' 'columns'");
-                Console.WriteLine($"Hint: Input must be a number greater than zero");
-                Console.WriteLine($"Hint: Number of live cells can not be larger than (rows * columns)");
-            }
-        }
-
-        static int[] PerformChecksOnUserInput(string[] userArgs)
-        {
-            var rowsInt = Validate.StringsToNumbers(userArgs[1]);
-            var columnsInt = Validate.StringsToNumbers(userArgs[2]);
-            var liveCellsInt = Validate.LiveCellsToNumbers(userArgs[0], rowsInt, columnsInt);
-
-            return new[] {liveCellsInt, rowsInt, columnsInt};
-        }
+//            }
+//            else
+//            {
+//                Console.ForegroundColor = ConsoleColor.Red;
+//                Console.WriteLine("Invalid Input:");
+//                Console.WriteLine("Input needs to be in the format: 'number of live cells' 'rows' 'columns'");
+//                Console.WriteLine($"Hint: Input must be a number greater than zero");
+//                Console.WriteLine($"Hint: Number of live cells can not be larger than (rows * columns)");
+//            }
+        }    
     }
 }
