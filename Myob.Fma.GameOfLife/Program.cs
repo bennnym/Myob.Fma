@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Myob.Fma.GameOfLife.Rules;
-using Myob.Fma.GameOfLife.Validation;
 
 //https://stackoverflow.com/questions/12826760/printing-2d-array-in-matrix-format
 //https://stackoverflow.com/questions/888533/how-can-i-update-the-current-line-in-a-c-sharp-windows-console-app
@@ -15,10 +14,7 @@ namespace Myob.Fma.GameOfLife
         static void Main(string[] args)
         {
             var userInputs = UserInputs.GenerateUserInput(args);
-
-//            if (Validate.InputIsValid(userInputs))
-//            {
-                // start game;
+            
                 var rule1 = new OverPopulation();
                 var rule2 = new Reproduction();
                 var rule3 = new UnderPopulation();
@@ -28,15 +24,6 @@ namespace Myob.Fma.GameOfLife
                 grid.PopulateGrid();
                 grid.StartGameOfLife();
 
-//            }
-//            else
-//            {
-//                Console.ForegroundColor = ConsoleColor.Red;
-//                Console.WriteLine("Invalid Input:");
-//                Console.WriteLine("Input needs to be in the format: 'number of live cells' 'rows' 'columns'");
-//                Console.WriteLine($"Hint: Input must be a number greater than zero");
-//                Console.WriteLine($"Hint: Number of live cells can not be larger than (rows * columns)");
-//            }
         }    
     }
 }
