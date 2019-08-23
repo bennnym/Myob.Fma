@@ -46,5 +46,18 @@ namespace Myob.Fma.Payslip.IncomeProcessing
                 throw;
             }
         }
+
+        private static int ConvertStringToNumber(string number)
+        {
+            try
+            {
+                return int.Parse(number);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"You must enter a valid number for the day date {e}");
+                throw;
+            }
+        }
     }
 }

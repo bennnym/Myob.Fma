@@ -10,23 +10,29 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            try
-            {
-                var word = "ben";
-                int.Parse(word);
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("you broke it");
-                throw;
-            }
-            finally
-            {
-                Console.WriteLine("still executed");
-            }
-            
-            
+            var date = "1 March";
+
+            var reveresed = string.Join(" ",date.Split(" ").Reverse());
+
+            Console.WriteLine(reveresed);
+//            try
+//            {
+//                var word = "11 March";
+//                var splitword = word.Split(" ");
+//
+//            }
+//            catch (Exception e)
+//            {
+//                Console.WriteLine("you broke it");
+//                throw;
+//            }
+//            finally
+//            {
+//                Console.WriteLine("still executed");
+//            }
+
+
 //            var dateTime = DateTime.Now;
 //            Console.WriteLine(dateTime.Kind);
 //            
