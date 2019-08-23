@@ -10,9 +10,9 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            var name = "benjamin";
-            
-            Console.WriteLine(name.Capitalize());
+            var date = "10 March";
+
+            Console.WriteLine(DateTime.Parse(date));
         }
 
         public enum Holidays
