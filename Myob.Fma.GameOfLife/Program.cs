@@ -27,14 +27,12 @@ namespace Myob.Fma.GameOfLife
 
             var randomCellPositions = NumberGenerator.Random(userInputs);
 
-            Board board = Board.Create(userInputs);
-            
-            Game game = Game.Create(board, gameRules);
-            
-            StartingBoard.SetUpBoard(board,randomCellPositions);
+            Board board = new Board(userInputs);
+            board.Initialize(randomCellPositions);
 
+            Game game = new Game(board, gameRules);
+            
             GameSimulator.Play(game);
-
         }
     }
 }

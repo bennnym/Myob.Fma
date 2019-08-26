@@ -6,7 +6,7 @@ namespace Myob.Fma.GameOfLife.GameOperations
 {
     public interface IGame
     {
-        Board Board { get; }
+        IBoard Board { get; }
         IList<IRule> Rules { get; }
     }
 }

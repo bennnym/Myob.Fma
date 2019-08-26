@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Myob.Fma.GameOfLife.Cells;
 
 namespace Myob.Fma.GameOfLife.BoardOperations
@@ -6,13 +7,55 @@ namespace Myob.Fma.GameOfLife.BoardOperations
     {
         public ICell[,] Grid { get; private set; }
         public int StartingAliveCells { get; private set; }
-        
-        public static Board Create(UserInputs userInputs)
+
+        public bool isInitialized { get; private set; }
+
+        public Board(UserInputs userInputs)
         {
-            return new Board()
+            Grid = new ICell[userInputs.Rows, userInputs.Columns];
+            StartingAliveCells = userInputs.Lives;
+        }
+
+        public void Initialize(HashSet<int> randomAliveCellPositions)
+        {
+            var cells = Grid.Length;
+
+            for (var i = 1; i <= cells; i++)
             {
-                Grid = new ICell[userInputs.Rows,userInputs.Columns],
-                StartingAliveCells = userInputs.Lives
+                SetCellState(Grid, i, randomAliveCellPositions.Contains(i));
+            }
+
+            isInitialized = true;
+        }
+        
+        private void SetCellState(ICell[,] grid, int cellPosition, bool isAlive)
+        {
+            var cell = new Cell(isAlive);
+            var index = ConvertIntToCellPosition(grid.GetLength(1),cellPosition);
+            cell.Position = index;
+            grid[index.XPosition, index.YPosition] = cell;
+        }
+        
+        private CellPosition ConvertIntToCellPosition(int columns, int index)
+        {
+            int x;
+            int y;
+
+            if (index % columns != 0)
+            {
+                x = index / columns;
+                y = (index % columns) - 1;
+            }
+            else
+            {
+                x = (index / columns) - 1;
+                y = columns - 1;
+            }
+
+            return new CellPosition()
+            {
+                XPosition = x,
+                YPosition = y
             };
         }
     }

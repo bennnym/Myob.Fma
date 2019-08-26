@@ -11,12 +11,17 @@ namespace Myob.Fma.GameOfLife.GameOperations
     {
         public static void Play(IGame game)
         {
-            Console.WriteLine();
-            PrintBoard.Print(game.Board);
-            UpdateStateOfGridCells(game);
-            Console.CursorTop -= game.Board.Grid.GetLength(0) + 3;
-            Thread.Sleep(500);
-            Play(game);
+            if (game.Board.isInitialized)
+            {
+                Console.WriteLine();
+                PrintBoard.Print(game.Board);
+                UpdateStateOfGridCells(game);
+                Console.CursorTop -= game.Board.Grid.GetLength(0) + 3;
+                Thread.Sleep(500);
+                Play(game);
+            }
+
+            Console.WriteLine("ERROR - please initialize board before playing");
         }
 
         private static void UpdateStateOfGridCells(IGame game)
