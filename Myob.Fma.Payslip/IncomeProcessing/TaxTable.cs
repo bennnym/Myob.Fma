@@ -14,21 +14,8 @@ namespace Myob.Fma.Payslip.IncomeProcessing
         {
             return new TaxTable()
             {
-                TaxBrackets = AddTaxBracketsIntoTaxTable(taxBrackets)
+                TaxBrackets = taxBrackets.ToList()
             };
         }
-
-        private static IList<ITaxBracket> AddTaxBracketsIntoTaxTable(ITaxBracket[] brackets)
-        {
-            var taxBrackets = new List<ITaxBracket>();
-            
-            foreach (var bracket in brackets)
-            {
-                taxBrackets.Add(bracket);
-            }
-
-            return taxBrackets;
-        }
-
     }
 }

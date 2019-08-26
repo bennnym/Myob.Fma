@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Myob.Fma.Payslip.Printer
 {
-    public static class PayslipPrinter
+    public static class PayslipBuilder
     {
         public static string Print(IPaySlip payslip)
         {

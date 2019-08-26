@@ -49,7 +49,7 @@ namespace Myob.Fma.Payslip
                 super
             );
 
-            var payslipOutput = PayslipPrinter.Print(paySlip);
+            var payslipOutput = PayslipBuilder.Print(paySlip);
 
             Console.WriteLine(payslipOutput);
 //            
