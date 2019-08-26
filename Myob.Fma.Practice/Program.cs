@@ -10,105 +10,47 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            var list = new List<int>()
-            {
-                1,2,3,3,5,5,7,6,9,1
-            };
 
-            var occurences = list.GroupBy(x => x > 6);
-            
-            foreach (var occurence in occurences)
-            {
-                Console.WriteLine($"printing groups of : {occurence.Key}");
-                foreach (var item in occurence)
-                {
-                    Console.WriteLine(item);
-                    
-                }
-            }
-        }
+            var date = "1 March";
 
-        public enum Holidays
-        {
-            Christmas,
-            BlackFriday,
-            NewYearsDay,
-            BoxingDay
-        }
+            var reveresed = string.Join(" ",date.Split(" ").Reverse());
 
-        public enum Discounts
-        {
-            FullPrice = 100,
-            HalfPrice = 50,
-            Percent10 = 10,
-            Percent30 = 30
-        }
+            Console.WriteLine(reveresed);
+//            try
+//            {
+//                var word = "11 March";
+//                var splitword = word.Split(" ");
+//
+//            }
+//            catch (Exception e)
+//            {
+//                Console.WriteLine("you broke it");
+//                throw;
+//            }
+//            finally
+//            {
+//                Console.WriteLine("still executed");
+//            }
 
-        public static string Disemove(string str)
-        {
-            var vowels = new List<char> {'a', 'e', 'i', 'o', 'u'};
-            var stringWithNoVowels = "";
 
-            foreach (var letter in str)
-            {
-                if (vowels.Contains(char.ToLower(letter)))
-                {
-                    continue;
-                }
-
-                stringWithNoVowels += letter;
-            }
-
-            return stringWithNoVowels;
-        }
-
-        public static string Tickets(int[] peopleInLine)
-        {
-            var change = new Dictionary<int, int>();
-
-            foreach (var ticket in peopleInLine)
-            {
-                if (ticket >= 25)
-                {
-                    var changeRequired = ticket - 25;
-                }
-            }
-
-            return "ok";
-        }
-
-        public static bool validBraces(String braces)
-        {
-            var parenthesis = 0;
-            var square = 0;
-            var curly = 0;
-
-            foreach (var bracket in braces)
-            {
-                switch (bracket)
-                {
-                    case '(':
-                        parenthesis++;
-                        break;
-                    case ')':
-                        parenthesis--;
-                        break;
-                    case '{':
-                        curly++;
-                        break;
-                    case '}':
-                        curly--;
-                        break;
-                    case '[':
-                        square++;
-                        break;
-                    case ']':
-                        square--;
-                        break;
-                }
-            }
-
-            return 0 == parenthesis && 0 == square && 0 == curly;
+//            var dateTime = DateTime.Now;
+//            Console.WriteLine(dateTime.Kind);
+//            
+//            Console.WriteLine(dateTime);
+//
+//            var utcNow = DateTime.UtcNow;
+//            Console.WriteLine(utcNow.Kind);
+//            Console.WriteLine(utcNow);
+//            
+//            var unsepcifiedTime = new DateTime(2019,11,11,11,11,11);
+//            Console.WriteLine(unsepcifiedTime);
+//            Console.WriteLine(unsepcifiedTime.Kind);
+//
+//            
+//            Console.WriteLine(dateTime.ToUniversalTime());
+//            Console.WriteLine(unsepcifiedTime.ToUniversalTime());
+//
+//            Console.WriteLine(dateTime.ToString(format:"f"));
         }
     }
 }
