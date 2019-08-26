@@ -10,9 +10,22 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            var date = "10 March";
+            var list = new List<int>()
+            {
+                1,2,3,3,5,5,7,6,9,1
+            };
 
-            Console.WriteLine(DateTime.Parse(date));
+            var occurences = list.GroupBy(x => x > 6);
+            
+            foreach (var occurence in occurences)
+            {
+                Console.WriteLine($"printing groups of : {occurence.Key}");
+                foreach (var item in occurence)
+                {
+                    Console.WriteLine(item);
+                    
+                }
+            }
         }
 
         public enum Holidays

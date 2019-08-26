@@ -1,4 +1,4 @@
-namespace Myob.Fma.GameOfLife
+namespace Myob.Fma.GameOfLife.Cells
 {
     public class Cell : ICell
     {
@@ -13,7 +13,7 @@ namespace Myob.Fma.GameOfLife
         public bool CellState { get; set; }
         public string Symbol { get; set; }
 
-        public int[] Position { get; set; }
+        public CellPosition Position { get; set; }
 
     }
 

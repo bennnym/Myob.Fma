@@ -1,3 +1,5 @@
+using Myob.Fma.GameOfLife.Cells;
+
 namespace Myob.Fma.GameOfLife.Rules
 {
     public class Reproduction : IRule

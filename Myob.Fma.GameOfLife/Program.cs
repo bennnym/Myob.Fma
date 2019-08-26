@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Myob.Fma.GameOfLife.BoardOperations;
+using Myob.Fma.GameOfLife.GameOperations;
 using Myob.Fma.GameOfLife.Rules;
+using Myob.Fma.GameOfLife.RandomNumbers;
 
 //https://stackoverflow.com/questions/12826760/printing-2d-array-in-matrix-format
 //https://stackoverflow.com/questions/888533/how-can-i-update-the-current-line-in-a-c-sharp-windows-console-app
@@ -14,16 +17,24 @@ namespace Myob.Fma.GameOfLife
         static void Main(string[] args)
         {
             var userInputs = UserInputs.GenerateUserInput(args);
-            
-                var rule1 = new OverPopulation();
-                var rule2 = new Reproduction();
-                var rule3 = new UnderPopulation();
-                var gameRules = new List<IRule> {rule1, rule2, rule3};
-                
-                var grid = new Grid(userInputs.Lives, userInputs.Rows, userInputs.Columns, gameRules);
-                grid.PopulateGrid();
-                grid.StartGameOfLife();
 
-        }    
+            var gameRules = new List<IRule>
+            {
+                new OverPopulation(),
+                new Reproduction(),
+                new UnderPopulation()
+            };
+
+            var randomCellPositions = NumberGenerator.Random(userInputs);
+
+            Board board = Board.Create(userInputs);
+            
+            Game game = Game.Create(board, gameRules);
+            
+            StartingBoard.SetUpBoard(board,randomCellPositions);
+
+            GameSimulator.Play(game);
+
+        }
     }
 }

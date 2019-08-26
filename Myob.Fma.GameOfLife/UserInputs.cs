@@ -24,7 +24,12 @@ namespace Myob.Fma.GameOfLife
 
             CheckAliveCellsIsLessThanGridSize(numberOfAliveCells, numberOfColumns, numberOfRows);
             
-            return new UserInputs {Rows = numberOfRows, Columns = numberOfColumns, Lives = numberOfAliveCells};
+            return new UserInputs
+            {
+                Rows = numberOfRows, 
+                Columns = numberOfColumns, 
+                Lives = numberOfAliveCells
+            };
         }
 
         private static int ConvertStringToNumber(string input)
