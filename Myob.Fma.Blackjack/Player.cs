@@ -108,7 +108,6 @@ namespace Myob.Fma.Blackjack
 
             if (handTotal == 21)
             {
-//                Console.WriteLine("You scored 21, nice work!");
                 FinalScore = handTotal;
                 return false;
             }

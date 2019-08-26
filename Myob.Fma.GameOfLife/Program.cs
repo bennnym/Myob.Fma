@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Myob.Fma.GameOfLife.BoardOperations;
+using Myob.Fma.GameOfLife.GameOperations;
 using Myob.Fma.GameOfLife.Rules;
-using Myob.Fma.GameOfLife.Validation;
+using Myob.Fma.GameOfLife.RandomNumbers;
 
 //https://stackoverflow.com/questions/12826760/printing-2d-array-in-matrix-format
 //https://stackoverflow.com/questions/888533/how-can-i-update-the-current-line-in-a-c-sharp-windows-console-app
@@ -14,38 +16,25 @@ namespace Myob.Fma.GameOfLife
     {
         static void Main(string[] args)
         {
-            int[] userInputs = PerformChecksOnUserInput(args);
+            var userInputs = UserInputs.GenerateUserInput(args);
 
-            if (Validate.InputIsValid(userInputs))
+            var gameRules = new List<IRule>
             {
-                // start game;
-                var rule1 = new OverPopulation();
-                var rule2 = new Reproduction();
-                var rule3 = new UnderPopulation();
-                var gameRules = new List<IRule> {rule1, rule2, rule3};
-                
-                var grid = new Grid(userInputs[0], userInputs[1], userInputs[2], gameRules);
-                grid.PopulateGrid();
-                grid.StartGameOfLife();
+                new OverPopulation(),
+                new Reproduction(),
+                new UnderPopulation()
+            };
 
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid Input:");
-                Console.WriteLine("Input needs to be in the format: 'number of live cells' 'rows' 'columns'");
-                Console.WriteLine($"Hint: Input must be a number greater than zero");
-                Console.WriteLine($"Hint: Number of live cells can not be larger than (rows * columns)");
-            }
-        }
+            var randomCellPositions = NumberGenerator.Random(userInputs);
 
-        static int[] PerformChecksOnUserInput(string[] userArgs)
-        {
-            var rowsInt = Validate.StringsToNumbers(userArgs[1]);
-            var columnsInt = Validate.StringsToNumbers(userArgs[2]);
-            var liveCellsInt = Validate.LiveCellsToNumbers(userArgs[0], rowsInt, columnsInt);
+            Board board = Board.Create(userInputs);
+            
+            Game game = Game.Create(board, gameRules);
+            
+            StartingBoard.SetUpBoard(board,randomCellPositions);
 
-            return new[] {liveCellsInt, rowsInt, columnsInt};
+            GameSimulator.Play(game);
+
         }
     }
 }
