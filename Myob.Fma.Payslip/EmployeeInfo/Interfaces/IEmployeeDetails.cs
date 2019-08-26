@@ -4,7 +4,5 @@ namespace Myob.Fma.Payslip.EmployeeInfo.Interfaces
     {
         string FirstName { get; }
         string Surname { get; }
-        string GetFullName();
-
     }
 }

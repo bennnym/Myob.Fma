@@ -1,4 +1,5 @@
 using System;
+using Myob.Fma.Payslip.DateProcessing;
 using Myob.Fma.Payslip.ExtensionMethods;
 using Myob.Fma.Payslip.IncomeProcessing.Interfaces;
 
@@ -6,23 +7,25 @@ namespace Myob.Fma.Payslip.IncomeProcessing
 {
     public class GrossIncome : IGrossIncome
     {
-        public int AnnualIncome { get; private set; }
+        public int AnnualAmount { get; private set; }
+        public int Amount { get; private set; }
 
-        public static GrossIncome GenerateGrossIncome(string annualIncome)
+        public static GrossIncome Generate(string annualIncome, IPayPeriod payPeriod)
         {
             if (string.IsNullOrWhiteSpace(annualIncome))
                 throw new Exception("Annual Salary must be entered");
 
             var annualIncomeAsANumber = ConvertSalaryStringToNumber(annualIncome);
 
-            return new GrossIncome {AnnualIncome = annualIncomeAsANumber};
-        }
+            var grossIncomeOverPeriod =
+                (annualIncomeAsANumber * DateCalculator.GetPayPeriodAsAFractionOfAYear(payPeriod)).Rounding();
+            
 
-        public int GetGrossIncomeForPeriod(IPayPeriod payPeriod)
-        {
-            var incomeOverPeriod = AnnualIncome * payPeriod.GetPayPeriodAsAFractionOfAYear();
-
-            return incomeOverPeriod.Rounding();
+            return new GrossIncome
+            {
+                Amount = grossIncomeOverPeriod,
+                AnnualAmount = annualIncomeAsANumber
+            };
         }
 
         private static int ConvertSalaryStringToNumber(string annualIncome)

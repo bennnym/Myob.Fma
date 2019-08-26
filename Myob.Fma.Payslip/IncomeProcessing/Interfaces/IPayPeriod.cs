@@ -6,7 +6,5 @@ namespace Myob.Fma.Payslip.IncomeProcessing.Interfaces
     {
         DateTime Start { get; }
         DateTime End { get; }
-        string GetDateString();
-        decimal GetPayPeriodAsAFractionOfAYear();
     }
 }

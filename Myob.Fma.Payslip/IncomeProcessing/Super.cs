@@ -1,21 +1,15 @@
 using System;
 using Myob.Fma.Payslip.ExtensionMethods;
+using Myob.Fma.Payslip.IncomeProcessing.IncomeHelpers;
 using Myob.Fma.Payslip.IncomeProcessing.Interfaces;
 
 namespace Myob.Fma.Payslip.IncomeProcessing
 {
     public class Super : ISuper
     {
-        public decimal SuperRate { get; private set; }
+        public int Amount { get; private set; }
 
-        public int GetSuper(int netIncome)
-        {
-            var superAmount = netIncome * (SuperRate / 100M);
-
-            return superAmount.Rounding();
-        }
-
-        public static Super GenerateSuper(string superRate)
+        public static Super Generate(string superRate, IGrossIncome grossIncome)
         {
             if (string.IsNullOrWhiteSpace(superRate))
                 throw new Exception("Super must be greater than 0");
@@ -27,8 +21,10 @@ namespace Myob.Fma.Payslip.IncomeProcessing
             }
 
             var superRateAsANumber = ConvertSuperStringToNumber(superRate);
+
+            var superOverPeriod = SuperCalculator.GetSuper(superRateAsANumber, grossIncome);
             
-            return new Super { SuperRate = superRateAsANumber};
+            return new Super { Amount = superOverPeriod };
         }
 
         private static decimal ConvertSuperStringToNumber(string superRate)

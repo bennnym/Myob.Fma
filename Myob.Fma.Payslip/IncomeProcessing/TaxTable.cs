@@ -8,36 +8,27 @@ namespace Myob.Fma.Payslip.IncomeProcessing
 {
     public class TaxTable : ITaxTable
     {
-        private readonly IList<ITaxBracket> _taxBracket = new List<ITaxBracket>();
+        public IList<ITaxBracket> TaxBrackets { get; private set; }
 
-        public TaxTable(params ITaxBracket[] taxBrackets)
+        public static TaxTable Build(params ITaxBracket[] taxBrackets)
         {
-            AddTaxBracketsIntoTaxTable(taxBrackets);
+            return new TaxTable()
+            {
+                TaxBrackets = AddTaxBracketsIntoTaxTable(taxBrackets)
+            };
         }
 
-        private void AddTaxBracketsIntoTaxTable(ITaxBracket[] brackets)
+        private static IList<ITaxBracket> AddTaxBracketsIntoTaxTable(ITaxBracket[] brackets)
         {
+            var taxBrackets = new List<ITaxBracket>();
+            
             foreach (var bracket in brackets)
             {
-                _taxBracket.Add(bracket);
+                taxBrackets.Add(bracket);
             }
+
+            return taxBrackets;
         }
 
-        public int GetTaxForPeriod(IPayPeriod payPeriod, int grossIncome)
-        {
-            var taxBracket = GetTaxBracket(grossIncome);
-
-            var accumulatedTax = taxBracket.AccumulatedTaxFromPreviousBracket;
-            var marginalTax = (grossIncome - taxBracket.LowerLimit) * taxBracket.MarginalTaxRate;
-
-            var totalTax = (accumulatedTax + marginalTax) * payPeriod.GetPayPeriodAsAFractionOfAYear();
-
-            return totalTax.Rounding();
-        }
-
-        private ITaxBracket GetTaxBracket(int annualIncome)
-        {
-           return _taxBracket.Single(t => annualIncome > t.LowerLimit && annualIncome <= t.UpperLimit);
-        }
     }
 }
