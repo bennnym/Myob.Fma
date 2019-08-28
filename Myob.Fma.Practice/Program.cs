@@ -15,31 +15,30 @@ namespace Myob.Fma.Practice
 //        [17, 17, 3, 17, 17, 17, 17] ==> 3
         static void Main(string[] args)
         {
-            var delimiters = new List<string> {"***","---"};
+            var input = @"//[*1*][%]";
 
-            Console.WriteLine(PatternConstructor(delimiters));
+            var delimiters = GetDelimiterFromString(input);
             
             
-          
+
+
+
         }
         
-        static string PatternConstructor(List<string> delimiters)
+        static string GetDelimiterFromString(string inputString)
         {
-            var pattern = "(?<=";
+            var regex = new Regex(@"(?<=\//\[).+(?=\])"); // looks for the pattern //[pattern]\n
 
-            for (int i = 0; i < delimiters.Count(); i++)
+            var matches = regex.Matches(inputString);
+
+            if (matches.Any())        
             {
-                if (i == delimiters.Count() - 1)
-                {
-                    pattern += $@"[{delimiters[i]}])-?\d+";
-                }
-                else
-                {
-                    pattern += $"[{delimiters[i]}]|";
-                }
+                return matches.First().ToString();
             }
 
-            return pattern;
+            var indexOfLineBreak = inputString.IndexOf('\n');
+
+            return inputString[indexOfLineBreak - 1].ToString();
         }
 
     }

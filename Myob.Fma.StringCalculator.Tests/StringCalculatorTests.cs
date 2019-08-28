@@ -92,6 +92,28 @@ namespace Myob.Fma.StringCalculator.Tests
             
             Assert.Equal(6, result);
         }
+
+        [Theory]
+        [InlineData("//[*][%]\n1*2%3", 6)]
+        public void Should_Be_Able_To_Enter_Multiple_Delimiters_And_Return_Sum(string input, int expectedOutput)
+        {
+            // act
+
+            var result = _stringCalculator.Add(input);
+            
+            // assert
+            Assert.Equal(expectedOutput,result);
+
+        }
+
+        [Fact]
+        public void Should_Be_Able_To_Input_A_Custom_Delimeter_With_A_Integer_Inbetween_And_Sum_Is_Still_Valid()
+        {
+            //act
+            var result = _stringCalculator.Add("//[*1*][%]\n1*1*2%3");
+            //assert
+            Assert.Equal(6,result);
+        }
         
     }
 }

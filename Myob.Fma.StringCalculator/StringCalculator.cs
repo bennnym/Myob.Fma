@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -9,23 +10,24 @@ namespace Myob.Fma.StringCalculator
     {
         public int Add(string numberString)
         {
-            var delimiters = new List<string> {",", "\n"};
-
             if (numberString == string.Empty) return 0;
 
             if (OptionalDelimiterPresent(numberString))
             {
-                delimiters = new List<string> {GetDelimiterFromString(numberString)};
-
+                var optionalDelimiterString = GetOptionalDelimiterString(numberString);
+                
                 numberString = GetInputToSum(numberString);
+
+                var delimiters = GetDelimiterMatchesFromString(optionalDelimiterString);
+                
+                ReplaceDelimiters(ref numberString, delimiters);
             }
 
-//            var pattern = GetRegexPattern(delimiters);
             var separatedNums = SplitStringWithDelimiters(numberString);
 
             var sum = 0;
 
-            var negativeNumbers = new List<int>();
+            var negativeNumbersFound = new List<int>();
 
             foreach (var stringNum in separatedNums)
             {
@@ -35,7 +37,7 @@ namespace Myob.Fma.StringCalculator
                 {
                     var stringToNum = int.Parse(matchedNumber);
 
-                    if (stringToNum < 0) negativeNumbers.Add(stringToNum);
+                    if (stringToNum < 0) negativeNumbersFound.Add(stringToNum);
 
                     if (stringToNum < 1000)
                     {
@@ -44,8 +46,8 @@ namespace Myob.Fma.StringCalculator
                 }
             }
 
-            if (negativeNumbers.Any())
-                throw new Exception(string.Join(", ", negativeNumbers));
+            if (negativeNumbersFound.Any())
+                throw new Exception(string.Join(", ", negativeNumbersFound));
 
             return sum;
         }
@@ -64,20 +66,12 @@ namespace Myob.Fma.StringCalculator
             return inputString.Substring(0, 2) == "//";
         }
 
-        private string GetDelimiterFromString(string inputString)
+        private MatchCollection GetDelimiterMatchesFromString(string inputString)
         {
-            var regex = new Regex(@"(?<=\//\[).+(?=\])"); // looks for the pattern //[pattern]\n
+            var regex = new Regex(@"((?<=\//\[).*(?=\]\[))|((?<=\[).*(?=\]$))"); // looks for the pattern //[pattern]\n
 
-            var matches = regex.Matches(inputString);
+            return regex.Matches(inputString);
 
-            if (matches.Any())
-            {
-                return matches.First().ToString();
-            }
-
-            var indexOfLineBreak = inputString.IndexOf('\n');
-
-            return inputString[indexOfLineBreak - 1].ToString();
         }
 
         private string GetInputToSum(string inputString)
@@ -89,23 +83,19 @@ namespace Myob.Fma.StringCalculator
             return inputString.Substring(startOfNewLine, inputLength);
         }
 
-        private string GetRegexPattern(List<string> delimiters)
+        private string GetOptionalDelimiterString(string inputString)
         {
-            var pattern = "(?<=";
+            var indexOfLineBreak = inputString.IndexOf('\n');
+            return inputString.Substring(0, indexOfLineBreak);
 
-            for (int i = 0; i < delimiters.Count(); i++)
+        }
+
+        private void ReplaceDelimiters(ref string inputString, MatchCollection delimiters)
+        {
+            foreach (var delimeter in delimiters)
             {
-                if (i == delimiters.Count() - 1)
-                {
-                    pattern += $@"[{delimiters[i]}])-?\d+|\w";
-                }
-                else
-                {
-                    pattern += $"[{delimiters[i]}]|";
-                }
+                inputString = inputString.Replace(delimeter.ToString(), ",");
             }
-
-            return pattern;
         }
     }
 }
