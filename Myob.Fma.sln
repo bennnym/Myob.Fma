@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.FoundationalTests", "Myob.Fma.FoundationalTests\Myob.Fma.FoundationalTests.csproj", "{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.AbcKata", "Myob.Fma.AbcKata\Myob.Fma.AbcKata.csproj", "{FF0B0172-16D4-4E7A-81D9-62CE18B3C703}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Foundational", "Myob.Fma.Foundational\Myob.Fma.Foundational.csproj", "{AC97ECCD-9B50-423A-89D0-31C2D0F89B70}"
@@ -28,16 +26,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Payslip", "Myob.Fm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Mopping", "Myob.Fma.Mopping\Myob.Fma.Mopping.csproj", "{1A38A2FD-6071-462C-B9F6-C4CE64324D2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Calculator", "Myob.Fma.Calculator\Myob.Fma.Calculator.csproj", "{AE26E933-2FA9-4E5E-A397-4EFCAEC958A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Calculator.Tests", "Myob.Fma.Calculator.Tests\Myob.Fma.Calculator.Tests.csproj", "{1F71DBF3-57DD-4369-BA0C-23205529A375}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.StringCalculator", "Myob.Fma.StringCalculator\Myob.Fma.StringCalculator.csproj", "{CE95E645-A730-4765-B807-16D9F0E03AC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.StringCalculator.Tests", "Myob.Fma.StringCalculator.Tests\Myob.Fma.StringCalculator.Tests.csproj", "{1F13E26F-9068-4282-8D7D-211246FB23F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A80EFB33-E2E0-43BC-8D33-0790F06CBEEE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FF0B0172-16D4-4E7A-81D9-62CE18B3C703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF0B0172-16D4-4E7A-81D9-62CE18B3C703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF0B0172-16D4-4E7A-81D9-62CE18B3C703}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -90,5 +92,21 @@ Global
 		{1A38A2FD-6071-462C-B9F6-C4CE64324D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A38A2FD-6071-462C-B9F6-C4CE64324D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A38A2FD-6071-462C-B9F6-C4CE64324D2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE26E933-2FA9-4E5E-A397-4EFCAEC958A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE26E933-2FA9-4E5E-A397-4EFCAEC958A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE26E933-2FA9-4E5E-A397-4EFCAEC958A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE26E933-2FA9-4E5E-A397-4EFCAEC958A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F71DBF3-57DD-4369-BA0C-23205529A375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F71DBF3-57DD-4369-BA0C-23205529A375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F71DBF3-57DD-4369-BA0C-23205529A375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F71DBF3-57DD-4369-BA0C-23205529A375}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE95E645-A730-4765-B807-16D9F0E03AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE95E645-A730-4765-B807-16D9F0E03AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE95E645-A730-4765-B807-16D9F0E03AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE95E645-A730-4765-B807-16D9F0E03AC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F13E26F-9068-4282-8D7D-211246FB23F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F13E26F-9068-4282-8D7D-211246FB23F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F13E26F-9068-4282-8D7D-211246FB23F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F13E26F-9068-4282-8D7D-211246FB23F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
