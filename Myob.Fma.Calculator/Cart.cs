@@ -43,7 +43,7 @@ namespace Myob.Fma.Calculator
                     prefix = "a";
                     break;
                 case ProductType.Physical:
-                    prefix = "p";
+                    prefix = "pop";
                     break;
             }
             
