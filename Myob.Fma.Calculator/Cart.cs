@@ -1,8 +1,15 @@
+using System;
+
 namespace Myob.Fma.Calculator
 {
     public class RealPaymentProvider : IPaymentProvider
     {
         public int GetSerialCode()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public static int GetSerialCodeTwo()
         {
             throw new System.NotImplementedException();
         }
@@ -12,6 +19,7 @@ namespace Myob.Fma.Calculator
     {
         int GetSerialCode();
     }
+
     public class Cart
     {
         private readonly IPaymentProvider _paymentProvider;
@@ -21,9 +29,33 @@ namespace Myob.Fma.Calculator
             _paymentProvider = paymentProvider;
         }
 
-        public string GetSerialCode()
+        public string GetLabelCode(ProductType productType)
         {
-            return "S"+_paymentProvider.GetSerialCode();
+
+            var prefix = string.Empty;
+            
+            switch (productType)
+            {
+                case ProductType.Event:
+                    prefix = "e";
+                    break;
+                case ProductType.Action:
+                    prefix = "a";
+                    break;
+                case ProductType.Physical:
+                    prefix = "p";
+                    break;
+            }
+            
+            return prefix + _paymentProvider.GetSerialCode();
         }
+    }
+
+    public enum ProductType
+    {
+        Event,
+        Action,
+        Physical,
+        Invalid
     }
 }

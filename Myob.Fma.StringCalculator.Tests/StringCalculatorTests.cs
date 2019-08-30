@@ -83,8 +83,8 @@ namespace Myob.Fma.StringCalculator.Tests
             var result = _stringCalculator.Add(inputString);
             
             Assert.Equal(expectedOutput, result);
-        }
 
+        }
         [Fact]
         public void Should_Register_Optional_Delimiters_Of_Any_Length_Surrounded_By_Square_Brackets()
         {

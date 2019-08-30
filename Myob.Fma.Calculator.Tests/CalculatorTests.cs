@@ -18,10 +18,7 @@ namespace Myob.Fma.Calculator.Tests
         [InlineData(new int[] { 5,6,7, 8 }, 26)]
         public void Should_Add_Return_Sum_When_Given_Input_Data(int[] inputs, int expected)
         {
-            //Arrange 
-            var x = 3;
-            var y = 5;
-            
+
             //Act
             var result = _calculator.Add(inputs);
             
@@ -29,19 +26,16 @@ namespace Myob.Fma.Calculator.Tests
             Assert.Equal(expected, result);
         }
         
-        [Fact]
-        public void Should_Add_Return_Sum_When_Three_Input_Integers()
+        [Theory]
+        [InlineData(new int[] {3,5,10}, 18)]
+        public void Should_Add_Return_Sum_When_Three_Input_Integers(int[] input, int expectedOutput)
         {
-            //Arrange 
-            var x = 3;
-            var y = 5;
-            var z = 10;
-            
+
             //Act
-            var result = _calculator.Add(x, y, z);
+            var result = _calculator.Add(input);
             
             //Assert
-            Assert.Equal(18, result);
+            Assert.Equal(expectedOutput, result);
         }
 
         [Fact]

@@ -1,29 +1,29 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Myob.Fma.StringCalculator
 {
     public class StringCalculator
     {
-        public int Add(string numberString)
+        public int Add(string input)
         {
-            if (numberString == string.Empty) return 0;
+            if (input == string.Empty) return 0;
 
-            if (OptionalDelimiterPresent(numberString))
+            if (OptionalDelimiterPresent(input))
             {
-                var optionalDelimiterString = GetOptionalDelimiterString(numberString);
+                var delimiterInputSection = GetOptionalDelimiterString(input);
                 
-                numberString = GetInputToSum(numberString);
+                input = FormatInputToSum(input);
 
-                var delimiters = GetDelimiterMatchesFromString(optionalDelimiterString);
+                var delimiters = GetDelimiterMatchesFromString(delimiterInputSection);
                 
-                ReplaceDelimiters(ref numberString, delimiters);
+                ReplaceDelimitersInString(ref input, delimiters);
             }
 
-            var separatedNums = SplitStringWithDelimiters(numberString);
+            var separatedNums = SplitStringWithDelimiters(input);
 
             var sum = 0;
 
@@ -52,7 +52,7 @@ namespace Myob.Fma.StringCalculator
             return sum;
         }
 
-        private MatchCollection SplitStringWithDelimiters(string inputString)
+        private IEnumerable SplitStringWithDelimiters(string inputString)
         {
             var regex = new Regex(@"-?\d+");
 
@@ -74,7 +74,7 @@ namespace Myob.Fma.StringCalculator
 
         }
 
-        private string GetInputToSum(string inputString)
+        private string FormatInputToSum(string inputString)
         {
             var indexOfLineBreak = inputString.IndexOf('\n');
             var startOfNewLine = indexOfLineBreak + 1;
@@ -90,11 +90,11 @@ namespace Myob.Fma.StringCalculator
 
         }
 
-        private void ReplaceDelimiters(ref string inputString, MatchCollection delimiters)
+        private void ReplaceDelimitersInString(ref string inputString, IEnumerable delimiters)
         {
-            foreach (var delimeter in delimiters)
+            foreach (var delimiter in delimiters)
             {
-                inputString = inputString.Replace(delimeter.ToString(), ",");
+                inputString = inputString.Replace(delimiter.ToString(), ",");
             }
         }
     }
