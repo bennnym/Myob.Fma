@@ -29,20 +29,20 @@ namespace Myob.Fma.Calculator.Tests
 //            Assert.StartsWith("S", result);
 
 
-        [Theory]
-        [InlineData(ProductType.Action, "a")]
-        [InlineData(ProductType.Event, "e")]
-        [InlineData(ProductType.Physical, "p")]
-        public void When_Valid_Product_Type_Expect_Valid_Label_Code_Prefix(ProductType productType, string expectedOutput)
-        {
-            // Arrange
-            var fakeProvider = new FakePaymentProvider();
-            var cart = new Cart(fakeProvider);
-            // Act
-            var result = cart.GetLabelCode(productType);
-            // Assert
-            Assert.StartsWith(expectedOutput, result);
-        }
+//        [Theory]
+//        [InlineData(ProductType.Action, "a")]
+//        [InlineData(ProductType.Event, "e")]
+//        [InlineData(ProductType.Physical, "p")]
+//        public void When_Valid_Product_Type_Expect_Valid_Label_Code_Prefix(ProductType productType, string expectedOutput)
+//        {
+//            // Arrange
+//            var fakeProvider = new FakePaymentProvider();
+//            var cart = new Cart(fakeProvider);
+//            // Act
+//            var result = cart.GetLabelCode(productType);
+//            // Assert
+//            Assert.StartsWith(expectedOutput, result);
+//        }
 
 //        
 //        [Fact]

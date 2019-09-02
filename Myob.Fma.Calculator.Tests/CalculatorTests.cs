@@ -38,15 +38,20 @@ namespace Myob.Fma.Calculator.Tests
             Assert.Equal(expectedOutput, result);
         }
 
-        [Fact]
-        public void Should_Multiply_Return_Product_Of_Numbers_When_Two_Input_Integers()
+        [Theory]
+        [InlineData(5,6,30)]
+        [InlineData(10,10,100)]
+        [InlineData(1,1,1)]
+        public void Should_Multiply_Return_Product_Of_Numbers_When_Two_Input_Integers(int firstNum, int secondNum, int expectedOutput)
         {
-            var x = 5;
-            var y = 10;
+            
+            var x = firstNum;
+            var y = secondNum;
 
             var result = _calculator.Multiply(x, y);
             
-            Assert.Equal(50, result);
+            Assert.Equal(expectedOutput, result);
+            
         }
 
         [Fact]
@@ -58,7 +63,8 @@ namespace Myob.Fma.Calculator.Tests
             var result = _calculator.LargerThan(x, y);
             
             Assert.True(result);
-        }
 
+           
+        }
     }
 }

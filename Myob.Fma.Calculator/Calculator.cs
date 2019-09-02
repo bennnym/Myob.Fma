@@ -26,10 +26,5 @@ namespace Myob.Fma.Calculator
         {
             return x > y;
         }
-        
-        public DateTime GetDateTime()
-        {
-            return DateTime.Now;
-        }
     }
 }
