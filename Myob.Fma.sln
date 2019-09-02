@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.StringCalculator",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.StringCalculator.Tests", "Myob.Fma.StringCalculator.Tests\Myob.Fma.StringCalculator.Tests.csproj", "{1F13E26F-9068-4282-8D7D-211246FB23F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.CartExceptionsChallenge", "Myob.Fma.CartExceptionsChallenge\Myob.Fma.CartExceptionsChallenge.csproj", "{F5A3C920-3AB4-4A2E-83F3-2DFF90227DE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,5 +110,9 @@ Global
 		{1F13E26F-9068-4282-8D7D-211246FB23F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F13E26F-9068-4282-8D7D-211246FB23F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F13E26F-9068-4282-8D7D-211246FB23F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5A3C920-3AB4-4A2E-83F3-2DFF90227DE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5A3C920-3AB4-4A2E-83F3-2DFF90227DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5A3C920-3AB4-4A2E-83F3-2DFF90227DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5A3C920-3AB4-4A2E-83F3-2DFF90227DE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

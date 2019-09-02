@@ -11,14 +11,11 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            var num1 = 45199277;
-            var num2 = 41177722899;
+            Console.WriteLine("enter something");
+            
+            var input = Console.ReadLine();
 
-            Console.WriteLine(TripleDouble(num1,num2));
-
-            Console.WriteLine( TripleDouble(451999277,41177722899L));
-
-            Console.WriteLine(TripleDouble(10560002,100));
+            Console.WriteLine(input == "5");
 
 
         }
