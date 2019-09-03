@@ -9,8 +9,9 @@ namespace Myob.Fma.CartExceptionsChallenge
         static void Main(string[] args)
         {
             StandardMessages.Welcome();
-
-            var cart = new Cart();
+            var inventory = new Inventory();
+            var shipping = new Shipping();
+            var cart = new Cart(inventory, shipping);
 
             var customerIsAddingProducts = true;
 

@@ -2,13 +2,13 @@ using System;
 
 namespace Myob.Fma.CartExceptionsChallenge.Exceptions
 {
-    public class ProductCostZeroOrLess : Exception
+    public class ProductCostZeroOrLessException : Exception
     {
-        private readonly string _productName;
-
-        public ProductCostZeroOrLess(string productName)
+        public ProductCostZeroOrLessException(string productName)
         {
-            _productName = productName;
+            ProductName = productName;
         }
+
+        public readonly string ProductName;
     }
 }
