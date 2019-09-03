@@ -6,10 +6,10 @@ namespace Myob.Fma.Yatzy
     public class PairTests
     {
         [Theory]
-        [InlineData(new List<Dice>{new Dice(){RolledSide = 3},new Dice(){RolledSide = 3},new Dice(){RolledSide = 3},new Dice(){RolledSide = 4},new Dice(){RolledSide = 4}},8)]
-        [InlineData(new List<Dice>{new Dice(){RolledSide = 1},new Dice(){RolledSide = 1},new Dice(){RolledSide = 6},new Dice(){RolledSide = 2},new Dice(){RolledSide = 6}},12)]
-        [InlineData(new List<Dice>{new Dice(){RolledSide = 3},new Dice(){RolledSide = 3},new Dice(){RolledSide = 3},new Dice(){RolledSide = 3},new Dice(){RolledSide = 1}},6)]
-        public void Should_Return_The_Sum_Of_The_Two_Highest_Matching_Numbers(List<Dice> roll, int expectedOutput)
+        [InlineData(new List<IDice>{new IDice(){ActiveSide = 3},new IDice(){ActiveSide = 3},new IDice(){ActiveSide = 3},new IDice(){ActiveSide = 4},new IDice(){ActiveSide = 4}},8)]
+        [InlineData(new List<IDice>{new IDice(){ActiveSide = 1},new IDice(){ActiveSide = 1},new IDice(){ActiveSide = 6},new IDice(){ActiveSide = 2},new IDice(){ActiveSide = 6}},12)]
+        [InlineData(new List<IDice>{new IDice(){ActiveSide = 3},new IDice(){ActiveSide = 3},new IDice(){ActiveSide = 3},new IDice(){ActiveSide = 3},new IDice(){ActiveSide = 1}},6)]
+        public void Should_Return_The_Sum_Of_The_Two_Highest_Matching_Numbers(List<IDice> roll, int expectedOutput)
         {
             // Arrange
             var rollTotal = EvaluateScore.Pairs(roll);
@@ -24,7 +24,7 @@ namespace Myob.Fma.Yatzy
             // Arrange
             var rollTotal = EvaluateScore.Pairs(1, 2, 3, 4, 5);
             // Assert
-            Assert.Equal(0,rollTotal);
+            Assert.Equal(decimal.Zero,rollTotal);
         }
             
     }

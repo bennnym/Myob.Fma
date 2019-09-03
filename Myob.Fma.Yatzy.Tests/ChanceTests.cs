@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Myob.Fma.Yatzy
@@ -6,14 +7,12 @@ namespace Myob.Fma.Yatzy
     public class ChanceTests
     {
         [Theory]
-        [InlineData(1, 1, 3, 3, 6, 14)]
-        [InlineData(4, 5, 5, 6, 1, 21)]
-        public void Should_Return_Sum_Of_All_Dice_Rolls(int dice1, int dice2, int dice3, int dice4, int dice5,
-             int expectedOutput)
+        [InlineData(new List <IDice>{new IDice(){ActiveSide = 1}, new IDice(){ActiveSide = 1},new IDice(){ActiveSide = 3},new IDice(){ActiveSide = 3},new IDice(){ActiveSide = 6}},14)]
+        [InlineData(new List <IDice>{new IDice(){ActiveSide = 4}, new IDice(){ActiveSide = 5},new IDice(){ActiveSide = 5},new IDice(){ActiveSide = 6},new IDice(){ActiveSide = 1}},21)]
+        public void Should_Return_Sum_Of_All_Active_Sides_In_Roll(List<IDice> roll, int expectedOutput)
         {
             //Arrange
-            var rollTotal = EvaluateScore.Chance
-                (dice1, dice2, dice3, dice4, dice5);
+            var rollTotal = EvaluateScore.Chance(roll);
             //Assert
             Assert.Equal(expectedOutput,rollTotal);
         }
