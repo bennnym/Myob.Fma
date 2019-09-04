@@ -1,21 +1,45 @@
 using System;
 using System.Collections.Generic;
+using Myob.Fma.Yatzy.Dice_Files;
+using Myob.Fma.Yatzy.Scoring;
 using Xunit;
 
 namespace Myob.Fma.Yatzy
 {
-    public class FourOfAKind
+    public class FourOfAKindTests
     {
-        [Theory]
-        [InlineData(new List <IDice> {new IDice() {ActiveSide = 2},new IDice() {ActiveSide = 2},new IDice() {ActiveSide = 2},new IDice() {ActiveSide = 2},new IDice() {ActiveSide = 5}}, 8)]
-        [InlineData(new List <IDice> {new IDice() {ActiveSide = 3},new IDice() {ActiveSide = 3},new IDice() {ActiveSide = 3},new IDice() {ActiveSide = 3},new IDice() {ActiveSide = 3}}, 12)]
-        public void Should_Return_Sum_Of_Four_Matching_Dice_If_There_Are_Four_That_Match(List<IDice> roll, int expectedOutput)
+        private readonly Dice _sideOne;
+        private readonly Dice _sideTwo;
+        private readonly Dice _sideThree;
+        private readonly Dice _sideFour;
+        private readonly Dice _sideFive;
+        private readonly Dice _sideSix;
+        private readonly FourOfAKind _fourOfAKind;
+
+        public FourOfAKindTests()
         {
+            _sideOne = new Dice() {NumberRolled = 1};
+            _sideTwo = new Dice() {NumberRolled = 2};
+            _sideThree = new Dice() {NumberRolled = 3};
+            _sideFour = new Dice() {NumberRolled = 4};
+            _sideFive = new Dice() {NumberRolled = 5};
+            _sideSix = new Dice() {NumberRolled = 6};
+            _fourOfAKind = new FourOfAKind();
+        }
+        [Fact]
+        public void Should_Return_Sum_Of_Four_Matching_Dice_If_There_Are_Four_That_Match()
+        {
+            // Arrange
+            var roll = new List<IDice>
+            {
+                _sideThree, _sideThree, _sideThree, _sideThree, _sideFour
+            };
+            
             // Act
-            var rollTotal = EvaluateScore.ThreeOfAKind(roll);
+            var rollTotal = _fourOfAKind.GetScore(roll);
             
             // Assert
-            Assert.Equal(expectedOutput,rollTotal);
+            Assert.Equal(12,rollTotal);
         }
 
         [Fact]
@@ -24,18 +48,14 @@ namespace Myob.Fma.Yatzy
             // Arrange
             var roll = new List<IDice>
             {
-                new IDice {ActiveSide = 1},
-                new IDice {ActiveSide = 2},
-                new IDice {ActiveSide = 3},
-                new IDice {ActiveSide = 4},
-                new IDice {ActiveSide = 5},
+                _sideTwo, _sideOne, _sideThree, _sideFour, _sideFive
             };
-
+            
             // Act
-            var rollTotal = EvaluateScore.FourOfAKind(roll);
-
+            var rollTotal = _fourOfAKind.GetScore(roll);
+            
             // Assert
-            Assert.Equal(Decimal.Zero, rollTotal);
+            Assert.Equal(0,rollTotal);
         }
     }
 }

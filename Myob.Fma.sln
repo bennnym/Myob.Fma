@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.CartExceptionChall
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Yatzy.Tests", "Myob.Fma.Yatzy.Tests\Myob.Fma.Yatzy.Tests.csproj", "{02DA11BB-6DA6-45F9-AB25-8A96E813FA7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Yatzy", "Myob.Fma.Yatzy\Myob.Fma.Yatzy.csproj", "{801F014C-94B4-47A6-A796-AA4CEA884614}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,5 +128,9 @@ Global
 		{02DA11BB-6DA6-45F9-AB25-8A96E813FA7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02DA11BB-6DA6-45F9-AB25-8A96E813FA7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02DA11BB-6DA6-45F9-AB25-8A96E813FA7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{801F014C-94B4-47A6-A796-AA4CEA884614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{801F014C-94B4-47A6-A796-AA4CEA884614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{801F014C-94B4-47A6-A796-AA4CEA884614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{801F014C-94B4-47A6-A796-AA4CEA884614}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
