@@ -9,7 +9,7 @@ namespace Myob.Fma.Yatzy
 {
     public class YahtzyTests
     {
-        private Scoring.YatzyCategory _yatzyCategory;
+        private YatzyCategory _yatzyCategory;
 
         public YahtzyTests()
         {

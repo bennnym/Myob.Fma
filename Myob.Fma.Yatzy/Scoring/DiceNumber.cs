@@ -8,7 +8,7 @@ namespace Myob.Fma.Yatzy.Scoring
 {
     public class DiceNumber : IScoringCategories
     {
-        public int GetScore(List<IDice> roll, NumberCategory? numberCategory = null)
+        public int GetScore(IEnumerable<IDice> roll, NumberCategory? numberCategory = null)
         {
             if (numberCategory == null)
                 throw new NoNullAllowedException("A number category must be entered as an argument.");

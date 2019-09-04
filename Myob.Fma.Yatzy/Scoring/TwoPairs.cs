@@ -8,11 +8,11 @@ namespace Myob.Fma.Yatzy.Scoring
 {
     public class TwoPairs : IScoringCategories
     {
-        public int GetScore(List<IDice> roll, NumberCategory? numberCategory = null)
+        public int GetScore(IEnumerable<IDice> roll, NumberCategory? numberCategory = null)
         {
             try
             {
-                var numberOfPairs = roll.GroupBy(n => n.NumberRolled).Count(g => g.Count<IDice>() >= 2);
+                var numberOfPairs = roll.GroupBy(n => n.NumberRolled).Count(g => g.Count() >= 2);
 
                 if (numberOfPairs == 2)
                 {
@@ -25,8 +25,6 @@ namespace Myob.Fma.Yatzy.Scoring
             {
                 return 0;
             }
-
-            return 1;
         }
     }
 }

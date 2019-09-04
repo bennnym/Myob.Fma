@@ -7,7 +7,7 @@ namespace Myob.Fma.Yatzy.Scoring
 {
     public class Chance : IScoringCategories
     {
-        public int GetScore(List<IDice> roll, NumberCategory? numberCategory = null)
+        public int GetScore(IEnumerable<IDice> roll, NumberCategory? numberCategory = null)
         {
             return roll.Sum(d => d.NumberRolled);
         }

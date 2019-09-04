@@ -8,11 +8,11 @@ namespace Myob.Fma.Yatzy.Scoring
 {
     public class ThreeOfAKind : IScoringCategories
     {
-        public int GetScore(List<IDice> roll, NumberCategory? numberCategory = null)
+        public int GetScore(IEnumerable<IDice> roll, NumberCategory? numberCategory = null)
         {
             try
             {
-                return roll.GroupBy(n => n.NumberRolled).First(g => g.Count<IDice>() >= 3).Key * 3;
+                return roll.GroupBy(n => n.NumberRolled).First(g => g.Count() >= 3).Key * 3;
             }
             catch (InvalidOperationException e)
             {

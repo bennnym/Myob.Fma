@@ -13,7 +13,21 @@ namespace Myob.Fma.Yatzy
         static void Main(string[] args)
         {
 
+            var list = new List<int>
+            {
+                2, 4, 6, 8
+            };
+
+            Console.WriteLine(OddOne(list));
+        }
+        
+        public static int OddOne(List<int> list)
+        {
+            return list.FindIndex(x => Math.Abs(x % 2) == 1);
 
         }
+      
+        
+       
     }
 }

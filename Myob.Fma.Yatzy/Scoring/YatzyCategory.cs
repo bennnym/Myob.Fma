@@ -7,7 +7,7 @@ namespace Myob.Fma.Yatzy.Scoring
 {
     public class YatzyCategory : IScoringCategories
     {
-        public int GetScore(List<IDice> roll, NumberCategory? numberCategory = null)
+        public int GetScore(IEnumerable<IDice> roll, NumberCategory? numberCategory = null)
         {
             var uniqueDieNumbers = roll.GroupBy(d => d.NumberRolled).Count();
 

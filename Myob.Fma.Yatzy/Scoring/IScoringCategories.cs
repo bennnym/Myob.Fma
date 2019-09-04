@@ -6,6 +6,6 @@ namespace Myob.Fma.Yatzy.Scoring
 {
     public interface IScoringCategories
     {
-        int GetScore(List<IDice> roll, NumberCategory? numberCategory = null);
+        int GetScore(IEnumerable<IDice> roll, NumberCategory? numberCategory = null);
     }
 }

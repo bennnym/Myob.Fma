@@ -8,7 +8,7 @@ namespace Myob.Fma.Yatzy.Scoring
 {
     public class Pair : IScoringCategories
     {
-        public int GetScore(List<IDice> roll, NumberCategory? numberCategory = null)
+        public int GetScore(IEnumerable<IDice> roll, NumberCategory? numberCategory = null)
         {
             try
             {
