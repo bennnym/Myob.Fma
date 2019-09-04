@@ -7,39 +7,53 @@ namespace Myob.Fma.Yatzy
 {
     public class TwoPairsTests
     {
-        private readonly Dice _sideOne;
-        private readonly Dice _sideTwo;
-        private readonly Dice _sideThree;
-        private readonly Dice _sideFour;
-        private readonly Dice _sideFive;
-        private readonly Dice _sideSix;
         private readonly TwoPairs _twoPairsCategory;
 
         public TwoPairsTests()
         {
-            _sideOne = new Dice() {NumberRolled = 1};
-            _sideTwo = new Dice() {NumberRolled = 2};
-            _sideThree = new Dice() {NumberRolled = 3};
-            _sideFour = new Dice() {NumberRolled = 4};
-            _sideFive = new Dice() {NumberRolled = 5};
-            _sideSix = new Dice() {NumberRolled = 6};
             _twoPairsCategory = new TwoPairs();
         }
-        [Fact]
-        public void Should_Return_The_Sum_Of_The_Two_Largest_Pairs()
+
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void Should_Return_The_Sum_Of_The_Two_Largest_Pairs(List<IDice> roll, int expected)
         {
-            // Arrange
-            var roll = new List<IDice>
-            {
-                _sideThree, _sideThree, _sideThree, _sideFour, _sideFour
-            };
-            
             // Act
             var rollTotal = _twoPairsCategory.GetScore(roll);
 
             // Assert
-            Assert.Equal(14, rollTotal);
+            Assert.Equal(expected, rollTotal);
         }
+
+        public static IEnumerable<object[]> Data =>
+            new List<object[]>
+            {
+                new object[]
+                {
+                    new List<IDice>
+                    {
+                        new Dice() {NumberRolled = 2},
+                        new Dice() {NumberRolled = 2},
+                        new Dice() {NumberRolled = 6},
+                        new Dice() {NumberRolled = 6},
+                        new Dice() {NumberRolled = 1},
+                    },
+                    16
+                },
+
+                new object[]
+                {
+                    new List<IDice>
+                    {
+                        new Dice() {NumberRolled = 3},
+                        new Dice() {NumberRolled = 3},
+                        new Dice() {NumberRolled = 3},
+                        new Dice() {NumberRolled = 1},
+                        new Dice() {NumberRolled = 1},
+                    },
+                    8
+                }
+            };
 
         [Fact]
         public void Should_Return_Zero_When_There_Arent_Two_Pairs_Present_In_The_Roll()
@@ -47,9 +61,12 @@ namespace Myob.Fma.Yatzy
             // Arrange
             var roll = new List<IDice>
             {
-                _sideThree, _sideTwo, _sideSix, _sideFive, _sideFour
-            };
-            
+                new Dice() {NumberRolled = 3},
+                new Dice() {NumberRolled = 3},
+                new Dice() {NumberRolled = 3},
+                new Dice() {NumberRolled = 3},
+                new Dice() {NumberRolled = 3},            };
+
             // Act
             var rollTotal = _twoPairsCategory.GetScore(roll);
             // Assert
@@ -62,12 +79,15 @@ namespace Myob.Fma.Yatzy
             // Arrange
             var roll = new List<IDice>
             {
-                _sideOne, _sideOne, _sideOne, _sideOne, _sideFour
-            };
-            
+                new Dice() {NumberRolled = 3},
+                new Dice() {NumberRolled = 1},
+                new Dice() {NumberRolled = 3},
+                new Dice() {NumberRolled = 4},
+                new Dice() {NumberRolled = 2},            };
+
             // Act
             var rollTotal = _twoPairsCategory.GetScore(roll);
-            
+
             // Assert
             Assert.Equal(0, rollTotal);
         }

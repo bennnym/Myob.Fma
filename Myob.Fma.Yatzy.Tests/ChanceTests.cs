@@ -8,41 +8,39 @@ namespace Myob.Fma.Yatzy
 {
     public class ChanceTests
     {
-        private readonly Dice _sideOne;
-        private readonly Dice _sideTwo;
-        private readonly Dice _sideThree;
-        private readonly Dice _sideFour;
-        private readonly Dice _sideFive;
-        private readonly Dice _sideSix;
-
-        public ChanceTests()
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void Should_Return_Sum_Of_All_Active_Sides_In_Roll(List<IDice> roll, int expectedOutput )
         {
-            _sideOne = new Dice() {NumberRolled = 1};
-            _sideTwo = new Dice() {NumberRolled = 2};
-            _sideThree = new Dice() {NumberRolled = 3};
-            _sideFour = new Dice() {NumberRolled = 4};
-            _sideFive = new Dice() {NumberRolled = 5};
-            _sideSix = new Dice() {NumberRolled = 6};
-        }
-
-        [Fact]
-        public void Should_Return_Sum_Of_All_Active_Sides_In_Roll()
-        {
-            var roll = new List<IDice>
-            {
-                _sideOne,
-                _sideOne, 
-                _sideThree, 
-                _sideThree,
-                _sideSix
-            };
-            
             var chanceCategory = new Chance();
 
             var rollTotal = chanceCategory.GetScore(roll);
             
-            Assert.Equal(14,rollTotal);
+            Assert.Equal(expectedOutput,rollTotal);
 
         }
+        
+        public static IEnumerable<object[]> Data =>
+            new List<object[]>
+            {
+                new object[] { new List<IDice>
+                {
+                    new Dice() {NumberRolled = 1},
+                    new Dice() {NumberRolled = 3},
+                    new Dice() {NumberRolled = 5},
+                    new Dice() {NumberRolled = 4},
+                    new Dice() {NumberRolled = 1},
+                }, 14},
+                
+                new object[] { new List<IDice>
+                {
+                    new Dice() {NumberRolled = 3},
+                    new Dice() {NumberRolled = 3},
+                    new Dice() {NumberRolled = 6},
+                    new Dice() {NumberRolled = 4},
+                    new Dice() {NumberRolled = 1},
+                }, 17}
+                    
+            };
     }
 }

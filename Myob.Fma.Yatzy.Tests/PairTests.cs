@@ -26,43 +26,117 @@ namespace Myob.Fma.Yatzy
             _pairCategory = new Pair();
         }
 
-        [Fact]
-        public void Should_Return_The_Sum_Of_The_Two_Highest_Matching_Numbers_When_Two_Dif_Pairs_Are_Present()
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void Should_Return_The_Sum_Of_The_Two_Highest_Matching_Numbers_When_Two_Dif_Pairs_Are_Present(
+            List<IDice> roll, int expectedOutput)
         {
-            // Arrange
-            
-            var roll = new List<IDice>
-            {
-                _sideThree, _sideThree, _sideThree, _sideFour, _sideFour
-            };
-
             // Act
-            
+
             var rollTotal = _pairCategory.GetScore(roll);
 
             // Assert
-            
-            Assert.Equal(8, rollTotal);
+
+            Assert.Equal(expectedOutput, rollTotal);
         }
-        
-        [Fact]
-        public void Should_Return_The_Sum_Of_The__Highest_Paur_When_More_Than_Two_Of_That_Num_Are_Present()
-        {
-            // Arrange
-            
-            var roll = new List<IDice>
+
+        public static IEnumerable<object[]> Data =>
+            new List<object[]>
             {
-                _sideThree, _sideThree, _sideThree, _sideThree, _sideFour
+                new object[]
+                {
+                    new List<IDice>
+                    {
+                        new Dice() {NumberRolled = 2},
+                        new Dice() {NumberRolled = 2},
+                        new Dice() {NumberRolled = 4},
+                        new Dice() {NumberRolled = 4},
+                        new Dice() {NumberRolled = 1},
+                    },
+                    8
+                },
+
+                new object[]
+                {
+                    new List<IDice>
+                    {
+                        new Dice() {NumberRolled = 3},
+                        new Dice() {NumberRolled = 3},
+                        new Dice() {NumberRolled = 6},
+                        new Dice() {NumberRolled = 6},
+                        new Dice() {NumberRolled = 6},
+                    },
+                    12
+                },
+                new object[]
+                {
+                    new List<IDice>
+                    {
+                        new Dice() {NumberRolled = 1},
+                        new Dice() {NumberRolled = 1},
+                        new Dice() {NumberRolled = 2},
+                        new Dice() {NumberRolled = 2},
+                        new Dice() {NumberRolled = 6},
+                    },
+                    4
+                }
             };
 
+        [Theory]
+        [MemberData(nameof(PairData))]
+        public void Should_Return_The_Sum_Of_The_Highest_Pair_When_More_Than_Two_Of_That_Num_Are_Present(
+            List<IDice> roll, int expected)
+        {
             // Act
-            
+
             var rollTotal = _pairCategory.GetScore(roll);
 
             // Assert
-            
-            Assert.Equal(6, rollTotal);
+
+            Assert.Equal(expected, rollTotal);
         }
+
+        public static IEnumerable<object[]> PairData =>
+            new List<object[]>
+            {
+                new object[]
+                {
+                    new List<IDice>
+                    {
+                        new Dice() {NumberRolled = 2},
+                        new Dice() {NumberRolled = 2},
+                        new Dice() {NumberRolled = 2},
+                        new Dice() {NumberRolled = 4},
+                        new Dice() {NumberRolled = 1},
+                    },
+                    4
+                },
+
+                new object[]
+                {
+                    new List<IDice>
+                    {
+                        new Dice() {NumberRolled = 6},
+                        new Dice() {NumberRolled = 6},
+                        new Dice() {NumberRolled = 6},
+                        new Dice() {NumberRolled = 6},
+                        new Dice() {NumberRolled = 6},
+                    },
+                    12
+                },
+                new object[]
+                {
+                    new List<IDice>
+                    {
+                        new Dice() {NumberRolled = 4},
+                        new Dice() {NumberRolled = 4},
+                        new Dice() {NumberRolled = 4},
+                        new Dice() {NumberRolled = 1},
+                        new Dice() {NumberRolled = 1},
+                    },
+                    8
+                }
+            };
 
         [Fact]
         public void Should_Return_Zero_If_No_Pair_Of_Numbers_Are_Present()
@@ -71,8 +145,11 @@ namespace Myob.Fma.Yatzy
 
             var roll = new List<IDice>
             {
-                _sideThree, _sideTwo, _sideOne, _sideFive, _sideSix
-            };
+                new Dice() {NumberRolled = 4},
+                new Dice() {NumberRolled = 3},
+                new Dice() {NumberRolled = 2},
+                new Dice() {NumberRolled = 5},
+                new Dice() {NumberRolled = 1},            };
 
             //Act
 
