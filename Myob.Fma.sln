@@ -42,6 +42,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Yatzy.Tests", "Myo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Yatzy", "Myob.Fma.Yatzy\Myob.Fma.Yatzy.csproj", "{801F014C-94B4-47A6-A796-AA4CEA884614}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.BookingLibrary", "Myob.Fma.BookingLibrary\Myob.Fma.BookingLibrary.csproj", "{868E85D3-33C9-4847-9558-CB23866725CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.BookingLibraryTests", "Myob.Fma.BookingLibraryTests\Myob.Fma.BookingLibraryTests.csproj", "{11A5A039-FDEE-4AA1-A684-48E23B347FE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -132,5 +136,13 @@ Global
 		{801F014C-94B4-47A6-A796-AA4CEA884614}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{801F014C-94B4-47A6-A796-AA4CEA884614}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{801F014C-94B4-47A6-A796-AA4CEA884614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868E85D3-33C9-4847-9558-CB23866725CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868E85D3-33C9-4847-9558-CB23866725CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868E85D3-33C9-4847-9558-CB23866725CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868E85D3-33C9-4847-9558-CB23866725CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11A5A039-FDEE-4AA1-A684-48E23B347FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11A5A039-FDEE-4AA1-A684-48E23B347FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11A5A039-FDEE-4AA1-A684-48E23B347FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11A5A039-FDEE-4AA1-A684-48E23B347FE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
