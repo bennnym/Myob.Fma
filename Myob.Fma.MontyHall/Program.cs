@@ -10,39 +10,39 @@ namespace Myob.Fma.MontyHall
         {
             var simulations = 0;
             var stayStats = 0;
-            var changeStats = 0;
             
             var doors = new List<IDoor>
             {
-                new Door() {Prize = false},
-                new Door() {Prize = false},
-                new Door() {Prize = false},
+                new Door(),
+                new Door(),
+                new Door(),
             };
+            
+            var gameshow = new SimulationEnvironment(doors);
 
-            while (simulations <= 1000)
+            while (simulations <= 100000)
             {
-                var emptiedDoors = SimulationEnvironment.EmptyDoors(doors);
+                
+                gameshow.EmptyDoors();
+                
+                gameshow.PlacePrizeBehindDoor();
+                
+                gameshow.SimulateUserDoorSelection();
+                
+                gameshow.EliminateAClosedDoor();
+                
+                stayStats += gameshow.Doors.Count(door => door.ContainsPrize && door.IsUsersSelection);
 
-                var doorsWithPrizePlaced = SimulationEnvironment.PlacePrizeBehindDoor(emptiedDoors);
-
-                var simulateUserDoorSelection = SimulationEnvironment.SimulateUserDoorSelection(doorsWithPrizePlaced);
-
-                var removeNonPrizeDoor = SimulationEnvironment.EliminateAClosedDoor(simulateUserDoorSelection);
+                gameshow.ResetDoors();
 
                 simulations++;
 
-                foreach (var door in removeNonPrizeDoor)
-                {
-                    if (door.Prize && door.UserSelected)
-                    {
-                        stayStats++;
-                    }
-                    else
-                    {
-                        changeStats++;
-                    }
-                }
             }
+
+            var stayPercentage = Math.Round(stayStats / (decimal) simulations, 2);
+            
+            Console.WriteLine($"stay: {stayPercentage}");
+            Console.WriteLine($"change: {1 - stayPercentage}");
         }
     }
 }

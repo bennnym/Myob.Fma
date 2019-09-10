@@ -2,7 +2,7 @@ namespace Myob.Fma.MontyHall
 {
     public class Door : IDoor
     {
-        public bool Prize { get; set; }
-        public bool UserSelected { get; set; }
+        public bool ContainsPrize { get; set; }
+        public bool IsUsersSelection { get; set; }
     }
 }

@@ -4,43 +4,52 @@ using System.Linq;
 
 namespace Myob.Fma.MontyHall
 {
-    public static class SimulationEnvironment
+    public class SimulationEnvironment
     {
-        public static IList<IDoor> EmptyDoors(IList<IDoor> doors)
+        public SimulationEnvironment(List<IDoor> doors)
         {
-            foreach (var door in doors)
+            Doors = doors;
+        }
+
+        public List<IDoor> Doors { get; private set; }
+
+        public void EmptyDoors()
+        {
+            foreach (var door in Doors)
             {
-                door.Prize = false;
+                door.ContainsPrize = false;
             }
-
-            return doors;
         }
 
-        public static IList<IDoor> PlacePrizeBehindDoor(IList<IDoor> doors)
+        public void PlacePrizeBehindDoor()
         {
-            var randomDoorToPlacePrizeBehind = new Random().Next(0, doors.Count() - 1);
+            var randomIndex = new Random().Next(0, Doors.Count());
 
-            doors[randomDoorToPlacePrizeBehind].Prize = true;
-
-            return doors;
-        }
-        
-        public static IList<IDoor> SimulateUserDoorSelection(IList<IDoor> doors)
-        {
-            var userSelectedDoor = new Random().Next(0, doors.Count() - 1);
-
-            doors[userSelectedDoor].UserSelected = true;
-
-            return doors;
+            Doors[randomIndex].ContainsPrize = true;
         }
 
-        public static IList<IDoor> EliminateAClosedDoor(IList<IDoor> doors)
+        public void SimulateUserDoorSelection()
         {
-            var eliminatedDoor = doors.First(d => d.UserSelected == false);
+            var randomIndex = new Random().Next(0, Doors.Count());
 
-            doors.Remove(eliminatedDoor);
+            Doors[randomIndex].IsUsersSelection = true;
+        }
 
-            return doors;
+        public void EliminateAClosedDoor()
+        {
+            var doorToEliminate = Doors.First(d => d.IsUsersSelection == false);
+
+            Doors.Remove(doorToEliminate);
+        }
+
+        public void ResetDoors()
+        {
+            Doors = new List<IDoor>()
+            {
+                new Door(),
+                new Door(),
+                new Door()
+            };
         }
     }
 }
