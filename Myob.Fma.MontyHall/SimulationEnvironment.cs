@@ -37,7 +37,7 @@ namespace Myob.Fma.MontyHall
 
         public void EliminateAClosedDoor()
         {
-            var doorToEliminate = Doors.First(d => d.IsUsersSelection == false);
+            var doorToEliminate = Doors.First(d => d.IsUsersSelection == false && d.ContainsPrize == false);
 
             Doors.Remove(doorToEliminate);
         }
