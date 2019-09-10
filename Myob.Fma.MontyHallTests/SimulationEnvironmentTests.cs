@@ -14,17 +14,19 @@ namespace Myob.Fma.MontyHallTests
             // Arrange
             var doors = new List<IDoor>
             {
-                new Door() {Prize = true},
-                new Door() {Prize = true},
-                new Door() {Prize = true},
-                new Door() {Prize = true},
-                new Door() {Prize = true}
+                new Door() {ContainsPrize = true},
+                new Door() {ContainsPrize = true},
+                new Door() {ContainsPrize = true},
+                new Door() {ContainsPrize = true},
+                new Door() {ContainsPrize = true}
             };
             
-            // Act
-            var emptiedDoors = SimulationEnvironment.EmptyDoors(doors);
+            var gameshow = new SimulationEnvironment(doors);
             
-            var result = emptiedDoors.All(d => d.Prize == false);
+            // Act
+            gameshow.RemovePrizesFromAllDoors();
+            
+            var result = gameshow.Doors.All(d => d.ContainsPrize == false);
             
             // Assert
             Assert.True(result);
@@ -36,16 +38,16 @@ namespace Myob.Fma.MontyHallTests
             // Arrange
             var doors = new List<IDoor>
             {
-                new Door() {Prize = false},
-                new Door() {Prize = false},
-                new Door() {Prize = false},
-                new Door() {Prize = false},
-                new Door() {Prize = false}
+                new Door() {ContainsPrize = false},
+                new Door() {ContainsPrize = false},
+                new Door() {ContainsPrize = false}
             };
             
+            var gameshow = new SimulationEnvironment(doors);
+
             //Act
-            var withPrizePlaced = SimulationEnvironment.PlacePrizeBehindDoor(doors);
-            var result = withPrizePlaced.Count(d => d.Prize);
+            gameshow.PlacePrizeBehindRandomDoor();
+            var result = gameshow.Doors.Count(d => d.ContainsPrize);
 
             //Assert
             Assert.Equal(1, result);
@@ -57,14 +59,16 @@ namespace Myob.Fma.MontyHallTests
             // Arrange
             var doors = new List<IDoor>
             {
-                new Door() {Prize = false},
-                new Door() {Prize = false},
-                new Door() {Prize = false},
+                new Door() {ContainsPrize = false},
+                new Door() {ContainsPrize = false},
+                new Door() {ContainsPrize = false},
             };
             
+            var gameshow = new SimulationEnvironment(doors);
+
             //Act
-            var withUserDoorSelected = SimulationEnvironment.SimulateUserDoorSelection(doors);
-            var result = withUserDoorSelected.Count(d => d.UserSelected);
+            gameshow.ChooseARandomDoorForTheUser();
+            var result = gameshow.Doors.Count(d => d.IsUsersSelection);
 
             //Assert
             Assert.Equal(1, result);
@@ -76,19 +80,22 @@ namespace Myob.Fma.MontyHallTests
             // Arrange
             var doors = new List<IDoor>
             {
-                new Door() {Prize = false, UserSelected = true},
-                new Door() {Prize = true, UserSelected = true},
-                new Door() {Prize = false},
+                new Door() {ContainsPrize = false, IsUsersSelection = true},
+                new Door() {ContainsPrize = true, IsUsersSelection = true},
+                new Door() {ContainsPrize = false},
             };
+            
+            var gameshow = new SimulationEnvironment(doors);
 
             // Act
-            var doorsWithOneRemoved = SimulationEnvironment.EliminateAClosedDoor(doors);
-            var numberOfDoors = doorsWithOneRemoved.Count();
-            var removedTheNonUserSelectedDoor = doorsWithOneRemoved.All(d => d.UserSelected);
+            gameshow.EliminateAClosedDoor();
+            var numberOfDoors = gameshow.Doors.Count();
+            var removedTheNonUserSelectedDoor = gameshow.Doors.All(d => d.IsUsersSelection);
             
             // Assert
             Assert.Equal(2,numberOfDoors);
             Assert.True(removedTheNonUserSelectedDoor);
         }
+        
     }
 }

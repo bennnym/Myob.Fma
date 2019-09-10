@@ -11,35 +11,24 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("enter something");
+            Console.WriteLine(MaxMultiply(2, 7));
+
+
+        }
+        
+        public static int MaxMultiply(int divisor, int bound)
+        {
+            int maxMultiple = 0;
+            int counter = divisor;
             
-            var input = Console.ReadLine();
-
-            Console.WriteLine(input == "5");
-
-
-        }
-
-        public static bool TestForSquares(IEnumerable<int> numbers, IEnumerable<int> squares)
-        {
-            return numbers.Select(_ => _ * _).SequenceEqual(squares);
-        }
-
-        public static int TripleDouble(long num1, long num2)
-        {
-            var triples = num1.ToString().GroupBy(i => i).Where(g => g.Count() == 3);
-            var lookForDoubles = num2.ToString();
-
-            var found = 0;
-
-            foreach (var triple in triples)
+            while (counter <= bound)
             {
-                var lookingFor = new string(triple.Key, 2);
+                if (counter % divisor == 0) maxMultiple = counter;
 
-                if (lookForDoubles.Contains(lookingFor)) return 1;
+                counter++;
             }
 
-            return found;
+            return maxMultiple;
         }
     }
 }
