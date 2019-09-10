@@ -13,7 +13,7 @@ namespace Myob.Fma.MontyHall
 
         public List<IDoor> Doors { get; private set; }
 
-        public void EmptyDoors()
+        public void RemovePrizesFromAllDoors()
         {
             foreach (var door in Doors)
             {
@@ -21,14 +21,14 @@ namespace Myob.Fma.MontyHall
             }
         }
 
-        public void PlacePrizeBehindDoor()
+        public void PlacePrizeBehindRandomDoor()
         {
             var randomIndex = new Random().Next(0, Doors.Count());
 
             Doors[randomIndex].ContainsPrize = true;
         }
 
-        public void SimulateUserDoorSelection()
+        public void ChooseARandomDoorForTheUser()
         {
             var randomIndex = new Random().Next(0, Doors.Count());
 
@@ -42,7 +42,7 @@ namespace Myob.Fma.MontyHall
             Doors.Remove(doorToEliminate);
         }
 
-        public void ResetDoors()
+        public void ResetDoorsToHaveNoPrizesOrUserChoices()
         {
             Doors = new List<IDoor>()
             {
@@ -50,6 +50,11 @@ namespace Myob.Fma.MontyHall
                 new Door(),
                 new Door()
             };
+        }
+
+        public int CountOfPrizesBehindUserSelectedDoors()
+        {
+            return Doors.Count(door => door.ContainsPrize && door.IsUsersSelection);
         }
     }
 }

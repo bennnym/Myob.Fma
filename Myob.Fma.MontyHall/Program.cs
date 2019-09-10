@@ -9,7 +9,7 @@ namespace Myob.Fma.MontyHall
         static void Main(string[] args)
         {
             var simulations = 0;
-            var stayStats = 0;
+            var successfulStayCount = 0;
             
             var doors = new List<IDoor>
             {
@@ -18,31 +18,32 @@ namespace Myob.Fma.MontyHall
                 new Door(),
             };
             
-            var gameshow = new SimulationEnvironment(doors);
+            var montyHall = new SimulationEnvironment(doors);
 
             while (simulations <= 100000)
             {
                 
-                gameshow.EmptyDoors();
+                montyHall.RemovePrizesFromAllDoors();
                 
-                gameshow.PlacePrizeBehindDoor();
+                montyHall.PlacePrizeBehindRandomDoor();
                 
-                gameshow.SimulateUserDoorSelection();
+                montyHall.ChooseARandomDoorForTheUser();
                 
-                gameshow.EliminateAClosedDoor();
-                
-                stayStats += gameshow.Doors.Count(door => door.ContainsPrize && door.IsUsersSelection);
+                montyHall.EliminateAClosedDoor();
 
-                gameshow.ResetDoors();
+                successfulStayCount += montyHall.CountOfPrizesBehindUserSelectedDoors();
+
+                montyHall.ResetDoorsToHaveNoPrizesOrUserChoices();
 
                 simulations++;
 
             }
 
-            var stayPercentage = Math.Round(stayStats / (decimal) simulations, 2);
+            var stayPercentage = Math.Round(successfulStayCount / (decimal) simulations, 4);
+            var changePercentage = 1 - stayPercentage;
             
-            Console.WriteLine($"stay: {stayPercentage}");
-            Console.WriteLine($"change: {1 - stayPercentage}");
+            Console.WriteLine($"stay: {stayPercentage * 100}%");
+            Console.WriteLine($"change: {changePercentage * 100}%");
         }
     }
 }
