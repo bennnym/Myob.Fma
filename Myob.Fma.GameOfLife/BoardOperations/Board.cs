@@ -18,9 +18,9 @@ namespace Myob.Fma.GameOfLife.BoardOperations
 
         public void Initialize(HashSet<int> randomAliveCellPositions)
         {
-            var cells = Grid.Length;
+            var cellsToFill = Grid.Length;
 
-            for (var i = 1; i <= cells; i++)
+            for (var i = 1; i <= cellsToFill; i++)
             {
                 SetCellState(Grid, i, randomAliveCellPositions.Contains(i));
             }

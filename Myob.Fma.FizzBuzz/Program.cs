@@ -13,15 +13,15 @@ namespace Myob.Fma.FizzBuzz
         {
             for (int i = 1; i < 100; i++)
             {
-                if (i % 3 == 0 && i % 5 == 0)
+                if (IsDivisibleByThreeAndFive(i))
                 {
                     Console.WriteLine("FizzBuzz");
                 }
-                else if (i % 3 == 0)
+                else if (IsDivisibleByThree(i))
                 {
                     Console.WriteLine("Fizz");
                 }
-                else if (i % 5 == 0)
+                else if (IsDivisibleByFive(i))
                 {
                     Console.WriteLine("Buzz");
                 }
@@ -30,6 +30,21 @@ namespace Myob.Fma.FizzBuzz
                     Console.WriteLine(i);
                 }
             }
+        }
+
+        static bool IsDivisibleByThreeAndFive(int number)
+        {
+            return number % 3 == 0 && number % 5 == 0;
+        }
+
+        static bool IsDivisibleByThree(int number)
+        {
+            return number % 3 == 0;
+        }
+        
+        static bool IsDivisibleByFive(int number)
+        {
+            return number % 5 == 0;
         }
     }
 }

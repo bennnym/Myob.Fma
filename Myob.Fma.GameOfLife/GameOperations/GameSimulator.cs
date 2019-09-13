@@ -111,7 +111,7 @@ namespace Myob.Fma.GameOfLife.GameOperations
             return new CellPosition()
             {
                 XPosition = ProcessXAxis(x, board.Grid.GetLength(0) - 1),
-                YPosition = ProcessYAxis(y,board.Grid.GetLength(1) - 1)
+                YPosition = ProcessYAxis(y, board.Grid.GetLength(1) - 1)
             };
         }
     }

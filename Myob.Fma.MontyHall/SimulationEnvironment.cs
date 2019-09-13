@@ -6,9 +6,11 @@ namespace Myob.Fma.MontyHall
 {
     public class SimulationEnvironment
     {
+        private int Testing { get; set; }
         public SimulationEnvironment(List<IDoor> doors)
         {
             Doors = doors;
+            Testing = 1;
         }
 
         public List<IDoor> Doors { get; private set; }
