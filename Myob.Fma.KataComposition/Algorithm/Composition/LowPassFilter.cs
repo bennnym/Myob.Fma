@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algorithm.Composition
+namespace Myob.Fma.KataComposition.Algorithm.Composition
 {
     public class LowPassFilter : IMeasurementFilter
     {

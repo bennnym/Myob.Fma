@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Algorithm.Inheritance
+namespace Myob.Fma.KataComposition.Algorithm.Inheritance
 {
     public abstract class PointsAggregator
     {

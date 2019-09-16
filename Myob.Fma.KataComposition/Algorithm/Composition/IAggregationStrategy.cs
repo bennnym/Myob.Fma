@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Algorithm.Composition
+namespace Myob.Fma.KataComposition.Algorithm.Composition
 {
     public interface IAggregationStrategy
     {

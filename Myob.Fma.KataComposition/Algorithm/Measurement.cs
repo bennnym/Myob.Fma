@@ -1,4 +1,4 @@
-namespace Algorithm
+namespace Myob.Fma.KataComposition.Algorithm
 {
     public struct Measurement
     {
