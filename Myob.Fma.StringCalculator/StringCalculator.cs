@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Linq;
 
@@ -8,94 +9,92 @@ namespace Myob.Fma.StringCalculator
 {
     public class StringCalculator
     {
-        public int Add(string input)
+        public string EncodedString;
+        
+        public int Add()
         {
-            if (input == string.Empty) return 0;
+            if (IsEmptyString()) return 0;
 
-            if (OptionalDelimiterPresent(input))
+            if (HasCustomDelimiter())
             {
-                var delimiterInputSection = GetOptionalDelimiterString(input);
-                
-                input = FormatInputToSum(input);
-
-                var delimiters = GetDelimiterMatchesFromString(delimiterInputSection);
-                
-                ReplaceDelimitersInString(ref input, delimiters);
+                EncodedString = RemoveDelimitersFromCalculatableString();
             }
+            
+            if (IsNegativeNumbersPresent())
+                throw new Exception(GetNegativeNumbers());
 
-            var separatedNums = SplitStringWithDelimiters(input);
+            var digitsAsMatchCollection = ExtractDigitsFromString();
 
-            var sum = 0;
-
-            var negativeNumbersFound = new List<int>();
-
-            foreach (var stringNum in separatedNums)
-            {
-                var matchedNumber = stringNum.ToString();
-                
-                if (matchedNumber.Length > 0)
-                {
-                    var stringToNum = int.Parse(matchedNumber);
-
-                    if (stringToNum < 0) negativeNumbersFound.Add(stringToNum);
-
-                    if (stringToNum < 1000)
-                    {
-                        sum += stringToNum;
-                    }
-                }
-            }
-
-            if (negativeNumbersFound.Any())
-                throw new Exception(string.Join(", ", negativeNumbersFound));
-
-            return sum;
-        }
-
-        private IEnumerable SplitStringWithDelimiters(string inputString)
-        {
-            var regex = new Regex(@"-?\d+");
-
-            return regex.Matches(inputString);
-        }
-
-        private bool OptionalDelimiterPresent(string inputString)
-        {
-            if (inputString.Length < 2) return false;
-
-            return inputString.Substring(0, 2) == "//";
-        }
-
-        private MatchCollection GetDelimiterMatchesFromString(string inputString)
-        {
-            var regex = new Regex(@"((?<=\//\[).*(?=\]\[))|((?<=\[).*(?=\]$))"); // looks for the pattern //[pattern]\n
-
-            return regex.Matches(inputString);
+            return GetSumOfMatchCollectionDigits(digitsAsMatchCollection);
 
         }
 
-        private string FormatInputToSum(string inputString)
+        private bool IsEmptyString()
         {
-            var indexOfLineBreak = inputString.IndexOf('\n');
-            var startOfNewLine = indexOfLineBreak + 1;
-            var inputLength = (inputString.Length - 1) - indexOfLineBreak;
-
-            return inputString.Substring(startOfNewLine, inputLength);
+            return EncodedString == string.Empty;
         }
 
-        private string GetOptionalDelimiterString(string inputString)
+        private MatchCollection ExtractDigitsFromString()
         {
-            var indexOfLineBreak = inputString.IndexOf('\n');
-            return inputString.Substring(0, indexOfLineBreak);
+            var regexSearch = new Regex(@"\d+");
 
+            return regexSearch.Matches(EncodedString);
         }
 
-        private void ReplaceDelimitersInString(ref string inputString, IEnumerable delimiters)
+        private bool IsNegativeNumbersPresent()
         {
+            var regexSearch = new Regex(@"-\d+");
+
+            return regexSearch.Matches(EncodedString).Any();
+        }
+
+        private string GetNegativeNumbers()
+        {
+            var regexSearch = new Regex(@"-\d+");
+
+            var negativeNumbersFound = regexSearch.Matches(EncodedString);
+
+            return string.Join(", ", negativeNumbersFound.Select(d => d.ToString()));
+        }
+
+        private string RemoveDelimitersFromCalculatableString()
+        {
+            var delimiters = GetCustomDelimiters();
+
+            var calculatableString = GetCalculatableString();
+
             foreach (var delimiter in delimiters)
             {
-                inputString = inputString.Replace(delimiter.ToString(), ",");
+                var delimiterAsString = delimiter.ToString();
+
+                calculatableString = calculatableString.Replace(delimiterAsString, " ");
             }
+
+            return calculatableString;
+        }
+
+        private MatchCollection GetCustomDelimiters()
+        {
+            var regexSearch = new Regex(@"(?<=\[).{3}(?=\])");
+
+            return regexSearch.Matches(EncodedString);
+        }
+
+        private string GetCalculatableString()
+        {
+            var regexSearch = new Regex(@"(?<=\])(\n).*");
+
+            return regexSearch.Match(EncodedString).ToString();
+        }
+
+        private bool HasCustomDelimiter()
+        {
+            return EncodedString.Contains("//[");
+        }
+
+        private int GetSumOfMatchCollectionDigits(MatchCollection digits)
+        {
+            return digits.Where(d => int.Parse(d.ToString()) <= 999 ).Aggregate(0, (total, number) => total + int.Parse(number.ToString()));
         }
     }
 }

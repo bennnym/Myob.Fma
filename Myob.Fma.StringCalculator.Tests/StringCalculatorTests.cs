@@ -18,7 +18,8 @@ namespace Myob.Fma.StringCalculator.Tests
         [InlineData("13", 13)]
         public void Should_Return_The_String_As_A_Integer_When_A_Single_Number_Is_Input(string num, int expectedOutput)
         {
-            var result = _stringCalculator.Add(num);
+            _stringCalculator.EncodedString = num;
+            var result = _stringCalculator.Add();
 
             Assert.Equal(expectedOutput, result);
         }
@@ -26,7 +27,8 @@ namespace Myob.Fma.StringCalculator.Tests
         [Fact]
         public void Should_Return_Zero_When_An_Empty_String_Is_Input()
         {
-            var result = _stringCalculator.Add(string.Empty);
+            _stringCalculator.EncodedString = string.Empty;
+            var result = _stringCalculator.Add();
 
             Assert.Equal(0, result);
         }
@@ -39,7 +41,8 @@ namespace Myob.Fma.StringCalculator.Tests
         public void Should_Return_The_Sum_Of_The_Strings_When_Multiple_Numbers_Are_Entered(string input,
             int expectedOutput)
         {
-            var result = _stringCalculator.Add(input);
+            _stringCalculator.EncodedString = input;
+            var result = _stringCalculator.Add();
 
             Assert.Equal(expected: expectedOutput, result);
         }
@@ -51,7 +54,8 @@ namespace Myob.Fma.StringCalculator.Tests
             string input,
             int expectedOutput)
         {
-            var result = _stringCalculator.Add(input);
+            _stringCalculator.EncodedString = input;
+            var result = _stringCalculator.Add();
 
             Assert.Equal(expected: expectedOutput, result);
         }
@@ -62,7 +66,8 @@ namespace Myob.Fma.StringCalculator.Tests
         public void Should_Return_The_Sum_Of_The_Strings_With_A_Specific_Delimiter_Provided(string input,
             int expectedOutput)
         {
-            var result = _stringCalculator.Add(input);
+            _stringCalculator.EncodedString = input;
+            var result = _stringCalculator.Add();
             
             Assert.Equal(expected: expectedOutput, result);
         }
@@ -70,7 +75,8 @@ namespace Myob.Fma.StringCalculator.Tests
         [Fact]
         public void Should_Throw_An_Exception_When_A_Negative_Number_Is_In_The_Input_String()
         {
-            var exception = Assert.Throws<Exception>(() => _stringCalculator.Add("-1,2,-3"));
+            _stringCalculator.EncodedString = "-1,2,-3";
+            var exception = Assert.Throws<Exception>(() => _stringCalculator.Add());
             
             Assert.Equal("-1, -3", exception.Message);
         }
@@ -80,7 +86,8 @@ namespace Myob.Fma.StringCalculator.Tests
         [InlineData("10000,3000,100, 7", 107)]
         public void Should_Ignore_Numbers_That_Are_Greater_Than_1000_And_Sum_Other_Numbers(string inputString, int expectedOutput)
         {
-            var result = _stringCalculator.Add(inputString);
+            _stringCalculator.EncodedString = inputString;
+            var result = _stringCalculator.Add();
             
             Assert.Equal(expectedOutput, result);
 
@@ -88,7 +95,8 @@ namespace Myob.Fma.StringCalculator.Tests
         [Fact]
         public void Should_Register_Optional_Delimiters_Of_Any_Length_Surrounded_By_Square_Brackets()
         {
-            var result = _stringCalculator.Add("//[***]\n1***2***3");
+            _stringCalculator.EncodedString = "//[***]\n1***2***3";
+            var result = _stringCalculator.Add();
             
             Assert.Equal(6, result);
         }
@@ -97,9 +105,10 @@ namespace Myob.Fma.StringCalculator.Tests
         [InlineData("//[*][%]\n1*2%3", 6)]
         public void Should_Be_Able_To_Enter_Multiple_Delimiters_And_Return_Sum(string input, int expectedOutput)
         {
+            _stringCalculator.EncodedString = input;
             // act
 
-            var result = _stringCalculator.Add(input);
+            var result = _stringCalculator.Add();
             
             // assert
             Assert.Equal(expectedOutput,result);
@@ -109,8 +118,10 @@ namespace Myob.Fma.StringCalculator.Tests
         [Fact]
         public void Should_Be_Able_To_Input_A_Custom_Delimeter_With_A_Integer_Inbetween_And_Sum_Is_Still_Valid()
         {
+            _stringCalculator.EncodedString = "//[*1*][%]\n1*1*2%3";
+
             //act
-            var result = _stringCalculator.Add("//[*1*][%]\n1*1*2%3");
+            var result = _stringCalculator.Add();
             //assert
             Assert.Equal(6,result);
         }

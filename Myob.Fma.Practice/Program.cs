@@ -2,33 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 
 namespace Myob.Fma.Practice
 {
-
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(MaxMultiply(2, 7));
+            var tester = "//[*1*][%]\n1*1*2%3";
+
+            var update = tester.Replace("//", "YOLO");
+
+            var regexSearch = new Regex(@"(?<=\])(\n).*");
+
+            var match = regexSearch.Match(tester);
+
+            Console.WriteLine(match);
 
 
-        }
-        
-        public static int MaxMultiply(int divisor, int bound)
-        {
-            int maxMultiple = 0;
-            int counter = divisor;
-            
-            while (counter <= bound)
-            {
-                if (counter % divisor == 0) maxMultiple = counter;
 
-                counter++;
-            }
 
-            return maxMultiple;
         }
     }
 }
