@@ -1,4 +1,4 @@
-﻿namespace Algorithm
+﻿namespace Myob.Fma.RefactoringKata.Algorithm
 {
     public enum FT
     {

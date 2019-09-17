@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Algorithm.Test
+namespace Myob.Fma.RefactoringKata.Algorithm.Tests
 {    
     public class FinderTests
     {

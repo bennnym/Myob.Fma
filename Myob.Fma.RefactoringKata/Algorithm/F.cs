@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Algorithm
+namespace Myob.Fma.RefactoringKata.Algorithm
 {
     public class F
     {

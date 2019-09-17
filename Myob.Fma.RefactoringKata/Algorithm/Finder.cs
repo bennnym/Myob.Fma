@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Algorithm
+namespace Myob.Fma.RefactoringKata.Algorithm
 {
     public class Finder
     {
