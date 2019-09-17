@@ -10,9 +10,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
         public void Returns_Empty_Results_When_Given_Empty_List()
         {
             var list = new List<Person>();
-            var finder = new Finder(list);
+            var finder = new AgeComparison(list);
 
-            var result = finder.GetCoupleWithAgeSearchCondition(AgeSearch.SmallestDifference);
+            var result = finder.SearchFor(AgeSearchFilter.SmallestDifference);
 
             Assert.Null(result.YoungerPerson);
             Assert.Null(result.OlderPerson);
@@ -22,9 +22,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
         public void Returns_Empty_Results_When_Given_One_Person()
         {
             var list = new List<Person>() { sue };
-            var finder = new Finder(list);
+            var finder = new AgeComparison(list);
 
-            var result = finder.GetCoupleWithAgeSearchCondition(AgeSearch.SmallestDifference);
+            var result = finder.SearchFor(AgeSearchFilter.SmallestDifference);
 
             Assert.Null(result.YoungerPerson);
             Assert.Null(result.OlderPerson);
@@ -34,9 +34,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
         public void Returns_Closest_Two_For_Two_People()
         {
             var list = new List<Person>() { sue, greg };
-            var finder = new Finder(list);
+            var finder = new AgeComparison(list);
 
-            var result = finder.GetCoupleWithAgeSearchCondition(AgeSearch.SmallestDifference);
+            var result = finder.SearchFor(AgeSearchFilter.SmallestDifference);
 
             Assert.Same(sue, result.YoungerPerson);
             Assert.Same(greg, result.OlderPerson);
@@ -46,9 +46,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
         public void Returns_Furthest_Two_For_Two_People()
         {
             var list = new List<Person>() { greg, mike };
-            var finder = new Finder(list);
+            var finder = new AgeComparison(list);
 
-            var result = finder.GetCoupleWithAgeSearchCondition(AgeSearch.LargestDifference);
+            var result = finder.SearchFor(AgeSearchFilter.LargestDifference);
 
             Assert.Same(greg, result.YoungerPerson);
             Assert.Same(mike, result.OlderPerson);
@@ -58,9 +58,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
         public void Returns_Furthest_Two_For_Four_People()
         {
             var list = new List<Person>() { greg, mike, sarah, sue };
-            var finder = new Finder(list);
+            var finder = new AgeComparison(list);
 
-            var result = finder.GetCoupleWithAgeSearchCondition(AgeSearch.LargestDifference);
+            var result = finder.SearchFor(AgeSearchFilter.LargestDifference);
 
             Assert.Same(sue, result.YoungerPerson);
             Assert.Same(sarah, result.OlderPerson);
@@ -70,9 +70,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
         public void Returns_Closest_Two_For_Four_People()
         {
             var list = new List<Person>() { greg, mike, sarah, sue };
-            var finder = new Finder(list);
+            var finder = new AgeComparison(list);
 
-            var result = finder.GetCoupleWithAgeSearchCondition(AgeSearch.SmallestDifference);
+            var result = finder.SearchFor(AgeSearchFilter.SmallestDifference);
 
             Assert.Same(sue, result.YoungerPerson);
             Assert.Same(greg, result.OlderPerson);

@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace Myob.Fma.RefactoringKata.Algorithm
 {
-    public class Finder
+    public class AgeComparison
     {
         private readonly List<Person> _people;
 
-        public Finder(List<Person> people)
+        public AgeComparison(List<Person> people)
         {
             _people = people;
         }
 
-        public Couple GetCoupleWithAgeSearchCondition(AgeSearch birthdaySearch)
+        public Couple SearchFor(AgeSearchFilter birthdaySearch)
         {
             if (IsOnlySearchingThroughOneOrLessPeople())
             {
@@ -33,9 +33,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             return _people.Count() <= 1;
         }
 
-        private bool IsSearchingForLargestDifferenceOfAges(AgeSearch birthdaySearchCriteria)
+        private bool IsSearchingForLargestDifferenceOfAges(AgeSearchFilter birthdaySearchCriteria)
         {
-            return birthdaySearchCriteria == AgeSearch.LargestDifference;
+            return birthdaySearchCriteria == AgeSearchFilter.LargestDifference;
         }
 
         private Couple GetLargestDifferenceOfAge()
@@ -67,7 +67,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
                 {
                     smallestAgeDifference = ageDifference;
                     youngest = GetYoungest(youngestToOldestPeople[i], youngestToOldestPeople[i - 1]);
-                    eldest = GetEldests(youngestToOldestPeople[i], youngestToOldestPeople[i - 1]);
+                    eldest = GetEldest(youngestToOldestPeople[i], youngestToOldestPeople[i - 1]);
                 }
             }
 
@@ -75,7 +75,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             {
                 YoungerPerson = youngest,
                 OlderPerson = eldest,
-                AgeDifference = eldest.BirthDate - youngest.BirthDate
+                AgeDifference = smallestAgeDifference
             };
         }
 
@@ -85,9 +85,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm
         }
 
 
-        private bool IsAgeDifferenceSmaller(TimeSpan currentMinimum, TimeSpan comparingSpan)
+        private bool IsAgeDifferenceSmaller(TimeSpan currentMinimum, TimeSpan comparisonValue)
         {
-            return currentMinimum > comparingSpan;
+            return comparisonValue < currentMinimum;
         }
 
         private Person GetYoungest(Person person1, Person person2)
@@ -100,7 +100,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             return person2;
         }
 
-        private Person GetEldests(Person person1, Person person2)
+        private Person GetEldest(Person person1, Person person2)
         {
             if (person1.BirthDate > person2.BirthDate)
             {

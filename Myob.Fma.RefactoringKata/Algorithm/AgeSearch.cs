@@ -1,6 +1,6 @@
 ﻿namespace Myob.Fma.RefactoringKata.Algorithm
 {
-    public enum AgeSearch
+    public enum AgeSearchFilter
     {
         SmallestDifference,
         LargestDifference
