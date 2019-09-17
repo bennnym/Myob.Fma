@@ -20,7 +20,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
                 return new Couple();
             }
 
-            if (IsSearchingForLargestDifference(birthdaySearch))
+            if (IsSearchingForLargestDifferenceOfAges(birthdaySearch))
             {
                 return GetLargestDifferenceOfAge();
             }
@@ -33,7 +33,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             return _people.Count() <= 1;
         }
 
-        private bool IsSearchingForLargestDifference(AgeSearch birthdaySearchCriteria)
+        private bool IsSearchingForLargestDifferenceOfAges(AgeSearch birthdaySearchCriteria)
         {
             return birthdaySearchCriteria == AgeSearch.LargestDifference;
         }
