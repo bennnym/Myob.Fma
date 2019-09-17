@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Algorithm.Inheritance
+namespace Myob.Fma.Composition.Inheritance
 {
     public class AveragingAggregator : PointsAggregator
     {

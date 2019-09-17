@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algorithm.Composition
+namespace Myob.Fma.Composition.Composition
 {
     public class SummingStrategy : IAggregationStrategy
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Algorithm.Composition
+namespace Myob.Fma.Composition.Composition
 {
     public class PointsAggregator
     {

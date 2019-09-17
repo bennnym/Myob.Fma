@@ -1,5 +1,4 @@
-﻿using Algorithm;
-using Algorithm.Inheritance;
+﻿using Myob.Fma.Composition.Inheritance;
 using Xunit;
 
 namespace Myob.Fma.Composition.Tests.Inheritance
@@ -41,16 +40,16 @@ namespace Myob.Fma.Composition.Tests.Inheritance
 
         /// Uncomment this test and make it pass reusing as much code as 
         /// possible from other classes that are availalbe in the Inheritance folder
-        //[Fact]
-        //public void HighPassSummingAggregator_Applys_Filter()
-        //{                
-        //    var aggregator = new HighPassSummingAggregator(_measurements);
+        [Fact]
+        public void HighPassSummingAggregator_Applys_Filter()
+        {                
+            var aggregator = new HighPassSummingAggregator(_measurements);
 
-        //    var result = aggregator.Aggregate();
+            var result = aggregator.Aggregate();
 
-        //    Assert.Equal(105, result.X);
-        //    Assert.Equal(15, result.Y);
-        //}
+            Assert.Equal(105, result.X);
+            Assert.Equal(15, result.Y);
+        }
 
         Measurement[] _measurements = new[]
         {

@@ -1,4 +1,4 @@
-namespace Algorithm
+namespace Myob.Fma.Composition
 {
     public struct Measurement
     {
