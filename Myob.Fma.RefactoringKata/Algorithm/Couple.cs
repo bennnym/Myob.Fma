@@ -6,6 +6,6 @@ namespace Myob.Fma.RefactoringKata.Algorithm
     {
         public Person YoungerPerson { get; set; }
         public Person OlderPerson { get; set; }
-        public TimeSpan DateDifference { get; set; }
+        public TimeSpan AgeDifference { get; set; }
     }
 }
