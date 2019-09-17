@@ -4,23 +4,23 @@ using System.Linq;
 
 namespace Myob.Fma.RefactoringKata.Algorithm
 {
-    public class AgeComparison
+    public class PersonGroup
     {
         private readonly List<Person> _people;
 
-        public AgeComparison(List<Person> people)
+        public PersonGroup(List<Person> people)
         {
             _people = people;
         }
 
-        public Couple SearchFor(AgeSearchFilter birthdaySearch)
+        public Couple SearchForCouple(AgeSearchFilter searchFilter)
         {
             if (IsOnlySearchingThroughOneOrLessPeople())
             {
                 return new Couple();
             }
 
-            if (IsSearchingForLargestDifferenceOfAges(birthdaySearch))
+            if (IsSearchingForLargestDifferenceOfAges(searchFilter))
             {
                 return GetLargestDifferenceOfAge();
             }
@@ -33,9 +33,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             return _people.Count() <= 1;
         }
 
-        private bool IsSearchingForLargestDifferenceOfAges(AgeSearchFilter birthdaySearchCriteria)
+        private bool IsSearchingForLargestDifferenceOfAges(AgeSearchFilter ageSearchFilter)
         {
-            return birthdaySearchCriteria == AgeSearchFilter.LargestDifference;
+            return ageSearchFilter == AgeSearchFilter.LargestAgeDifference;
         }
 
         private Couple GetLargestDifferenceOfAge()
@@ -83,7 +83,6 @@ namespace Myob.Fma.RefactoringKata.Algorithm
         {
             return firstPerson.BirthDate - secondPerson.BirthDate;
         }
-
 
         private bool IsAgeDifferenceSmaller(TimeSpan currentMinimum, TimeSpan comparisonValue)
         {

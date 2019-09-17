@@ -2,7 +2,7 @@
 {
     public enum AgeSearchFilter
     {
-        SmallestDifference,
-        LargestDifference
+        SmallestAgeDifference,
+        LargestAgeDifference
     }
 }
