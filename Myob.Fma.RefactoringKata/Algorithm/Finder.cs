@@ -1,67 +1,104 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Myob.Fma.RefactoringKata.Algorithm
 {
     public class Finder
     {
-        private readonly List<Thing> _p;
+        private readonly List<Person> _people;
 
-        public Finder(List<Thing> p)
+        public Finder(List<Person> people)
         {
-            _p = p;
+            _people = people;
         }
 
-        public F Find(FT ft)
+        public Couple Find(BirthdaySearch birthdaySearch)
         {
-            var tr = new List<F>();
+            var birthdayComparisonsOfPeople = new List<Couple>();
 
-            for(var i = 0; i < _p.Count - 1; i++)
+            if (IsSearchingForLargestDifference(birthdaySearch))
             {
-                for(var j = i + 1; j < _p.Count; j++)
+                return GetLargestDifferenceOfPersonsBirthdays();
+            }
+            else
+            {
+                return GetSmallestDifferenceOfPersonsBirthdays();
+            }
+
+            for (var i = 0; i < _people.Count - 1; i++) // goes over the entire list
+            {
+                for (var j = i + 1; j < _people.Count; j++) // compares the others to the above
                 {
-                    var r = new F();
-                    if(_p[i].BirthDate < _p[j].BirthDate)
+                    var results = new Couple();
+
+                    if (_people[i].BirthDate < _people[j].BirthDate)
                     {
-                        r.P1 = _p[i];
-                        r.P2 = _p[j];
+                        results.YoungerPerson = _people[i];
+                        results.OlderPerson = _people[j];
                     }
                     else
                     {
-                        r.P1 = _p[j];
-                        r.P2 = _p[i];
+                        results.YoungerPerson = _people[j];
+                        results.OlderPerson = _people[i];
                     }
-                    r.D = r.P2.BirthDate - r.P1.BirthDate;
-                    tr.Add(r);
+
+                    results.DateDifference = results.OlderPerson.BirthDate - results.YoungerPerson.BirthDate;
+                    
+                    birthdayComparisonsOfPeople.Add(results);
                 }
             }
 
-            if(tr.Count < 1)
+            if (IsListEmpty(birthdayComparisonsOfPeople))
             {
-                return new F();
+                return new Couple();
             }
 
-            F answer = tr[0];
-            foreach(var result in tr)
+            Couple searchFindings = birthdayComparisonsOfPeople[0];
+            
+            foreach (var coupleComparison in birthdayComparisonsOfPeople)
             {
-                switch(ft)
+                switch (birthdaySearch)
                 {
-                    case FT.One:
-                        if(result.D < answer.D)
+                    case BirthdaySearch.SmallestDifference:
+                        if (coupleComparison.DateDifference < searchFindings.DateDifference)
                         {
-                            answer = result;
+                            searchFindings = coupleComparison;
                         }
-                        break;
 
-                    case FT.Two:
-                        if(result.D > answer.D)
-                        {
-                            answer = result;
-                        }
                         break;
                 }
             }
+            
+            return searchFindings;
+        }
 
-            return answer;
+        private bool IsSearchingForLargestDifference(BirthdaySearch birthdaySearchCriteria)
+        {
+            return birthdaySearchCriteria == BirthdaySearch.LargestDifference;
+        }
+        private bool IsListEmpty(IEnumerable<Couple> searchFindings)
+        {
+            return searchFindings.Any() == false;
+        }
+
+        private Couple GetLargestDifferenceOfPersonsBirthdays()
+        {
+            var orderedPeople = _people.OrderBy(d => d.BirthDate).ToList();
+            var youngest = orderedPeople.First();
+            var eldest = orderedPeople.Last();
+
+            return new Couple()
+            {
+                YoungerPerson = youngest,
+                OlderPerson = eldest,
+                DateDifference = eldest.BirthDate - youngest.BirthDate
+            };
+        }
+
+        private Couple GetSmallestDifferenceOfPersonsBirthdays()
+        {
+            var orderedPeople = _people.OrderBy(d => d.BirthDate).ToList();
         }
     }
 }
