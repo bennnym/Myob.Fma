@@ -1,7 +1,8 @@
-﻿using Myob.Fma.KataComposition.Algorithm.Composition;
+﻿using Algorithm;
+using Algorithm.Composition;
 using Xunit;
 
-namespace Myob.Fma.KataComposition.Algorithm.Tests.Composition
+namespace Myob.Fma.Composition.Tests.Composition
 {
     public class AggregationTests
     {

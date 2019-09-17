@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Myob.Fma.KataComposition.Algorithm.Composition
+namespace Algorithm.Composition
 {
     public class EmptyFilter : IMeasurementFilter
     {

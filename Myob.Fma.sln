@@ -46,7 +46,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.MontyHall", "Myob.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.MontyHallTests", "Myob.Fma.MontyHallTests\Myob.Fma.MontyHallTests.csproj", "{E76D7530-4D02-4E8A-A248-3B7F30222B24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.KataComposition", "Myob.Fma.KataComposition\Myob.Fma.KataComposition.csproj", "{268D96DF-B447-4188-9187-BF57669EF92E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Composition", "Myob.Fma.Composition\Myob.Fma.Composition.csproj", "{F12D677A-EAEA-45AC-BD0A-02B76BC6E927}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Composition.Tests", "Myob.Fma.Composition.Tests\Myob.Fma.Composition.Tests.csproj", "{93DB50CA-01FB-46CE-926C-239B60B57B85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -146,9 +148,13 @@ Global
 		{E76D7530-4D02-4E8A-A248-3B7F30222B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E76D7530-4D02-4E8A-A248-3B7F30222B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E76D7530-4D02-4E8A-A248-3B7F30222B24}.Release|Any CPU.Build.0 = Release|Any CPU
-		{268D96DF-B447-4188-9187-BF57669EF92E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{268D96DF-B447-4188-9187-BF57669EF92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{268D96DF-B447-4188-9187-BF57669EF92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{268D96DF-B447-4188-9187-BF57669EF92E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F12D677A-EAEA-45AC-BD0A-02B76BC6E927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F12D677A-EAEA-45AC-BD0A-02B76BC6E927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F12D677A-EAEA-45AC-BD0A-02B76BC6E927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F12D677A-EAEA-45AC-BD0A-02B76BC6E927}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93DB50CA-01FB-46CE-926C-239B60B57B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93DB50CA-01FB-46CE-926C-239B60B57B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93DB50CA-01FB-46CE-926C-239B60B57B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93DB50CA-01FB-46CE-926C-239B60B57B85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

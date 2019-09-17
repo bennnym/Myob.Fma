@@ -1,4 +1,7 @@
-﻿namespace Myob.Fma.KataComposition.Algorithm.Composition
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Algorithm.Composition
 {
 
     /// <summary>

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Myob.Fma.KataComposition.Algorithm.Composition
+namespace Algorithm.Composition
 {
     public class AveragingStrategy : IAggregationStrategy
     {
