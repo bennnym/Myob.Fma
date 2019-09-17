@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using Myob.Fma.BookingLibrary.Resources;
 
 namespace Myob.Fma.BookingLibrary
 {
     public class Library
     {
-        private readonly string _name;
-        private readonly string _address;
+        private readonly List<IResource> _resources;
 
-        public Library(string name, string address)
+        public Library(List<IResource> resources)
         {
-            _name = name;
-            _address = address;
+            _resources = resources;
+        }
+
+        public bool IsResourceAvailable(int id)
+        {
+            return true;
         }
     }
 }
