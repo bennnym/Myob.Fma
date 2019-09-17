@@ -13,7 +13,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             _people = people;
         }
 
-        public Couple Find(BirthdaySearch birthdaySearch)
+        public Couple GetCoupleWithAgeSearchCondition(AgeSearch birthdaySearch)
         {
             if (IsOnlySearchingThroughOneOrLessPeople())
             {
@@ -33,14 +33,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             return _people.Count() <= 1;
         }
 
-        private bool IsSearchingForLargestDifference(BirthdaySearch birthdaySearchCriteria)
+        private bool IsSearchingForLargestDifference(AgeSearch birthdaySearchCriteria)
         {
-            return birthdaySearchCriteria == BirthdaySearch.LargestDifference;
-        }
-
-        private bool IsListEmpty(IEnumerable<Couple> searchFindings)
-        {
-            return searchFindings.Any() == false;
+            return birthdaySearchCriteria == AgeSearch.LargestDifference;
         }
 
         private Couple GetLargestDifferenceOfAge()
@@ -66,7 +61,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
 
             for (int i = 1; i < youngestToOldestPeople.Count; i++)
             {
-                var ageDifference = youngestToOldestPeople[i].BirthDate - youngestToOldestPeople[i - 1].BirthDate;
+                var ageDifference = GetAgeDifferenceOfPeople(youngestToOldestPeople[i], youngestToOldestPeople[i - 1]);
 
                 if (IsAgeDifferenceSmaller(smallestAgeDifference, ageDifference))
                 {
@@ -82,6 +77,11 @@ namespace Myob.Fma.RefactoringKata.Algorithm
                 OlderPerson = eldest,
                 AgeDifference = eldest.BirthDate - youngest.BirthDate
             };
+        }
+
+        private TimeSpan GetAgeDifferenceOfPeople(Person firstPerson, Person secondPerson)
+        {
+            return firstPerson.BirthDate - secondPerson.BirthDate;
         }
 
 
