@@ -33,14 +33,18 @@ namespace Myob.Fma.BookingLibrary
             if (IsResourceAvailable(resourceId) == false) throw new Exception("Resource is not available");
             if (IsMemberActive(membershipId) == false) throw new Exception("Membership is not active");
 
-            var resource = GetResource(resourceId);
-            resource.IsAvailable = false;
+            CheckoutResource(resourceId);
 
         }
-
         private IResource GetResource(int resourceId)
         {
             return _resources.Find(r => r.Id == resourceId);
+        }
+
+        private void CheckoutResource(int resourceId)
+        {
+            var resource = GetResource(resourceId);
+            resource.IsAvailable = false;
         }
     }
 }
