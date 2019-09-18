@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Myob.Fma.BookingLibrary;
 using Myob.Fma.BookingLibrary.Core;
+using Myob.Fma.BookingLibrary.Exceptions;
 using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
@@ -83,19 +84,6 @@ namespace Myob.Fma.BookingLibraryTests
         }
         
         [Fact]
-        public void Should_Throw_Exception_If_Resource_Is_Not_Available_To_Borrow()
-        {
-            // Arrange
-            var library = new Library(_resources, _memberships);
-            const int resourceId = 3;
-            const int membershipId = 1;
-
-            // Assert
-            var exception = Assert.Throws<Exception>(() => library.Borrow(resourceId, membershipId));
-            Assert.Same("Resource is not available",exception.Message);
-        }
-        
-        [Fact]
         public void Should_Reduce_Members_Borrowing_Limit_After_Borrowing_A_Resource()
         {
             // Arrange
@@ -112,6 +100,20 @@ namespace Myob.Fma.BookingLibraryTests
         }
         
         [Fact]
+        public void Should_Throw_Exception_If_Resource_Is_Not_Available_To_Borrow()
+        {
+            // Arrange
+            var library = new Library(_resources, _memberships);
+            const int resourceId = 3;
+            const int membershipId = 1;
+
+            // Assert
+            var exception = Assert.Throws<ResourceNotAvailableException>(() => library.Borrow(resourceId, membershipId));
+            Assert.Same("Resource is not available",exception.Message);
+        }
+
+        
+        [Fact]
         public void Should_Throw_Exception_If_Membership_Id_Is_Not_Active_To_Borrow()
         {
             // Arrange
@@ -120,7 +122,7 @@ namespace Myob.Fma.BookingLibraryTests
             const int membershipId = 2;
 
             // Assert
-            var exception = Assert.Throws<Exception>(() => library.Borrow(resourceId, membershipId));
+            var exception = Assert.Throws<MembershipNotActiveException>(() => library.Borrow(resourceId, membershipId));
             Assert.Same("Membership is not active",exception.Message);
         }
         
@@ -133,7 +135,7 @@ namespace Myob.Fma.BookingLibraryTests
             const int membershipId = 3;
 
             // Assert
-            var exception = Assert.Throws<Exception>(() => library.Borrow(resourceId, membershipId));
+            var exception = Assert.Throws<MembersBorrowingLimitExceededException>(() => library.Borrow(resourceId, membershipId));
             Assert.Same("Members borrowing limit exceeded",exception.Message);
         }
 

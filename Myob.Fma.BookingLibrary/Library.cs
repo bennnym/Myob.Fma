@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Myob.Fma.BookingLibrary.BorrowingItems;
+using Myob.Fma.BookingLibrary.Constants;
+using Myob.Fma.BookingLibrary.Exceptions;
 using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.Resources;
 
@@ -35,9 +37,14 @@ namespace Myob.Fma.BookingLibrary
 
         public void Borrow(int resourceId, int membershipId)
         {
-            if (IsResourceAvailable(resourceId) == false) throw new Exception("Resource is not available");
-            if (IsMemberActive(membershipId) == false) throw new Exception("Membership is not active");
-            if (GetMembersBorrowingLimit(membershipId) < 1) throw new Exception("Members borrowing limit exceeded");
+            if (IsResourceAvailable(resourceId) == false) 
+                throw new ResourceNotAvailableException(Constant.ResourceNotAvailable);
+            
+            if (IsMemberActive(membershipId) == false) 
+                throw new MembershipNotActiveException(Constant.MembershipNotActive);
+            
+            if (GetMembersBorrowingLimit(membershipId) < 1) 
+                throw new MembersBorrowingLimitExceededException(Constant.MembersBorrowingLimitExceeded);
 
             CheckoutResource(resourceId);
             ReduceMembersBorrowingLimit(membershipId);
