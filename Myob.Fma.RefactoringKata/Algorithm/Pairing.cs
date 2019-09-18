@@ -2,7 +2,7 @@
 
 namespace Myob.Fma.RefactoringKata.Algorithm
 {
-    public class Couple
+    public class Pairing
     {
         public Person YoungerPerson { get; set; }
         public Person OlderPerson { get; set; }

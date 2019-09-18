@@ -13,11 +13,11 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             _people = people;
         }
 
-        public Couple SearchForCouple(AgeSearchFilter searchFilter)
+        public Pairing SearchForCouple(AgeSearchFilter searchFilter)
         {
             if (IsOnlySearchingThroughOneOrLessPeople())
             {
-                return new Couple();
+                return new Pairing();
             }
 
             if (IsSearchingForLargestDifferenceOfAges(searchFilter))
@@ -35,16 +35,16 @@ namespace Myob.Fma.RefactoringKata.Algorithm
 
         private bool IsSearchingForLargestDifferenceOfAges(AgeSearchFilter ageSearchFilter)
         {
-            return ageSearchFilter == AgeSearchFilter.LargestAgeDifference;
+            return ageSearchFilter == AgeSearchFilter.MaxAgeDifference;
         }
 
-        private Couple GetLargestDifferenceOfAge()
+        private Pairing GetLargestDifferenceOfAge()
         {
             var youngestToOldestPeople = _people.OrderBy(d => d.BirthDate).ToList();
             var youngest = youngestToOldestPeople.First();
             var eldest = youngestToOldestPeople.Last();
 
-            return new Couple()
+            return new Pairing()
             {
                 YoungerPerson = youngest,
                 OlderPerson = eldest,
@@ -52,7 +52,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             };
         }
 
-        private Couple GetSmallestDifferenceOfAge()
+        private Pairing GetSmallestDifferenceOfAge()
         {
             var youngestToOldestPeople = _people.OrderBy(d => d.BirthDate).ToList();
             var smallestAgeDifference = TimeSpan.MaxValue;
@@ -71,7 +71,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
                 }
             }
 
-            return new Couple()
+            return new Pairing()
             {
                 YoungerPerson = youngest,
                 OlderPerson = eldest,
