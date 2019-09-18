@@ -7,8 +7,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
     public class PersonGroup
     {
         private readonly List<Person> _people;
-        private bool IsOneOrLessPeopleInGroup => _people.Count() <= 1;
-
+       
         public PersonGroup(List<Person> people)
         {
             _people = people;
@@ -16,17 +15,17 @@ namespace Myob.Fma.RefactoringKata.Algorithm
 
         public SearchResult SearchGroupFor(AgeSearchFilter searchFilter)
         {
-            if (IsOneOrLessPeopleInGroup)
-            {
-                return new SearchResult();
-            }
 
-            if (IsSearchingForMaxAgeDifference(searchFilter))
-            {
-                return GetMaxAgeDifferenceSearchResult();
-            }
-
+            if (IsOneOrLessPeopleInGroup(_people)) return new SearchResult();
+            
+            if (IsSearchingForMaxAgeDifference(searchFilter)) return GetMaxAgeDifferenceSearchResult();
+            
             return GetMinAgeDifferenceSearchResult();
+        }
+
+        private bool IsOneOrLessPeopleInGroup(List<Person> people)
+        {
+            return people.Count() <= 1;
         }
 
         private bool IsSearchingForMaxAgeDifference(AgeSearchFilter ageSearchFilter)
@@ -52,9 +51,9 @@ namespace Myob.Fma.RefactoringKata.Algorithm
         {
             var youngestToOldestPeople = _people.OrderBy(d => d.BirthDate).ToList();
             var smallestAgeDifference = TimeSpan.MaxValue;
-            var youngest = new Person();
-            var eldest = new Person();
-
+            Person youngest = null;
+            Person eldest = null;
+  
             for (int i = 1; i < youngestToOldestPeople.Count; i++)
             {
                 var ageDifference = GetAgeDifferenceOfPeople(youngestToOldestPeople[i], youngestToOldestPeople[i - 1]);
@@ -66,7 +65,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
                     eldest = GetEldest(youngestToOldestPeople[i], youngestToOldestPeople[i - 1]);
                 }
             }
-
+ 
             return new SearchResult()
             {
                 YoungerPerson = youngest,
