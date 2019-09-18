@@ -11,7 +11,6 @@ namespace Myob.Fma.BookingLibrary.Memberships
 //        void Delete(int id);
 //        Person Get(int id);
 //        List<Person> GetAll();
-        Person Member { get; set; }
         int BorrowingLimit { get; set; }
         int MembershipId { get; set; }
         bool IsActive { get; set; }

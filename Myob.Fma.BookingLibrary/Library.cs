@@ -28,12 +28,19 @@ namespace Myob.Fma.BookingLibrary
             return _memberships.Any(m => m.MembershipId == id && m.IsActive);
         }
 
+        public int GetMembersBorrowingLimit(int membershipId)
+        {
+            return _memberships.Find(m => m.MembershipId == membershipId).BorrowingLimit;
+        }
+
         public void Borrow(int resourceId, int membershipId)
         {
             if (IsResourceAvailable(resourceId) == false) throw new Exception("Resource is not available");
             if (IsMemberActive(membershipId) == false) throw new Exception("Membership is not active");
+            if (GetMembersBorrowingLimit(membershipId) < 1) throw new Exception("Members borrowing limit exceeded");
 
             CheckoutResource(resourceId);
+            ReduceMembersBorrowingLimit(membershipId);
 
         }
         private IResource GetResource(int resourceId)
@@ -45,6 +52,12 @@ namespace Myob.Fma.BookingLibrary
         {
             var resource = GetResource(resourceId);
             resource.IsAvailable = false;
+        }
+
+        private void ReduceMembersBorrowingLimit(int membershipId)
+        {
+            var membership = _memberships.Find(m => m.MembershipId == membershipId);
+            membership.BorrowingLimit--;
         }
     }
 }

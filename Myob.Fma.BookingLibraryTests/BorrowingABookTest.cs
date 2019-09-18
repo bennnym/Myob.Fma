@@ -96,6 +96,22 @@ namespace Myob.Fma.BookingLibraryTests
         }
         
         [Fact]
+        public void Should_Reduce_Members_Borrowing_Limit_After_Borrowing_A_Resource()
+        {
+            // Arrange
+            var library = new Library(_resources, _memberships);
+            const int resourceId = 1;
+            const int membershipId = 1;
+            
+            // Act
+            library.Borrow(resourceId, membershipId);
+            var borrowingLimit = library.GetMembersBorrowingLimit(membershipId);
+
+            // Assert
+            Assert.Equal(9,borrowingLimit);
+        }
+        
+        [Fact]
         public void Should_Throw_Exception_If_Membership_Id_Is_Not_Active_To_Borrow()
         {
             // Arrange
@@ -106,6 +122,19 @@ namespace Myob.Fma.BookingLibraryTests
             // Assert
             var exception = Assert.Throws<Exception>(() => library.Borrow(resourceId, membershipId));
             Assert.Same("Membership is not active",exception.Message);
+        }
+        
+        [Fact]
+        public void Should_Throw_Exception_If_Membership_Id_Borrowing_Limit_Is_Exceeded()
+        {
+            // Arrange
+            var library = new Library(_resources, _memberships);
+            const int resourceId = 1;
+            const int membershipId = 3;
+
+            // Assert
+            var exception = Assert.Throws<Exception>(() => library.Borrow(resourceId, membershipId));
+            Assert.Same("Members borrowing limit exceeded",exception.Message);
         }
 
         private readonly List<IResource> _resources = new List<IResource>()
@@ -119,9 +148,9 @@ namespace Myob.Fma.BookingLibraryTests
         
         private readonly List<IMembership> _memberships = new List<IMembership>()
         {
-            new Membership(){ BorrowingLimit = 10, IsActive = true, MembershipId = 1, Member = new Person("Ben", "Muller")},
-            new Membership(){ BorrowingLimit = 10, IsActive = false, MembershipId = 2, Member = new Person("Sam", "Grunel")},
-            new Membership(){ BorrowingLimit = 10, IsActive = false, MembershipId = 3, Member = new Person("Amr", "Reda")},
+            new Membership(){ BorrowingLimit = 10, IsActive = true, MembershipId = 1},
+            new Membership(){ BorrowingLimit = 6, IsActive = false, MembershipId = 2},
+            new Membership(){ BorrowingLimit = 0, IsActive = true, MembershipId = 3},
         };
     }
 }
