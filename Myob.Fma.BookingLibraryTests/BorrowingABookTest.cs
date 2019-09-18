@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Myob.Fma.BookingLibrary;
+using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
 
@@ -10,20 +11,34 @@ namespace Myob.Fma.BookingLibraryTests
     {
         public BorrowingABookTest()
         {
-            
         }
+
         [Fact]
-        public void Should_Check_If_A_Book_Is_Available()
+        public void Should_Check_If_A_Book_Is_Not_Available()
         {
             // Arrange
-            var library = new Library(new List<IResource>());
+            var library = new Library(new List<IResource>(), new List<IMembership>());
 
             //Act
             var id = 1;
             var bookIsAvailable = library.IsResourceAvailable(id);
-            
+
             // Assert
-            Assert.True(bookIsAvailable);
+            Assert.False(bookIsAvailable);
+        }
+
+        [Fact]
+        public void Should_Check_If_A_User_Can_Borrow_A_Resource()
+        {
+            // Arrange
+            var library = new Library(new List<IResource>(), new List<IMembership>());
+
+            //Act
+            var id = 1;
+            var isActiveMembership = library.IsMemberActive(id);
+            
+            //Assert
+            Assert.False(isActiveMembership);
         }
     }
 }

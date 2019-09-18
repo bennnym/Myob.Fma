@@ -4,7 +4,7 @@ namespace Myob.Fma.BookingLibrary.Resources
     {
         string Name { get; set; }
         int Id { get; set; }
-
         ResourceType ResourceType { get; set; }
+        bool IsAvailable { get; set; }
     }
 }
