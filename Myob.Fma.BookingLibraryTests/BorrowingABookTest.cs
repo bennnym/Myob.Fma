@@ -23,9 +23,23 @@ namespace Myob.Fma.BookingLibraryTests
             // Assert
             Assert.True(bookIsAvailable);
         }
+        
+        [Fact]
+        public void Should_Check_If_A_Book_Is_Not_Available()
+        {
+            // Arrange
+            var library = new Library(_resources, _memberships);
+
+            //Act
+            var id = 3;
+            var bookIsAvailable = library.IsResourceAvailable(id);
+
+            // Assert
+            Assert.False(bookIsAvailable);
+        }
 
         [Fact]
-        public void Should_Check_If_A_User_Has_A_Active_Membership()
+        public void Should_Check_If_A_Membership_Id_is_Active()
         {
             // Arrange
             var library = new Library(_resources, _memberships);
@@ -36,6 +50,62 @@ namespace Myob.Fma.BookingLibraryTests
             
             //Assert
             Assert.True(isActiveMembership);
+        }
+        
+        [Fact]
+        public void Should_Check_If_A_Membership_Id_is_Not_Active()
+        {
+            // Arrange
+            var library = new Library(_resources, _memberships);
+            
+            //Act
+            var id = 2;
+            var isActiveMembership = library.IsMemberActive(id);
+            
+            //Assert
+            Assert.False(isActiveMembership);
+        }
+
+        [Fact]
+        public void Should_Check_If_A_Resource_Becomes_Unavailable_After_It_Is_Borrowed()
+        {
+            // Arrange
+            var library = new Library(_resources, _memberships);
+            const int resourceId = 1;
+            const int membershipId = 1;
+
+            // Act
+            library.Borrow(resourceId, membershipId);
+            var resourceIsAvailable = library.IsResourceAvailable(resourceId);
+
+            // Assert
+            Assert.False(resourceIsAvailable);
+        }
+        
+        [Fact]
+        public void Should_Throw_Exception_If_Resource_Is_Not_Available_To_Borrow()
+        {
+            // Arrange
+            var library = new Library(_resources, _memberships);
+            const int resourceId = 3;
+            const int membershipId = 1;
+
+            // Assert
+            var exception = Assert.Throws<Exception>(() => library.Borrow(resourceId, membershipId));
+            Assert.Same("Resource is not available",exception.Message);
+        }
+        
+        [Fact]
+        public void Should_Throw_Exception_If_Membership_Id_Is_Not_Active_To_Borrow()
+        {
+            // Arrange
+            var library = new Library(_resources, _memberships);
+            const int resourceId = 1;
+            const int membershipId = 2;
+
+            // Assert
+            var exception = Assert.Throws<Exception>(() => library.Borrow(resourceId, membershipId));
+            Assert.Same("Membership is not active",exception.Message);
         }
 
         private readonly List<IResource> _resources = new List<IResource>()
@@ -50,8 +120,8 @@ namespace Myob.Fma.BookingLibraryTests
         private readonly List<IMembership> _memberships = new List<IMembership>()
         {
             new Membership(){ BorrowingLimit = 10, IsActive = true, MembershipId = 1, Member = new Person("Ben", "Muller")},
-            new Membership(){ BorrowingLimit = 10, IsActive = false, MembershipId = 1, Member = new Person("Sam", "Grunel")},
-            new Membership(){ BorrowingLimit = 10, IsActive = false, MembershipId = 1, Member = new Person("Amr", "Reda")},
+            new Membership(){ BorrowingLimit = 10, IsActive = false, MembershipId = 2, Member = new Person("Sam", "Grunel")},
+            new Membership(){ BorrowingLimit = 10, IsActive = false, MembershipId = 3, Member = new Person("Amr", "Reda")},
         };
     }
 }
