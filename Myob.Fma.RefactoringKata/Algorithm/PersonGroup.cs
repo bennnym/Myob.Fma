@@ -7,6 +7,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
     public class PersonGroup
     {
         private readonly List<Person> _people;
+        private bool IsOneOrLessPeopleInGroup => _people.Count() <= 1;
 
         public PersonGroup(List<Person> people)
         {
@@ -15,7 +16,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm
 
         public SearchResult SearchGroupFor(AgeSearchFilter searchFilter)
         {
-            if (IsSearchingThroughOneOrLessPeople())
+            if (IsOneOrLessPeopleInGroup)
             {
                 return new SearchResult();
             }
@@ -26,11 +27,6 @@ namespace Myob.Fma.RefactoringKata.Algorithm
             }
 
             return GetMinAgeDifferenceSearchResult();
-        }
-
-        private bool IsSearchingThroughOneOrLessPeople()
-        {
-            return _people.Count() <= 1;
         }
 
         private bool IsSearchingForMaxAgeDifference(AgeSearchFilter ageSearchFilter)
