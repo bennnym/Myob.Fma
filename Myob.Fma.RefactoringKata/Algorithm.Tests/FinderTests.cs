@@ -12,7 +12,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
             var list = new List<Person>();
             var finder = new PersonGroup(list);
 
-            var result = finder.SearchForCouple(AgeSearchFilter.MinAgeDifference);
+            var result = finder.SearchGroupFor(AgeSearchFilter.MinAgeDifference);
 
             Assert.Null(result.YoungerPerson);
             Assert.Null(result.OlderPerson);
@@ -24,7 +24,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
             var list = new List<Person>() { sue };
             var finder = new PersonGroup(list);
 
-            var result = finder.SearchForCouple(AgeSearchFilter.MinAgeDifference);
+            var result = finder.SearchGroupFor(AgeSearchFilter.MinAgeDifference);
 
             Assert.Null(result.YoungerPerson);
             Assert.Null(result.OlderPerson);
@@ -36,7 +36,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
             var list = new List<Person>() { sue, greg };
             var finder = new PersonGroup(list);
 
-            var result = finder.SearchForCouple(AgeSearchFilter.MinAgeDifference);
+            var result = finder.SearchGroupFor(AgeSearchFilter.MinAgeDifference);
 
             Assert.Same(sue, result.YoungerPerson);
             Assert.Same(greg, result.OlderPerson);
@@ -48,7 +48,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
             var list = new List<Person>() { greg, mike };
             var finder = new PersonGroup(list);
 
-            var result = finder.SearchForCouple(AgeSearchFilter.MaxAgeDifference);
+            var result = finder.SearchGroupFor(AgeSearchFilter.MaxAgeDifference);
 
             Assert.Same(greg, result.YoungerPerson);
             Assert.Same(mike, result.OlderPerson);
@@ -60,7 +60,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
             var list = new List<Person>() { greg, mike, sarah, sue };
             var finder = new PersonGroup(list);
 
-            var result = finder.SearchForCouple(AgeSearchFilter.MaxAgeDifference);
+            var result = finder.SearchGroupFor(AgeSearchFilter.MaxAgeDifference);
 
             Assert.Same(sue, result.YoungerPerson);
             Assert.Same(sarah, result.OlderPerson);
@@ -72,7 +72,7 @@ namespace Myob.Fma.RefactoringKata.Algorithm.Tests
             var list = new List<Person>() { greg, mike, sarah, sue };
             var finder = new PersonGroup(list);
 
-            var result = finder.SearchForCouple(AgeSearchFilter.MinAgeDifference);
+            var result = finder.SearchGroupFor(AgeSearchFilter.MinAgeDifference);
 
             Assert.Same(sue, result.YoungerPerson);
             Assert.Same(greg, result.OlderPerson);
