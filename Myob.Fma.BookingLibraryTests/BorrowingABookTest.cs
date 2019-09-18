@@ -28,7 +28,7 @@ namespace Myob.Fma.BookingLibraryTests
         }
 
         [Fact]
-        public void Should_Check_If_A_User_Can_Borrow_A_Resource()
+        public void Should_Check_If_A_User_Has_A_Active_Membership()
         {
             // Arrange
             var library = new Library(new List<IResource>(), new List<IMembership>());
