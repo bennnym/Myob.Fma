@@ -10,20 +10,20 @@ namespace Myob.Fma.MastermindTests
 {
     public class GameInputTests
     {
-        [Theory]
-        [InlineData("red yellow purple green", new List<Colours>(){Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN})]
-        public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_Entered(string input, List<Colours> expectedoutput)
+        [Fact]
+//        [InlineData("red yellow purple green", new List<Colours>(){Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN})]
+        public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_Entered()
         {
             var mockConsoleService = new Mock<ConsoleIoService>();
             var inputReader = new GameInput(mockConsoleService.Object);
-            mockConsoleService.Setup(i=> i.GetUserInput()).Returns(input);
+            mockConsoleService.Setup(i=> i.GetUserInput()).Returns("red yellow purple green");
             
 
             // Arrange
             var guesses = inputReader.GetUsersCodeGuess();
             
             // Assert
-            Assert.Equal(expectedoutput, guesses);
+            Assert.Equal(new List<Colours>(){Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN}, guesses);
         }
     }
 }
