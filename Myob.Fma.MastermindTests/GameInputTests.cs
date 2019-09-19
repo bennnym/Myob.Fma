@@ -24,7 +24,7 @@ namespace Myob.Fma.MastermindTests
 //            // Assert
 //            Assert.Equal(new List<Colours>() {Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN}, guesses);
 //        }
-        
+
 //        [Theory]
 //        [InlineData("red yellow purple green", new List<Colours>(){Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN})]
 //        public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_Entered(string userInput, List<Colours> expectedOutput)
@@ -43,7 +43,8 @@ namespace Myob.Fma.MastermindTests
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Should(string userInput, List<Colours> expectedOutput)
+        public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_Entered(string userInput,
+            List<Colours> expectedOutput)
         {
             // Arrange
             var mockConsoleService = new Mock<ConsoleIoService>();

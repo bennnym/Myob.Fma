@@ -11,9 +11,9 @@ namespace Myob.Fma.Mastermind
     {
         static void Main(string[] args)
         {
-            var consoleOutputService = new ConsoleIoService();
+            var consoleServices = new ConsoleIoService();
 
-            var inputReader = new GameInput(consoleOutputService);
+            var inputReader = new GameInput(consoleServices);
 
             inputReader.GetUsersCodeGuess();
 
