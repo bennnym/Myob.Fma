@@ -11,7 +11,8 @@ namespace Myob.Fma.MastermindTests
     public class GameInputTests
     {
         [Fact]
-//        [InlineData("red yellow purple green", new List<Colours>(){Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN})]
+        // [Theory]
+        // [InlineData("red yellow purple green", new List<Colours>(){Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN})]
         public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_Entered()
         {
             var mockConsoleService = new Mock<ConsoleIoService>();
