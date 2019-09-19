@@ -46,6 +46,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.MontyHall", "Myob.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.MontyHallTests", "Myob.Fma.MontyHallTests\Myob.Fma.MontyHallTests.csproj", "{E76D7530-4D02-4E8A-A248-3B7F30222B24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Mastermind", "Myob.Fma.Mastermind\Myob.Fma.Mastermind.csproj", "{7F0C04BB-E7BB-4734-A236-E3E05A55E227}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.MastermindTests", "Myob.Fma.MastermindTests\Myob.Fma.MastermindTests.csproj", "{A0CE5488-EF76-43E9-B12D-664E11C5822B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -144,5 +148,13 @@ Global
 		{E76D7530-4D02-4E8A-A248-3B7F30222B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E76D7530-4D02-4E8A-A248-3B7F30222B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E76D7530-4D02-4E8A-A248-3B7F30222B24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F0C04BB-E7BB-4734-A236-E3E05A55E227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F0C04BB-E7BB-4734-A236-E3E05A55E227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F0C04BB-E7BB-4734-A236-E3E05A55E227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F0C04BB-E7BB-4734-A236-E3E05A55E227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0CE5488-EF76-43E9-B12D-664E11C5822B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0CE5488-EF76-43E9-B12D-664E11C5822B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0CE5488-EF76-43E9-B12D-664E11C5822B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0CE5488-EF76-43E9-B12D-664E11C5822B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
