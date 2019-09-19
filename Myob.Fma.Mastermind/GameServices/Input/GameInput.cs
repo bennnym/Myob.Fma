@@ -8,7 +8,7 @@ using Myob.Fma.Mastermind.Infrastructure;
 
 namespace Myob.Fma.Mastermind.GameServices.Input
 {
-    class GameInput : IGameInput
+    public class GameInput : IGameInput
     {
         private readonly ConsoleIoService _consoleIoService;
 
@@ -39,13 +39,13 @@ namespace Myob.Fma.Mastermind.GameServices.Input
 
         private bool IsUsersInputValid(string usersGuess, out string message)
         {
-            if (IsTheCorrectAmountOfColoursEntered(usersGuess) == false)
+            if (IsTheCorrectAmountOfColoursEntered(usersGuess) is false)
             {
                 message = Constant.IncorrectNumberOfColoursErrorMsg;
                 return false;
             }
             
-            if (IsColoursValid(usersGuess) == false)
+            if (IsColoursValid(usersGuess) is false)
             {
                 message = Constant.InvalidColourErrorMsg;
                 return false;
