@@ -10,6 +10,14 @@ namespace Myob.Fma.Mastermind.Constants
                                            "\nA White means it is in the wrong position but it is present in the code." +
                                            "\nThe returned elements are always shuffled, so they will never be the same!";
 
+        public const string IncorrectNumberOfColoursErrorMsg = "Error: you must enter 4 colours!" +
+                                                            "\nTry again:";
+        public const string InvalidColourErrorMsg = "Error: you have given an invalid colour!" +
+                                                 "\nTry again:";
+        public const string ValidGuess = "Valid guess, calculating clues...";
+        public const string Delimiter = " ";
+        
+
         public const string RegexColourPattern = @"BLUE|RED|GREEN|ORANGE|PURPLE|YELLOW";
     }
 }

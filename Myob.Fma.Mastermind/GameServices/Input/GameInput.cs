@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Infrastructure;
 
@@ -32,38 +33,51 @@ namespace Myob.Fma.Mastermind.GameServices.Input
                _consoleIoService.DisplayOutput(message);
            }
 
+           return GetValidColours(usersGuess);
+
         }
 
         private bool IsUsersInputValid(string usersGuess, out string message)
         {
             if (IsTheCorrectAmountOfColoursEntered(usersGuess) == false)
             {
-                message = "Error: you must pass 4 colours!";
+                message = Constant.IncorrectNumberOfColoursErrorMsg;
                 return false;
             }
             
             if (IsColoursValid(usersGuess) == false)
             {
-                message = "Error: you have given an invalid colour!";
+                message = Constant.InvalidColourErrorMsg;
                 return false;
             }
 
-            message = "Valid guess, calculating clues...";
+            message = Constant.ValidGuess;
+            Thread.Sleep(2000);
             return true;
         }
         
         private bool IsTheCorrectAmountOfColoursEntered(string usersGuess)
         {
-            return usersGuess.Split(" ").Length == 4;
+            return usersGuess.Split(Constant.Delimiter).Length == 4;
         }
         
         private bool IsColoursValid(string usersGuess)
         {
+            var validColoursMatched = GetValidColours(usersGuess);
+
+            return validColoursMatched.Count() == 4;
+        }
+
+        private List<Colours> GetValidColours(string usersGuess)
+        {
             var usersGuessCapitalized = usersGuess.ToUpper();
 
-            var regex = new Regex(Constant.RegexColourPattern);
+            var colourMatches = new Regex(Constant.RegexColourPattern);
 
-            return regex.Matches(usersGuessCapitalized).Count() == 4;
+            return colourMatches
+                .Matches(usersGuessCapitalized)
+                .Select(m => (Colours)Enum.Parse(typeof(Colours), m.Value))
+                .ToList();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Reflection.Metadata;
 using Myob.Fma.Mastermind.Infrastructure;
 using Myob.Fma.Mastermind.Constants;
+using Myob.Fma.Mastermind.GameServices.Input;
 using Constant = Myob.Fma.Mastermind.Constants.Constant;
 
 namespace Myob.Fma.Mastermind
@@ -10,9 +11,12 @@ namespace Myob.Fma.Mastermind
     {
         static void Main(string[] args)
         {
-            var consoleOutput = new ConsoleIoService();
-            
-            consoleOutput.DisplayOutput(Constant.Instructions);
+            var consoleOutputService = new ConsoleIoService();
+
+            var inputReader = new GameInput(consoleOutputService);
+
+            inputReader.GetUsersCodeGuess();
+
         }
     }
 }
