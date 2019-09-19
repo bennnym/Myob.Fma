@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Reflection.Metadata;
+using Myob.Fma.Mastermind.Infrastructure;
+using Myob.Fma.Mastermind.Constants;
+using Constant = Myob.Fma.Mastermind.Constants.Constant;
 
 namespace Myob.Fma.Mastermind
 {
@@ -6,7 +10,9 @@ namespace Myob.Fma.Mastermind
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var consoleOutput = new ConsoleIoService();
+            
+            consoleOutput.DisplayOutput(Constant.Instructions);
         }
     }
 }

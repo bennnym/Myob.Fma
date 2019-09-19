@@ -9,7 +9,7 @@ namespace Myob.Fma.Mastermind.Infrastructure
             Console.WriteLine(message);
         }
 
-        public string ReadUserInput()
+        public string GetUserInput()
         {
             return Console.ReadLine();
         }
