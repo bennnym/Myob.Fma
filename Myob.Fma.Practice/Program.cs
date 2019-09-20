@@ -11,19 +11,25 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            var tester = "//[*1*][%]\n1*1*2%3";
+            Console.WriteLine(Add("-1,3,-5"));
 
-            var update = tester.Replace("//", "YOLO");
-
-            var regexSearch = new Regex(@"(?<=\])(\n).*");
-
-            var match = regexSearch.Match(tester);
-
-            Console.WriteLine(match);
-
-
-
-
+        }
+        
+        public static string Add(string input, int indexIHaveLookedAt = 0, string indexes = "")
+        {
+            if (input.Length == 0)
+            {
+                return indexes; // base case
+            }
+            var charachterIAmLookigAt = input[0];
+            
+            if (charachterIAmLookigAt is '-')
+            {
+                indexes += indexIHaveLookedAt + " ";
+            }
+            var newInput = input.Substring(1, input.Length - 1);
+            
+            return Add(newInput, indexIHaveLookedAt + 1, indexes);
         }
     }
 }

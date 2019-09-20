@@ -5,16 +5,19 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Infrastructure;
+using Myob.Fma.Mastermind.Utilities;
 
 namespace Myob.Fma.Mastermind.GameServices.Input
 {
     public class GameInput : IGameInput
     {
         private readonly ConsoleIoService _consoleIoService;
+        private readonly PatternValidator _patternValidator;
 
-        public GameInput(ConsoleIoService consoleIoService)
+        public GameInput(ConsoleIoService consoleIoService, PatternValidator patternValidator)
         {
             _consoleIoService = consoleIoService;
+            _patternValidator = patternValidator;
         }
         public List<Colours> GetUsersCodeGuess()
         {
@@ -51,14 +54,16 @@ namespace Myob.Fma.Mastermind.GameServices.Input
                 return false;
             }
 
-            message = Constant.ValidGuess;
+            message = Constant.ValidGuessMsg;
             Thread.Sleep(2000);
             return true;
         }
         
         private bool IsTheCorrectAmountOfColoursEntered(string usersGuess)
         {
-            return usersGuess.Split(Constant.Delimiter).Length == 4;
+            var wordSearch = new Regex(Constant.RegexWordSearchPattern);
+            
+            return wordSearch.Matches(usersGuess).Count() == 4;
         }
         
         private bool IsColoursValid(string usersGuess)

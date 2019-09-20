@@ -4,42 +4,63 @@ using Moq;
 using Myob.Fma.Mastermind;
 using Myob.Fma.Mastermind.GameServices.Input;
 using Myob.Fma.Mastermind.Infrastructure;
+using Myob.Fma.Mastermind.Utilities;
 using Xunit;
 
 namespace Myob.Fma.MastermindTests
 {
     public class GameInputTests
     {
-//        [Fact]
-//        public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_Entered()
-//        {
-//            var mockConsoleService = new Mock<ConsoleIoService>();
-//            var inputReader = new GameInput(mockConsoleService.Object);
-//            mockConsoleService.Setup(i => i.GetUserInput()).Returns("red yellow purple green");
-//
-//
-//            // Arrange
-//            var guesses = inputReader.GetUsersCodeGuess();
-//
-//            // Assert
-//            Assert.Equal(new List<Colours>() {Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN}, guesses);
-//        }
+        [Fact]
+        public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_End()
+        {
+            var mockConsoleService = new Mock<ConsoleIoService>();
+            var patternService = new Mock<PatternValidator>();
 
-//        [Theory]
-//        [InlineData("red yellow purple green", new List<Colours>(){Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN})]
-//        public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_Entered(string userInput, List<Colours> expectedOutput)
-//        {
-//            var mockConsoleService = new Mock<ConsoleIoService>();
-//            var inputReader = new GameInput(mockConsoleService.Object);
-//            mockConsoleService.Setup(i => i.GetUserInput()).Returns(userInput);
-//
-//
-//            // Arrange
-//            var guesses = inputReader.GetUsersCodeGuess();
-//
-//            // Assert
-//            Assert.Equal(expectedOutput, guesses);
-//        }
+            var inputReader = new GameInput(mockConsoleService.Object, patternService.Object);
+            mockConsoleService.Setup(i => i.GetUserInput()).Returns("red yellow purple green");
+
+
+            // Arrange
+            var guesses = inputReader.GetUsersCodeGuess();
+
+            // Assert
+            Assert.Equal(new List<Colours>() {Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN}, guesses);
+        }
+
+        [Theory]
+        [InlineData("red yellow blue, orange")]
+        [InlineData("red,red,blue,orange")]
+        [InlineData("red,   red,blue//orange")]
+        public void Should_Return_True_If_The_User_Has_Entered_Four_Words(string input)
+        {
+            // Arrange
+            var patternValidator = new PatternValidator();
+            
+            // Act
+            var userHasEnteredFourColours =
+                patternValidator.IsTheCorrectAmountOfColoursEntered(input);
+            
+            // Assert
+            Assert.True(userHasEnteredFourColours);
+        }
+        
+        [Theory]
+        [InlineData("red blue, orange")]
+        [InlineData("redred,blue,orange")]
+        [InlineData("red")]
+        public void Should_Return_False_If_The_User_Has_Entered_Four_Words(string input)
+        {
+            // Arrange
+            var patternValidator = new PatternValidator();
+            
+            // Act
+            var userHasEnteredFourColours =
+                patternValidator.IsTheCorrectAmountOfColoursEntered(input);
+            
+            // Assert
+            Assert.False(userHasEnteredFourColours);
+        }
 
         [Theory]
         [MemberData(nameof(Data))]
@@ -48,7 +69,8 @@ namespace Myob.Fma.MastermindTests
         {
             // Arrange
             var mockConsoleService = new Mock<ConsoleIoService>();
-            var inputReader = new GameInput(mockConsoleService.Object);
+            var patternService = new Mock<PatternValidator>();
+            var inputReader = new GameInput(mockConsoleService.Object, patternService.Object);
             mockConsoleService.Setup(i => i.GetUserInput()).Returns(userInput);
 
 
