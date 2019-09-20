@@ -42,6 +42,12 @@ namespace Myob.Fma.BookingLibrary
             return member.BorrowingLimit >= currentBorrowedItems;
         }
 
+        public IBorrowedItem GetBorrowedItemForMember(int membershipId, int resourceId)
+        {
+            return _borrowedItems
+                .FirstOrDefault(i => i.Member.MembershipId == membershipId && i.Resource.Id == resourceId && i.IsReturned == false);
+        }
+
         public void Borrow(int resourceId, int membershipId)
         {
             if (IsResourceAvailable(resourceId) == false)

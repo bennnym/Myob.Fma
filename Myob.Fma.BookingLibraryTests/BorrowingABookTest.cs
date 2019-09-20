@@ -151,6 +151,19 @@ namespace Myob.Fma.BookingLibraryTests
             // Assert
             Assert.False(borrowingLimitIsValid);
         }
+
+        [Fact]
+        public void Should_Have_A_Borrowed_Item_When_Borrowing_A_Resource()
+        {
+            // Arrange
+            var library = new Library(_resources, _memberships, _borrowedItems);
+
+            // Act
+            var borrowedItem = library.GetBorrowedItemForMember(membershipId, resourceId);
+            
+            // Assert
+            Assert.NotNull(borrowedItem);
+        }
         
         
 
