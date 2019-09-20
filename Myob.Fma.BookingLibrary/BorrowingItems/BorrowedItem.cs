@@ -10,7 +10,7 @@ namespace Myob.Fma.BookingLibrary.BorrowingItems
         public IMembership Member { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime BorrowedDate { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public DateTime ReturnedDate { get; set; }
         public bool IsReturned { get; set; }
     }
 }
