@@ -19,6 +19,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input
             _consoleIoService = consoleIoService;
             _patternValidator = patternValidator;
         }
+
         public List<Colours> GetUsersCodeGuess()
         {
             _consoleIoService.DisplayOutput(Constant.Welcome);
@@ -26,29 +27,28 @@ namespace Myob.Fma.Mastermind.GameServices.Input
 
             var isUserInputValid = false;
             var usersGuess = string.Empty;
-            
-           while (isUserInputValid == false)
-           {
-               usersGuess = _consoleIoService.GetUserInput();
 
-               isUserInputValid = IsUsersInputValid(usersGuess, out string message);
-               
-               _consoleIoService.DisplayOutput(message);
-           }
+            while (isUserInputValid == false)
+            {
+                usersGuess = _consoleIoService.GetUserInput();
 
-           return GetValidColours(usersGuess);
+                isUserInputValid = IsUsersInputValid(usersGuess, out string message);
 
+                _consoleIoService.DisplayOutput(message);
+            }
+
+            return _patternValidator.GetValidColours(usersGuess);
         }
 
         private bool IsUsersInputValid(string usersGuess, out string message)
         {
-            if (IsTheCorrectAmountOfColoursEntered(usersGuess) is false)
+            if (_patternValidator.IsCountOfWordsInGuessValid(usersGuess) == false)
             {
                 message = Constant.IncorrectNumberOfColoursErrorMsg;
                 return false;
             }
-            
-            if (IsColoursValid(usersGuess) is false)
+
+            if (_patternValidator.AreColoursValid(usersGuess) == false)
             {
                 message = Constant.InvalidColourErrorMsg;
                 return false;
@@ -57,32 +57,6 @@ namespace Myob.Fma.Mastermind.GameServices.Input
             message = Constant.ValidGuessMsg;
             Thread.Sleep(2000);
             return true;
-        }
-        
-        private bool IsTheCorrectAmountOfColoursEntered(string usersGuess)
-        {
-            var wordSearch = new Regex(Constant.RegexWordSearchPattern);
-            
-            return wordSearch.Matches(usersGuess).Count() == 4;
-        }
-        
-        private bool IsColoursValid(string usersGuess)
-        {
-            var validColoursMatched = GetValidColours(usersGuess);
-
-            return validColoursMatched.Count() == 4;
-        }
-
-        private List<Colours> GetValidColours(string usersGuess)
-        {
-            var usersGuessCapitalized = usersGuess.ToUpper();
-
-            var colourMatches = new Regex(Constant.RegexColourPattern);
-
-            return colourMatches
-                .Matches(usersGuessCapitalized)
-                .Select(m => (Colours)Enum.Parse(typeof(Colours), m.Value))
-                .ToList();
         }
     }
 }

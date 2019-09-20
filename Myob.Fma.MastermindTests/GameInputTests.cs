@@ -23,7 +23,7 @@ namespace Myob.Fma.MastermindTests
             
             // Act
             var userHasEnteredFourColours =
-                patternValidator.IsTheCorrectAmountOfColoursEntered(input);
+                patternValidator.IsCountOfWordsInGuessValid(input);
             
             // Assert
             Assert.True(userHasEnteredFourColours);
@@ -33,17 +33,33 @@ namespace Myob.Fma.MastermindTests
         [InlineData("red blue, orange")]
         [InlineData("redred,blue,orange")]
         [InlineData("red")]
-        public void Should_Return_False_If_The_User_Has_Entered_Four_Words(string input)
+        public void Should_Return_False_If_The_User_Has_Entered_Less_Than_Four_Words(string input)
         {
             // Arrange
             var patternValidator = new PatternValidator();
             
             // Act
             var userHasEnteredFourColours =
-                patternValidator.IsTheCorrectAmountOfColoursEntered(input);
+                patternValidator.IsCountOfWordsInGuessValid(input);
             
             // Assert
             Assert.False(userHasEnteredFourColours);
+        }
+
+        [Theory]
+        [InlineData("red orange, orange orange")]
+        [InlineData("red red,blue,orange")]
+        [InlineData("purple blue green yellow")]
+        public void Should_Return_True_When_User_Has_Entered_Valid_Colours(string input)
+        {
+            // Arrange
+            var patternValidator = new PatternValidator();
+            
+            // Act
+            var coloursValid = patternValidator.AreColoursValid(input);
+            
+            // Assert
+            Assert.True(coloursValid);
         }
 
         [Theory]
