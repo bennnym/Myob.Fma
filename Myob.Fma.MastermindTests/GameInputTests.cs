@@ -11,22 +11,6 @@ namespace Myob.Fma.MastermindTests
 {
     public class GameInputTests
     {
-        [Fact]
-        public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_End()
-        {
-            var mockConsoleService = new Mock<ConsoleIoService>();
-            var patternService = new Mock<PatternValidator>();
-
-            var inputReader = new GameInput(mockConsoleService.Object, patternService.Object);
-            mockConsoleService.Setup(i => i.GetUserInput()).Returns("red yellow purple green");
-
-
-            // Arrange
-            var guesses = inputReader.GetUsersCodeGuess();
-
-            // Assert
-            Assert.Equal(new List<Colours>() {Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN}, guesses);
-        }
 
         [Theory]
         [InlineData("red yellow blue, orange")]
