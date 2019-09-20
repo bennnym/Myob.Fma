@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Infrastructure;
@@ -32,7 +29,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input
             {
                 usersGuess = _consoleIoService.GetUserInput();
 
-                isUserInputValid = IsUsersInputValid(usersGuess, out string message);
+                isUserInputValid = IsUsersInputValid(usersGuess, out var message);
 
                 _consoleIoService.DisplayOutput(message);
             }
