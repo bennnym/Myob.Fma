@@ -3,22 +3,35 @@ using System.Collections.Generic;
 using Moq;
 using Myob.Fma.Mastermind;
 using Myob.Fma.Mastermind.GameServices.Input;
+using Myob.Fma.Mastermind.GameServices.Input.Processor;
+using Myob.Fma.Mastermind.GameServices.Input.Validations;
+using Myob.Fma.Mastermind.GameServices.Input.Validator;
 using Myob.Fma.Mastermind.Infrastructure;
-using Myob.Fma.Mastermind.Utilities;
 using Xunit;
 
 namespace Myob.Fma.MastermindTests
 {
     public class GameInputTests
     {
-        private readonly List<IValidation> _validations;
+        private readonly IInputValidator _inputValidatorWordLength;
+        private readonly InputValidator _inputValidator;
+
         public GameInputTests()
         {
-            _validations = new List<IValidation>()
-            {
-                new ColourValidation(),
-                new WordCountValidation()
-            };
+            _inputValidatorWordLength = new InputValidator(
+                new List<IValidation>()
+                {
+                    new WordCountValidation()
+                });
+
+
+            _inputValidator = new InputValidator(
+                new List<IValidation>()
+                {
+                    new WordCountValidation(),
+                    new ColourValidation(),
+                    new GuessLimitValidation()
+                });
         }
 
         [Theory]
@@ -27,32 +40,44 @@ namespace Myob.Fma.MastermindTests
         [InlineData("red,   red,blue//orange")]
         public void Should_Return_True_If_The_User_Has_Entered_Four_Words(string input)
         {
-            // Arrange
-            var patternValidator = new PatternValidator(_validations);
-            
             // Act
             var userHasEnteredFourColours =
-                patternValidator.IsUsersInputValid(input, out string message);
-            
+                _inputValidatorWordLength.IsUsersInputValid(input, out string message);
+
             // Assert
             Assert.True(userHasEnteredFourColours);
         }
-        
+
         [Theory]
         [InlineData("red blue, orange")]
         [InlineData("redred,blue,orange")]
         [InlineData("red")]
         public void Should_Return_False_If_The_User_Has_Entered_Less_Than_Four_Words(string input)
         {
-            // Arrange
-            var patternValidator = new PatternValidator(_validations);
-            
             // Act
             var userHasEnteredFourColours =
-                patternValidator.IsUsersInputValid(input, out string message);
-            
+                _inputValidatorWordLength.IsUsersInputValid(input, out string message);
+
             // Assert
             Assert.False(userHasEnteredFourColours);
+        }
+
+        [Fact]
+        public void Should_Return_False_If_The_User_Has_Made_60_Guesses()
+        {
+            // Arrange
+            var inputValidatorGuessCount = new InputValidator(
+                new List<IValidation>()
+                {
+                    new FakeGuessLimitValidation()
+                });
+
+            // Act
+            var userHasMadeLessThanSixtyGuesses =
+                inputValidatorGuessCount.IsUsersInputValid("red red red red", out string message);
+
+            // Assert
+            Assert.False(userHasMadeLessThanSixtyGuesses);
         }
 
         [Theory]
@@ -61,12 +86,15 @@ namespace Myob.Fma.MastermindTests
         [InlineData("purple blue green yellow")]
         public void Should_Return_True_When_User_Has_Entered_Valid_Colours(string input)
         {
-            // Arrange
-            var patternValidator = new PatternValidator(_validations);
-            
+            var inputValidatorColor = new InputValidator(
+                new List<IValidation>()
+                {
+                    new ColourValidation(),
+                });
+
             // Act
-            var coloursValid = patternValidator.IsUsersInputValid(input, out string message);
-            
+            var coloursValid = inputValidatorColor.IsUsersInputValid(input, out string message);
+
             // Assert
             Assert.True(coloursValid);
         }
@@ -78,8 +106,7 @@ namespace Myob.Fma.MastermindTests
         {
             // Arrange
             var mockConsoleService = new Mock<ConsoleIoService>();
-            var patternValidator = new PatternValidator(_validations);
-            var inputReader = new GameInput(mockConsoleService.Object, patternValidator);
+            var inputReader = new InputProcessor(mockConsoleService.Object, _inputValidator);
             mockConsoleService.Setup(i => i.GetUserInput()).Returns(userInput);
 
 

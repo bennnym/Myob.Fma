@@ -1,20 +1,19 @@
 using System.Collections.Generic;
-using System.Threading;
 using Myob.Fma.Mastermind.Constants;
+using Myob.Fma.Mastermind.GameServices.Input.Validator;
 using Myob.Fma.Mastermind.Infrastructure;
-using Myob.Fma.Mastermind.Utilities;
 
-namespace Myob.Fma.Mastermind.GameServices.Input
+namespace Myob.Fma.Mastermind.GameServices.Input.Processor
 {
-    public class GameInput : IGameInput
+    public class InputProcessor : IInputProcessor
     {
         private readonly ConsoleIoService _consoleIoService;
-        private readonly PatternValidator _patternValidator;
+        private readonly IInputValidator _inputValidator;
 
-        public GameInput(ConsoleIoService consoleIoService, PatternValidator patternValidator)
+        public InputProcessor(ConsoleIoService consoleIoService, IInputValidator patternValidator)
         {
             _consoleIoService = consoleIoService;
-            _patternValidator = patternValidator;
+            _inputValidator = patternValidator;
         }
 
         public List<Colours> GetUsersCodeGuess()
@@ -29,12 +28,12 @@ namespace Myob.Fma.Mastermind.GameServices.Input
             {
                 usersGuess = _consoleIoService.GetUserInput();
 
-                isUserInputValid = _patternValidator.IsUsersInputValid(usersGuess, out var message);
+                isUserInputValid = _inputValidator.IsUsersInputValid(usersGuess, out var message);
 
                 _consoleIoService.DisplayOutput(message);
             }
 
-            return _patternValidator.GetValidColours(usersGuess);
+            return _inputValidator.GetValidColours(usersGuess);
         }
     }
 }

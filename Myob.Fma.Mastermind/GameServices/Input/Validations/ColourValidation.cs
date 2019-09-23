@@ -2,12 +2,13 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Myob.Fma.Mastermind.Constants;
+using Myob.Fma.Mastermind.GameServices.Input.Validator;
 
-namespace Myob.Fma.Mastermind.Utilities
+namespace Myob.Fma.Mastermind.GameServices.Input.Validations
 {
     public class ColourValidation : IValidation
     {
-        public bool IsValid(string userInput)
+        public bool IsNotValid(string userInput)
         {
             var usersGuessCapitalized = userInput.ToUpper();
 
@@ -17,7 +18,7 @@ namespace Myob.Fma.Mastermind.Utilities
                 .Matches(usersGuessCapitalized)
                 .Select(m => (Colours) Enum.Parse(typeof(Colours), m.Value));
             
-            return validColoursMatched.Count() == 4;
+            return validColoursMatched.Count() != 4;
         }
 
         public string GetErrorMessage()

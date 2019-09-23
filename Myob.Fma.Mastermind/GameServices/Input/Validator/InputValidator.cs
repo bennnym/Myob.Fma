@@ -2,26 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using Myob.Fma.Mastermind.Constants;
 
-namespace Myob.Fma.Mastermind.Utilities
+namespace Myob.Fma.Mastermind.GameServices.Input.Validator
 {
-    public class PatternValidator : IPatternValidator
+    public class InputValidator : IInputValidator
     {
         private readonly List<IValidation> _validations;
 
-        public PatternValidator(List<IValidation> validations)
+        public InputValidator(List<IValidation> validations)
         {
             _validations = validations;
         }
         public bool IsUsersInputValid(string usersGuess, out string message)
         {
-            foreach (var validation in _validations)
+            foreach (var validityCheck in _validations)
             {
-                if (validation.IsValid(usersGuess) == false)
+                if (validityCheck.IsNotValid(usersGuess))
                 {
-                    message = validation.GetErrorMessage();
+                    message = validityCheck.GetErrorMessage();
                     return false;
                 }
             }

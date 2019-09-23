@@ -14,11 +14,12 @@ namespace Myob.Fma.Mastermind.Constants
                                                             "\nTry again:";
         public const string InvalidColourErrorMsg = "Error: you have given an invalid colour!" +
                                                  "\nTry again:";
+        public const string GuessLimitExceededErrorMsg = "Error: you must pass 4 colours";
         public const string ValidGuessMsg = "Valid guess, calculating clues...";
-        public const string Delimiter = " ";
-        
         
         public const string RegexColourPattern = @"BLUE|RED|GREEN|ORANGE|PURPLE|YELLOW";
         public const string RegexWordSearchPattern = @"[a-zA-Z]+";
+
+        public const int GuessLimit = 60;
     }
 }
