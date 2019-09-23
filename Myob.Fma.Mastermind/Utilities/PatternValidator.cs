@@ -9,6 +9,27 @@ namespace Myob.Fma.Mastermind.Utilities
 {
     public class PatternValidator : IPatternValidator
     {
+        private readonly List<IValidation> _validations;
+
+        public PatternValidator(List<IValidation> validations)
+        {
+            _validations = validations;
+        }
+        public bool IsUsersInputValid(string usersGuess, out string message)
+        {
+            foreach (var validation in _validations)
+            {
+                if (validation.IsValid(usersGuess) == false)
+                {
+                    message = validation.GetErrorMessage();
+                    return false;
+                }
+            }
+
+            message = Constant.ValidGuessMsg;
+            return true;
+        }
+
         public List<Colours> GetValidColours(string usersGuess)
         {
             var usersGuessCapitalized = usersGuess.ToUpper();
@@ -19,39 +40,6 @@ namespace Myob.Fma.Mastermind.Utilities
                 .Matches(usersGuessCapitalized)
                 .Select(m => (Colours) Enum.Parse(typeof(Colours), m.Value))
                 .ToList();
-        }
-
-        public bool IsUsersInputValid(string usersGuess, out string message)
-        {
-            if (IsCountOfWordsInGuessValid(usersGuess) == false)
-            {
-                message = Constant.IncorrectNumberOfColoursErrorMsg;
-                return false;
-            }
-
-            if (AreColoursValid(usersGuess) == false)
-            {
-                message = Constant.InvalidColourErrorMsg;
-                return false;
-            }
-
-            message = Constant.ValidGuessMsg;
-            Thread.Sleep(2000);
-            return true;
-        }
-
-        private bool IsCountOfWordsInGuessValid(string userGuess)
-        {
-            var wordSearch = new Regex(Constant.RegexWordSearchPattern);
-
-            return wordSearch.Matches(userGuess).Count() == 4;
-        }
-
-        private bool AreColoursValid(string userGuess)
-        {
-            var validColoursMatched = GetValidColours(userGuess);
-
-            return validColoursMatched.Count() == 4;
         }
     }
 }

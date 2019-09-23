@@ -11,6 +11,15 @@ namespace Myob.Fma.MastermindTests
 {
     public class GameInputTests
     {
+        private readonly List<IValidation> _validations;
+        public GameInputTests()
+        {
+            _validations = new List<IValidation>()
+            {
+                new ColourValidation(),
+                new WordCountValidation()
+            };
+        }
 
         [Theory]
         [InlineData("red yellow blue, orange")]
@@ -19,7 +28,7 @@ namespace Myob.Fma.MastermindTests
         public void Should_Return_True_If_The_User_Has_Entered_Four_Words(string input)
         {
             // Arrange
-            var patternValidator = new PatternValidator();
+            var patternValidator = new PatternValidator(_validations);
             
             // Act
             var userHasEnteredFourColours =
@@ -36,7 +45,7 @@ namespace Myob.Fma.MastermindTests
         public void Should_Return_False_If_The_User_Has_Entered_Less_Than_Four_Words(string input)
         {
             // Arrange
-            var patternValidator = new PatternValidator();
+            var patternValidator = new PatternValidator(_validations);
             
             // Act
             var userHasEnteredFourColours =
@@ -53,7 +62,7 @@ namespace Myob.Fma.MastermindTests
         public void Should_Return_True_When_User_Has_Entered_Valid_Colours(string input)
         {
             // Arrange
-            var patternValidator = new PatternValidator();
+            var patternValidator = new PatternValidator(_validations);
             
             // Act
             var coloursValid = patternValidator.IsUsersInputValid(input, out string message);
@@ -69,8 +78,8 @@ namespace Myob.Fma.MastermindTests
         {
             // Arrange
             var mockConsoleService = new Mock<ConsoleIoService>();
-            var patternService = new Mock<PatternValidator>();
-            var inputReader = new GameInput(mockConsoleService.Object, patternService.Object);
+            var patternValidator = new PatternValidator(_validations);
+            var inputReader = new GameInput(mockConsoleService.Object, patternValidator);
             mockConsoleService.Setup(i => i.GetUserInput()).Returns(userInput);
 
 
