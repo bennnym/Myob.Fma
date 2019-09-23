@@ -4,8 +4,7 @@ namespace Myob.Fma.Mastermind.Utilities
 {
     public interface IPatternValidator
     {
-        bool IsCountOfWordsInGuessValid(string userGuess);
-        bool AreColoursValid(string userGuess);
+        bool IsUsersInputValid(string userInput, out string message);
         List<Colours> GetValidColours(string userGuess);
     }
 }

@@ -29,31 +29,12 @@ namespace Myob.Fma.Mastermind.GameServices.Input
             {
                 usersGuess = _consoleIoService.GetUserInput();
 
-                isUserInputValid = IsUsersInputValid(usersGuess, out var message);
+                isUserInputValid = _patternValidator.IsUsersInputValid(usersGuess, out var message);
 
                 _consoleIoService.DisplayOutput(message);
             }
 
             return _patternValidator.GetValidColours(usersGuess);
-        }
-
-        private bool IsUsersInputValid(string usersGuess, out string message)
-        {
-            if (_patternValidator.IsCountOfWordsInGuessValid(usersGuess) == false)
-            {
-                message = Constant.IncorrectNumberOfColoursErrorMsg;
-                return false;
-            }
-
-            if (_patternValidator.AreColoursValid(usersGuess) == false)
-            {
-                message = Constant.InvalidColourErrorMsg;
-                return false;
-            }
-
-            message = Constant.ValidGuessMsg;
-            Thread.Sleep(2000);
-            return true;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Myob.Fma.MastermindTests
             
             // Act
             var userHasEnteredFourColours =
-                patternValidator.IsCountOfWordsInGuessValid(input);
+                patternValidator.IsUsersInputValid(input, out string message);
             
             // Assert
             Assert.True(userHasEnteredFourColours);
@@ -40,7 +40,7 @@ namespace Myob.Fma.MastermindTests
             
             // Act
             var userHasEnteredFourColours =
-                patternValidator.IsCountOfWordsInGuessValid(input);
+                patternValidator.IsUsersInputValid(input, out string message);
             
             // Assert
             Assert.False(userHasEnteredFourColours);
@@ -56,7 +56,7 @@ namespace Myob.Fma.MastermindTests
             var patternValidator = new PatternValidator();
             
             // Act
-            var coloursValid = patternValidator.AreColoursValid(input);
+            var coloursValid = patternValidator.IsUsersInputValid(input, out string message);
             
             // Assert
             Assert.True(coloursValid);
