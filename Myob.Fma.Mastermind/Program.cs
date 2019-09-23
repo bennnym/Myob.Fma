@@ -27,7 +27,7 @@ namespace Myob.Fma.Mastermind
 
             var inputReader = new InputProcessor(consoleServices, patternValidator);
 
-            inputReader.GetUsersCodeGuess();
+            inputReader.GetUsersInput();
 
         }
     }

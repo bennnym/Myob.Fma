@@ -16,7 +16,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Processor
             _inputValidator = patternValidator;
         }
 
-        public List<Colours> GetUsersCodeGuess()
+        public List<Colours> GetUsersInput()
         {
             _consoleIoService.DisplayOutput(Constant.Welcome);
             _consoleIoService.DisplayOutput(Constant.Instructions);

@@ -111,7 +111,7 @@ namespace Myob.Fma.MastermindTests
 
 
             // Act
-            var guesses = inputReader.GetUsersCodeGuess();
+            var guesses = inputReader.GetUsersInput();
 
             // Assert
             Assert.Equal(expectedOutput, guesses);
