@@ -1,3 +1,4 @@
+using System;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
 

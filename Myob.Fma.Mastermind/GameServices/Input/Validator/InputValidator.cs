@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Myob.Fma.Mastermind.Constants;
+using Myob.Fma.Mastermind.Enums;
 
 namespace Myob.Fma.Mastermind.GameServices.Input.Validator
 {
@@ -29,7 +30,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
             return true;
         }
 
-        public List<Colours> GetValidColours(string usersGuess)
+        public List<GuessColour> GetValidColours(string usersGuess)
         {
             var usersGuessCapitalized = usersGuess.ToUpper();
 
@@ -37,7 +38,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
 
             return colourMatches
                 .Matches(usersGuessCapitalized)
-                .Select(m => (Colours) Enum.Parse(typeof(Colours), m.Value))
+                .Select(m => (GuessColour) Enum.Parse(typeof(GuessColour), m.Value))
                 .ToList();
         }
     }

@@ -1,7 +1,7 @@
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
 
-namespace Myob.Fma.MastermindTests
+namespace Myob.Fma.MastermindTests.Fakes
 {
     public class FakeGuessLimitValidation : IValidation
     {

@@ -1,6 +1,6 @@
-namespace Myob.Fma.Mastermind
+namespace Myob.Fma.Mastermind.Enums
 {
-    public enum Colours
+    public enum GuessColour
     {
         RED,
         BLUE,

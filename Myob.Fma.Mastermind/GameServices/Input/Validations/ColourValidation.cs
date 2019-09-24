@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Myob.Fma.Mastermind.Constants;
+using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
 
 namespace Myob.Fma.Mastermind.GameServices.Input.Validations
@@ -16,7 +17,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validations
 
             var validColoursMatched = colourMatches
                 .Matches(usersGuessCapitalized)
-                .Select(m => (Colours) Enum.Parse(typeof(Colours), m.Value));
+                .Select(m => (GuessColour) Enum.Parse(typeof(GuessColour), m.Value));
             
             return validColoursMatched.Count() != 4;
         }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Myob.Fma.Mastermind.Constants;
+using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
 using Myob.Fma.Mastermind.Infrastructure;
 
@@ -16,7 +17,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Processor
             _inputValidator = patternValidator;
         }
 
-        public List<Colours> GetUsersInput()
+        public List<GuessColour> GetUsersInput()
         {
             _consoleIoService.DisplayOutput(Constant.Welcome);
             _consoleIoService.DisplayOutput(Constant.Instructions);

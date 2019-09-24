@@ -8,7 +8,8 @@ namespace Myob.Fma.Mastermind.Constants
                                            "\nColours can be repeated so technically a sequence can all be RED RED RED RED" +
                                            "\nA Black element means you have guessed a colour in the correct position. " +
                                            "\nA White means it is in the wrong position but it is present in the code." +
-                                           "\nThe returned elements are always shuffled, so they will never be the same!";
+                                           "\nThe returned elements are always shuffled, so they will never be the same!" +
+                                            "\n";
 
         public const string IncorrectNumberOfColoursErrorMsg = "Error: you must enter 4 colours!" +
                                                             "\nTry again:";
@@ -21,5 +22,8 @@ namespace Myob.Fma.Mastermind.Constants
         public const string RegexWordSearchPattern = @"[a-zA-Z]+";
 
         public const int GuessLimit = 60;
+        public const int MinColoursRange = 0;
+        public const int MaxColoursRange = 5;
+        public const int ComputerArrayLen = 4;
     }
 }

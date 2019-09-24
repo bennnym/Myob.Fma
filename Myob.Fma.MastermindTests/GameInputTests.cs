@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using Moq;
 using Myob.Fma.Mastermind;
+using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Input;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;
 using Myob.Fma.Mastermind.GameServices.Input.Validations;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
 using Myob.Fma.Mastermind.Infrastructure;
+using Myob.Fma.MastermindTests.Fakes;
 using Xunit;
 
 namespace Myob.Fma.MastermindTests
@@ -102,7 +104,7 @@ namespace Myob.Fma.MastermindTests
         [Theory]
         [MemberData(nameof(Data))]
         public void Should_Return_A_List_Of_Colours_When_Valid_Colours_Are_Entered(string userInput,
-            List<Colours> expectedOutput)
+            List<GuessColour> expectedOutput)
         {
             // Arrange
             var mockConsoleService = new Mock<ConsoleIoService>();
@@ -123,17 +125,17 @@ namespace Myob.Fma.MastermindTests
                 new object[]
                 {
                     "red yellow purple green",
-                    new List<Colours>() {Colours.RED, Colours.YELLOW, Colours.PURPLE, Colours.GREEN}
+                    new List<GuessColour>() {GuessColour.RED, GuessColour.YELLOW, GuessColour.PURPLE, GuessColour.GREEN}
                 },
                 new object[]
                 {
                     "red red red red",
-                    new List<Colours>() {Colours.RED, Colours.RED, Colours.RED, Colours.RED}
+                    new List<GuessColour>() {GuessColour.RED, GuessColour.RED, GuessColour.RED, GuessColour.RED}
                 },
                 new object[]
                 {
                     "red yellow blue green",
-                    new List<Colours>() {Colours.RED, Colours.YELLOW, Colours.BLUE, Colours.GREEN}
+                    new List<GuessColour>() {GuessColour.RED, GuessColour.YELLOW, GuessColour.BLUE, GuessColour.GREEN}
                 },
             };
     }

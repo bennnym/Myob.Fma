@@ -7,6 +7,7 @@ using Myob.Fma.Mastermind.GameServices.Input;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;
 using Myob.Fma.Mastermind.GameServices.Input.Validations;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
+using Myob.Fma.Mastermind.GameServices.Players;
 using Constant = Myob.Fma.Mastermind.Constants.Constant;
 
 namespace Myob.Fma.Mastermind
@@ -22,12 +23,13 @@ namespace Myob.Fma.Mastermind
                 new GuessLimitValidation()
             };
             
+            var inputValidator = new InputValidator(validations);
             var consoleServices = new ConsoleIoService();
-            var patternValidator = new InputValidator(validations);
+            
+            var inputProcessor = new InputProcessor(consoleServices, inputValidator);
 
-            var inputReader = new InputProcessor(consoleServices, patternValidator);
+            var computerPlayer = ComputerPlayer.GetPlayer();
 
-            inputReader.GetUsersInput();
 
         }
     }
