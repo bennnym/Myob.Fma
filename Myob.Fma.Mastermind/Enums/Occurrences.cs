@@ -3,8 +3,8 @@ namespace Myob.Fma.Mastermind.Enums
     public enum Occurrences
     {
         Once = 1,
-        Twice,
-        ThreeTimes,
-        FourTimes,
+        Twice = 2,
+        ThreeTimes = 3,
+        FourTimes = 4,
     }
 }

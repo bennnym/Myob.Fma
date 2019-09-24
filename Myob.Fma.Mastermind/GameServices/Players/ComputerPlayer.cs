@@ -23,26 +23,6 @@ namespace Myob.Fma.Mastermind.GameServices.Players
             return _codeSelection;
         }
 
-        public Dictionary<GuessColour, Dictionary<int, List<int>>> GetCodeSelectionDictionary()
-        {
-            var codeDict = new Dictionary<GuessColour, Dictionary<int, List<int>>>();
-
-            for (int index = 0; index < _codeSelection.Length; index++)
-            {
-                var colour = _codeSelection[index];
-                var numberOfColours = _codeSelection.Count(c => c == colour);
-
-                if (codeDict.ContainsKey(colour))
-                {
-                    codeDict[colour][numberOfColours].Add(index);
-                }
-                
-                codeDict[colour][numberOfColours] = new List<int>(){index};
-            }
-
-            return codeDict;
-        }
-
         private static GuessColour[] GenerateRandomColourArray()
         {
             var randomNum = new Random();
