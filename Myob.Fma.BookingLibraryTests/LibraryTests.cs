@@ -20,7 +20,7 @@ namespace Myob.Fma.BookingLibraryTests
         public void Should_Throw_Exception_If_Resource_Is_Not_Available_To_Borrow()
         {
             // Arrange
-            const int resourceId = 3;
+            const int resourceId = NonExistentResource;
             const int membershipId = ZeroBorrowingLimitMember;
 
             // Assert
@@ -33,7 +33,7 @@ namespace Myob.Fma.BookingLibraryTests
         public void Should_Throw_Exception_If_Membership_Id_Is_Not_Active_To_Borrow()
         {
             // Arrange
-            const int resourceId = 1;
+            const int resourceId = Book;
             const int membershipId = ZeroBorrowingLimitMember;
 
             // Act
@@ -49,7 +49,7 @@ namespace Myob.Fma.BookingLibraryTests
         public void Should_Throw_Exception_If_Membership_Id_Borrowing_Limit_Is_Exceeded()
         {
             // Arrange
-            const int resourceId = 1;
+            const int resourceId = Book;
             const int membershipId = ZeroBorrowingLimitMember;
 
             // Act
@@ -68,7 +68,7 @@ namespace Myob.Fma.BookingLibraryTests
         public void Should_Check_If_A_Resource_Becomes_Unavailable_After_It_Is_Borrowed()
         {
             // Arrange
-            const int resourceId = 1;
+            const int resourceId = Book;
             const int membershipId = NormalMember;
 
             // Act
@@ -86,7 +86,7 @@ namespace Myob.Fma.BookingLibraryTests
         public void Should_Have_A_Borrowed_Item_When_Borrowing_A_Resource()
         {
             // Arrange
-            var resourceId = 1;
+            var resourceId = Book;
             var membershipId = NormalMember;
 
             // Act
@@ -137,6 +137,9 @@ namespace Myob.Fma.BookingLibraryTests
 
         private const int NormalMember = 2;
         private const int ZeroBorrowingLimitMember = 1;
+
+        private const int Book = 1;
+        private const int NonExistentResource = 99;
         private readonly Library _library;
         
     }
