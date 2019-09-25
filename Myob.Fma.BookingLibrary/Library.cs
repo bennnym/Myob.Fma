@@ -42,10 +42,11 @@ namespace Myob.Fma.BookingLibrary
             return member.BorrowingLimit >= currentBorrowedItems;
         }
 
-        public IBorrowedItem GetBorrowedItemForMember(int membershipId, int resourceId)
+        public IEnumerable<IBorrowedItem> GetBorrowedItemHistoryForMember(int membershipId, int resourceId)
         {
             return _borrowedItems
-                .FirstOrDefault(i => i.Member.MembershipId == membershipId && i.Resource.Id == resourceId && i.IsReturned == false);
+                .Where(i =>
+                    i.Member.MembershipId == membershipId && i.Resource.Id == resourceId);
         }
 
         public void Borrow(int resourceId, int membershipId)
@@ -60,6 +61,21 @@ namespace Myob.Fma.BookingLibrary
                 throw new MembersBorrowingLimitExceededException(Constant.MembersBorrowingLimitExceeded);
 
             CheckoutResource(resourceId);
+            CreateBorrowedItem(resourceId, membershipId, DateTime.UtcNow.AddDays(7)); //TODO: Refactor the duedate
+        }
+
+        private void CreateBorrowedItem(int resourceId, int membershipId, DateTime dueDate)
+        {
+            var borrowedItem = new BorrowedItem()
+            {
+                Resource = GetResource(resourceId),
+                Member = GetMemebership(membershipId),
+                DueDate = dueDate,
+                BorrowedDate = DateTime.UtcNow
+                
+            };
+            
+            _borrowedItems.Add(borrowedItem);
         }
 
         private IResource GetResource(int resourceId)
@@ -72,6 +88,10 @@ namespace Myob.Fma.BookingLibrary
             var resource = GetResource(resourceId);
             resource.IsAvailable = false;
         }
-        
+
+        private IMembership GetMemebership(int membershipId)
+        {
+            return _memberships.Find(m => m.MembershipId == membershipId);
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Myob.Fma.BookingLibrary;
 using Myob.Fma.BookingLibrary.BorrowingItems;
 using Myob.Fma.BookingLibrary.Core;
@@ -156,13 +157,17 @@ namespace Myob.Fma.BookingLibraryTests
         public void Should_Have_A_Borrowed_Item_When_Borrowing_A_Resource()
         {
             // Arrange
-            var library = new Library(_resources, _memberships, _borrowedItems);
+            var library = new Library(_resources, _memberships, _borrowedItems); //TODO: no params in ctor
+            var resourceId = 1;
+            var membershipId = 3;
 
             // Act
-            var borrowedItem = library.GetBorrowedItemForMember(membershipId, resourceId);
+            library.Borrow(resourceId,membershipId);
+            var borrowedItem = library.GetBorrowedItemHistoryForMember(membershipId, resourceId);
+            var itemIsBorrowed = borrowedItem.FirstOrDefault(x => !x.IsReturned && !x.ReturnedDate.HasValue);
             
             // Assert
-            Assert.NotNull(borrowedItem);
+            Assert.NotNull(itemIsBorrowed);
         }
         
         
