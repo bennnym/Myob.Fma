@@ -17,7 +17,7 @@ namespace Myob.Fma.MastermindTests
         public void Should_Return_An_Empty_Array_When_No_Matches_Are_Found()
         {
             // Arrange
-            var computerPlayer = new Mock<ComputerPlayer>();
+            var computerPlayer = new Mock<IPlayer>();
             var game = new Game(computerPlayer.Object);
 
             // Act
@@ -35,7 +35,7 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, HintColour[] expectedHint)
         {
             // Arrange
-            var computerPlayer = new Mock<ComputerPlayer>();
+            var computerPlayer = new Mock<IPlayer>();
             var game = new Game(computerPlayer.Object);
 
             // Act
@@ -52,7 +52,7 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, HintColour[] expectedHint)
         {
             // Arrange
-            var computerPlayer = new Mock<ComputerPlayer>();
+            var computerPlayer = new Mock<IPlayer>();
             var game = new Game(computerPlayer.Object);
 
             // Act
@@ -69,7 +69,7 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, int expectedBlackHints, int expectedWhiteHints)
         {
             // Arrange
-            var computerPlayer = new Mock<ComputerPlayer>();
+            var computerPlayer = new Mock<IPlayer>();
             var game = new Game(computerPlayer.Object);
 
             // Act

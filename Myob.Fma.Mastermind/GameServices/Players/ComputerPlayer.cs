@@ -31,7 +31,7 @@ namespace Myob.Fma.Mastermind.GameServices.Players
             return colours;
         }
 
-        public virtual GuessColour[] GetCodeSelection()
+        public  GuessColour[] GetCodeSelection()
         {
             return _codeSelection;
         }
