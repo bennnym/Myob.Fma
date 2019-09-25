@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata;
 using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Players;
@@ -8,6 +10,7 @@ namespace Myob.Fma.Mastermind
     public class Game
     {
         private readonly IPlayer _computerPlayer;
+        private readonly List<HintColour> _hints = new List<HintColour>();
 
         public Game(IPlayer computerPlayer)
         {
@@ -16,19 +19,45 @@ namespace Myob.Fma.Mastermind
 
         public HintColour[] Check(GuessColour[] userGuess)
         {
-            var computerSelection = _computerPlayer.GetCodeSelection();
+            _hints.Clear();
+            var exactMatches = CalculateExactMatchesInUsersGuess(userGuess);
+            SetExactMatchesToList(exactMatches);
+            SetMatchesWithIncorrectPositions(userGuess);
 
-            for (int i = 0; i < Constant.ComputerArrayLen; i++)
-            {
-            }
+            return _hints.ToArray();
+        }
+
+        private int CalculateExactMatchesInUsersGuess(GuessColour[] userGuess)
+        {
+            var computerSelection = _computerPlayer.GetCodeSelection();
             
-            return new HintColour[]
+            return computerSelection.Where((guess, index) => guess == userGuess[index]).Count();
+        }
+
+        private void SetExactMatchesToList(int exactMatches)
+        {
+            for (int i = 0; i < exactMatches; i++)
+            {
+                _hints.Add(HintColour.Black);
+            }
+        }
+
+        private void SetMatchesWithIncorrectPositions(GuessColour[] userGuess)
+        {
+            var computerSelection = _computerPlayer.GetCodeSelection();
+            
+            var unmatchedComputerSelection = computerSelection.Where((guess, index) => guess != userGuess[index]).ToList();
+            var unmatchedUserSelection = userGuess.Where((guess, index) => guess != computerSelection[index]).ToList();
+
+            foreach (var guess in unmatchedUserSelection)
+            {
+                if (unmatchedComputerSelection.Contains(guess))
                 {
-                    HintColour.Black, 
-                    HintColour.Black, 
-                    HintColour.Black, 
-                    HintColour.Black
-                };
+                    _hints.Add(HintColour.White);
+                    unmatchedComputerSelection.Remove(guess);
+                }
+            }
+
         }
     }
 }

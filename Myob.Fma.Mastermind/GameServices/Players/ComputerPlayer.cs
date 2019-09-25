@@ -10,17 +10,12 @@ namespace Myob.Fma.Mastermind.GameServices.Players
     {
         private GuessColour[] _codeSelection;
 
-        public static ComputerPlayer GetPlayer()
+        public static ComputerPlayer CreatePlayer()
         {
             return new ComputerPlayer()
             {
                 _codeSelection = GenerateRandomColourArray()
             };
-        }
-
-        public GuessColour[] GetCodeSelection()
-        {
-            return _codeSelection;
         }
 
         private static GuessColour[] GenerateRandomColourArray()
@@ -34,6 +29,11 @@ namespace Myob.Fma.Mastermind.GameServices.Players
             }
 
             return colours;
+        }
+
+        public virtual GuessColour[] GetCodeSelection()
+        {
+            return _codeSelection;
         }
     }
 }

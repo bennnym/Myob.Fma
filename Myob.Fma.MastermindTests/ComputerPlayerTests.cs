@@ -31,7 +31,7 @@ namespace Myob.Fma.MastermindTests
         public void Should_Return_An_Array_Of_Four_Black_Hints_If_Correct()
         {
             // Arrange
-            var computerPlayer = ComputerPlayer.GetPlayer();
+            var computerPlayer = ComputerPlayer.CreatePlayer();
 
             // Act
             var arrayIsFourElementsInSize = computerPlayer.GetCodeSelection().Length == 4;
@@ -40,10 +40,5 @@ namespace Myob.Fma.MastermindTests
             Assert.True(arrayIsFourElementsInSize);
         }
 
-        // red red green green
-
-        // vs
-
-        // red yellow blue orange
     }
 }

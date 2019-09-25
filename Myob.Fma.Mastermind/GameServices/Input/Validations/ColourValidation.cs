@@ -9,7 +9,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validations
 {
     public class ColourValidation : IValidation
     {
-        public bool IsNotValid(string userInput)
+        public bool IsValid(string userInput)
         {
             var usersGuessCapitalized = userInput.ToUpper();
 
@@ -19,7 +19,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validations
                 .Matches(usersGuessCapitalized)
                 .Select(m => (GuessColour) Enum.Parse(typeof(GuessColour), m.Value));
             
-            return validColoursMatched.Count() != 4;
+            return validColoursMatched.Count() == 4;
         }
 
         public string GetErrorMessage()

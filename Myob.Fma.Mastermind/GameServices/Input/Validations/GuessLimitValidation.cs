@@ -7,11 +7,11 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validations
     public class GuessLimitValidation : IValidation
     {
         private int _guessesCount;
-        public bool IsNotValid(string userInput)
+        public bool IsValid(string userInput)
         {
             _guessesCount += 1;
 
-            return _guessesCount >= Constant.GuessLimit;
+            return _guessesCount < Constant.GuessLimit;
         }
 
         public string GetErrorMessage()

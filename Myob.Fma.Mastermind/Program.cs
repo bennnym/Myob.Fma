@@ -28,7 +28,7 @@ namespace Myob.Fma.Mastermind
             
             var inputProcessor = new InputProcessor(consoleServices, inputValidator);
 
-            var computerPlayer = ComputerPlayer.GetPlayer();
+            var computerPlayer = ComputerPlayer.CreatePlayer();
 
 
         }

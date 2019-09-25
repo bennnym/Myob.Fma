@@ -19,7 +19,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
         {
             foreach (var validityCheck in _validations)
             {
-                if (validityCheck.IsNotValid(usersGuess))
+                if (validityCheck.IsValid(usersGuess) == false)
                 {
                     message = validityCheck.GetErrorMessage();
                     return false;

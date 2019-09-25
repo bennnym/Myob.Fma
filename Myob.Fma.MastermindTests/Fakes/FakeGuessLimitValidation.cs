@@ -7,11 +7,11 @@ namespace Myob.Fma.MastermindTests.Fakes
     {
         private int _guessesCount = 59;
 
-        public bool IsNotValid(string userInput)
+        public bool IsValid(string userInput)
         {
             _guessesCount += 1;
 
-            return _guessesCount >= Constant.GuessLimit;
+            return _guessesCount < Constant.GuessLimit;
         }
 
         public string GetErrorMessage()

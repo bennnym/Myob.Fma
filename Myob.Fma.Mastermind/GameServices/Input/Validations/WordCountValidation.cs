@@ -7,11 +7,11 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validations
 {
     public class WordCountValidation : IValidation
     {
-        public bool IsNotValid(string userInput)
+        public bool IsValid(string userInput)
         {
             var wordSearch = new Regex(Constant.RegexWordSearchPattern);
 
-            return wordSearch.Matches(userInput).Count() != 4;
+            return wordSearch.Matches(userInput).Count() == 4;
         }
 
         public string GetErrorMessage()
