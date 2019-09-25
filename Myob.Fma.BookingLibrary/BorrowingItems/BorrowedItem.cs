@@ -12,5 +12,6 @@ namespace Myob.Fma.BookingLibrary.BorrowingItems
         public DateTime BorrowedDate { get; set; }
         public DateTime? ReturnedDate { get; set; }
         public bool IsReturned { get; set; }
+        
     }
 }
