@@ -55,12 +55,12 @@ namespace Myob.Fma.BookingLibrary
             _resourceManager.RemoveResourceFromInventory(resource);
         }
 
-        public void SignUpMember(IMembership membership)
+        public void AddMember(IMembership membership)
         {
             _membershipManager.AddMembership(membership);
         }
 
-        public void CancelMembership(IMembership membership)
+        public void RemoveMembership(IMembership membership)
         {
             _membershipManager.RemoveMembership(membership);
         }

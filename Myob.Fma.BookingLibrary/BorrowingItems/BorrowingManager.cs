@@ -26,12 +26,11 @@ namespace Myob.Fma.BookingLibrary.BorrowingItems
         public void ReturnItem(IResource resource, IMembership membership)
         {
             var returnedItem =
-                _borrowedItems.First(i => i.Resource.Id == resource.Id && i.Member.Id == membership.Id && !i.IsReturned);
+                _borrowedItems.First(i =>
+                    i.Resource.Id == resource.Id && i.Member.Id == membership.Id && !i.IsReturned);
 
             returnedItem.IsReturned = true;
             returnedItem.ReturnedDate = DateTime.UtcNow;
-
-
         }
 
         public bool IsMemberUnderBorrowingLimit(IMembership membership)

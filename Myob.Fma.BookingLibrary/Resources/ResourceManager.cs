@@ -39,11 +39,6 @@ namespace Myob.Fma.BookingLibrary.Resources
             resource.IsAvailable = true;
         }
 
-        public int GetNewResourceId()
-        {
-            return _inventory.Last().Id + 1;
-        }
-
         public IResource GetResource(int resourceId)
         {
             return _inventory.Find(r => r.Id == resourceId);

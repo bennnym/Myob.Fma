@@ -8,7 +8,6 @@ namespace Myob.Fma.BookingLibrary.Resources
         bool IsResourceInInventory(int id);
         void CheckoutResource(int resourceId);
         void ReturnResource(int resourceId);
-        int GetNewResourceId();
         IResource GetResource(int resourceId);
     }
 }

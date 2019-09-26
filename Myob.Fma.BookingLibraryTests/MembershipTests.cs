@@ -56,8 +56,8 @@ namespace Myob.Fma.BookingLibraryTests
             // Arrange
             var library = Library.CreateLibraryWithPreExistingManagers(_resourceManager, _membershipManager, _borrowingManager);
             // Act
-            _membershipManager.AddMembership(_member);
-            library.CancelMembership(_member);
+            library.AddMember(_member);
+            library.RemoveMembership(_member);
 
             // Assert
             Assert.Null(_membershipManager.GetMembership(_member.Id));
