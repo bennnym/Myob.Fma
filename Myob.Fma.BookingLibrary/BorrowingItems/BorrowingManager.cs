@@ -6,7 +6,7 @@ using Myob.Fma.BookingLibrary.Resources;
 
 namespace Myob.Fma.BookingLibrary.BorrowingItems
 {
-    public class BorrowingManager
+    public class BorrowingManager : IBorrowingManager
     {
         private readonly List<IBorrowedItem> _borrowedItems = new List<IBorrowedItem>();
 

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Myob.Fma.BookingLibrary.Memberships
 {
-    public class MembershipManager
+    public class MembershipManager : IMembershipManager
     {
         private readonly List<IMembership> _members = new List<IMembership>();
         
@@ -14,6 +14,7 @@ namespace Myob.Fma.BookingLibrary.Memberships
 
         public void AddMembership(IMembership membership)
         {
+            membership.IsActive = true;
             _members.Add(membership);
         }
 

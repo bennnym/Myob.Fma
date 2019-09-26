@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Myob.Fma.BookingLibrary.Resources
 {
-    public class ResourceManager
+    public class ResourceManager : IResourceManager
     {
         private readonly List<IResource> _inventory = new List<IResource>();
 

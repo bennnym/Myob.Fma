@@ -11,12 +11,12 @@ namespace Myob.Fma.BookingLibrary
 {
     public class Library
     {
-        private ResourceManager _resourceManager = new ResourceManager();
-        private MembershipManager _membershipManager = new MembershipManager();
-        private BorrowingManager _borrowingManager = new BorrowingManager();
+        private IResourceManager _resourceManager = new ResourceManager();
+        private IMembershipManager _membershipManager = new MembershipManager();
+        private IBorrowingManager _borrowingManager = new BorrowingManager();
 
-        public static Library CreateLibraryWithPreExistingManagers(ResourceManager resourceManager = null,
-            MembershipManager membershipManager = null, BorrowingManager borrowingManager = null)
+        public static Library CreateLibraryWithPreExistingManagers(IResourceManager resourceManager = null,
+            IMembershipManager membershipManager = null, IBorrowingManager borrowingManager = null)
         {
             return new Library
             {
