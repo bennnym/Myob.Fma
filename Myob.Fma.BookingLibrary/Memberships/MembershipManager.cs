@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Myob.Fma.BookingLibrary.Constants;
+using Myob.Fma.BookingLibrary.Exceptions;
 
 namespace Myob.Fma.BookingLibrary.Memberships
 {
@@ -26,6 +28,12 @@ namespace Myob.Fma.BookingLibrary.Memberships
         public IMembership GetMembership(int membershipId)
         {
             return _members.Find(m => m.Id == membershipId);
+        }
+        
+        public void CheckMembershipIsActive(int membershipId)
+        {
+            if (IsMemberActive(membershipId) == false)
+                throw new MembershipNotActiveException(Constant.MembershipNotActive);
         }
     }
 }

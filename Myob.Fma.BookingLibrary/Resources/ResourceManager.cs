@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Myob.Fma.BookingLibrary.Constants;
+using Myob.Fma.BookingLibrary.Exceptions;
 
 namespace Myob.Fma.BookingLibrary.Resources
 {
@@ -42,6 +44,18 @@ namespace Myob.Fma.BookingLibrary.Resources
         public IResource GetResource(int resourceId)
         {
             return _inventory.Find(r => r.Id == resourceId);
+        }
+        
+        public void CheckResourceIsAvailableToBorrow(int resourceId)
+        {
+            if (IsResourceAvailableToBorrow(resourceId) == false)
+                throw new ResourceNotAvailableToBorrowException(Constant.ResourceNotAvailable);
+        }
+        
+        public void CheckForResourceInInventory(int resourceId)
+        {
+            if (IsResourceInInventory(resourceId) == false)
+                throw new ResourceNotInInventoryException(Constant.ResourceNotInInventory);
         }
     }
 }

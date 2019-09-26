@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Myob.Fma.BookingLibrary.Constants;
+using Myob.Fma.BookingLibrary.Exceptions;
 using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.Resources;
 
@@ -33,18 +35,29 @@ namespace Myob.Fma.BookingLibrary.BorrowingItems
             returnedItem.ReturnedDate = DateTime.UtcNow;
         }
 
-        public bool IsMemberUnderBorrowingLimit(IMembership membership)
-        {
-            var currentBorrowedItems = _borrowedItems.Count(i => i.IsReturned == false && i.Member.Id == membership.Id);
-
-            return membership.GetMembersResourceBorrowingLimit() > currentBorrowedItems;
-        }
-
         public IEnumerable<IBorrowedItem> GetItemBorrowingHistoryForMember(int resourceId, int membershipId)
         {
             return _borrowedItems
                 .Where(i =>
                     i.Member.Id == membershipId && i.Resource.Id == resourceId);
+        }
+
+        public void CheckMemberIsUnderBorrowingLimit(IMembership membership)
+        {
+            if ( IsMemberUnderBorrowingLimit(membership) == false)
+                throw new MembersBorrowingLimitExceededException(Constant.MembersBorrowingLimitExceeded);
+        }
+
+        private int GetNumberOfBorrowedItems(int membershipId)
+        {
+            return _borrowedItems.Count(i => i.IsReturned == false && i.Member.Id == membershipId);
+        }
+        
+        private bool IsMemberUnderBorrowingLimit(IMembership membership)
+        {
+            var currentBorrowedItems = GetNumberOfBorrowedItems(membership.Id);
+
+            return membership.GetMembersResourceBorrowingLimit() > currentBorrowedItems;
         }
     }
 }

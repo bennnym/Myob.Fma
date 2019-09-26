@@ -28,8 +28,8 @@ namespace Myob.Fma.BookingLibrary
 
         public void ReturnItem(int resourceId, int membershipId)
         {
-            CheckForResourceInInventory(resourceId);
-            CheckMembershipIsActive(membershipId);
+            _resourceManager.CheckForResourceInInventory(resourceId);
+            _membershipManager.CheckMembershipIsActive(membershipId);
 
             _resourceManager.ReturnResource(resourceId);
             UpdateBorrowedItemReturn(resourceId, membershipId);
@@ -37,9 +37,9 @@ namespace Myob.Fma.BookingLibrary
 
         public void BorrowItem(int resourceId, int membershipId)
         {
-            CheckResourceIsAvailableToBorrow(resourceId);
-            CheckMembershipIsActive(membershipId);
-            CheckMemberIsUnderBorrowingLimit(membershipId);
+            _resourceManager.CheckResourceIsAvailableToBorrow(resourceId);
+            _membershipManager.CheckMembershipIsActive(membershipId);
+            CheckMembersBorrowingLimit(membershipId);
 
             _resourceManager.CheckoutResource(resourceId);
             CreateBorrowedItem(resourceId, membershipId);
@@ -81,30 +81,12 @@ namespace Myob.Fma.BookingLibrary
             _borrowingManager.BorrowItem(resource, member);
         }
 
-        private void CheckForResourceInInventory(int resourceId)
-        {
-            if (_resourceManager.IsResourceInInventory(resourceId) == false)
-                throw new ResourceNotInInventoryException(Constant.ResourceNotInInventory);
-        }
 
-        private void CheckMembershipIsActive(int membershipId)
-        {
-            if (_membershipManager.IsMemberActive(membershipId) == false)
-                throw new MembershipNotActiveException(Constant.MembershipNotActive);
-        }
-
-        private void CheckResourceIsAvailableToBorrow(int resourceId)
-        {
-            if (_resourceManager.IsResourceAvailableToBorrow(resourceId) == false)
-                throw new ResourceNotAvailableToBorrowException(Constant.ResourceNotAvailable);
-        }
-
-        private void CheckMemberIsUnderBorrowingLimit(int membershipId)
+        private void CheckMembersBorrowingLimit(int membershipId)
         {
             var member = _membershipManager.GetMembership(membershipId);
 
-            if (_borrowingManager.IsMemberUnderBorrowingLimit(member) == false)
-                throw new MembersBorrowingLimitExceededException(Constant.MembersBorrowingLimitExceeded);
+            _borrowingManager.CheckMemberIsUnderBorrowingLimit(member);
         }
     }
 }

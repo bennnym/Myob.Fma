@@ -6,5 +6,6 @@ namespace Myob.Fma.BookingLibrary.Memberships
         void AddMembership(IMembership membership);
         void RemoveMembership(IMembership membership);
         IMembership GetMembership(int membershipId);
+        void CheckMembershipIsActive(int membershipId);
     }
 }
