@@ -1,5 +1,7 @@
-﻿using Myob.Fma.BookingLibrary.BorrowingItems;
+﻿using Myob.Fma.BookingLibrary.BorrowedItemsManagment;
+using Myob.Fma.BookingLibrary.MembershipManagment;
 using Myob.Fma.BookingLibrary.Memberships;
+using Myob.Fma.BookingLibrary.ResourceManagment;
 using Myob.Fma.BookingLibrary.Resources;
 
 namespace Myob.Fma.BookingLibrary

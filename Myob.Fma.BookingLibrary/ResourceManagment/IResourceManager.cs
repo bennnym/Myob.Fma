@@ -1,4 +1,6 @@
-namespace Myob.Fma.BookingLibrary.Resources
+using Myob.Fma.BookingLibrary.Resources;
+
+namespace Myob.Fma.BookingLibrary.ResourceManagment
 {
     public interface IResourceManager
     {
