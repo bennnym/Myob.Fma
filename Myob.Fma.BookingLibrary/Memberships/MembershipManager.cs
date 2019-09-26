@@ -9,7 +9,7 @@ namespace Myob.Fma.BookingLibrary.Memberships
         
         public bool IsMemberActive(int id)
         {
-            return _members.Any(m => m.MembershipId == id && m.IsActive);
+            return _members.Any(m => m.Id == id && m.IsActive);
         }
 
         public void AddMembership(IMembership membership)
@@ -21,18 +21,10 @@ namespace Myob.Fma.BookingLibrary.Memberships
         {
             _members.Remove(membership);
         }
-        
-        public bool IsMemberUnderBorrowingLimit(int membershipId)
-        {
-            var member = GetMembership(membershipId);
-            var currentBorrowedItems =   member.GetCurrentBorrowedItems().Count();
-            
-            return member.BorrowingLimit > currentBorrowedItems;
-        }
-        
+
         public IMembership GetMembership(int membershipId)
         {
-            return _members.Find(m => m.MembershipId == membershipId);
+            return _members.Find(m => m.Id == membershipId);
         }
     }
 }

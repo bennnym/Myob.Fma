@@ -12,7 +12,7 @@ namespace Myob.Fma.BookingLibraryTests
         {
             _member = new Membership()
             {
-                MembershipId = 1,
+                Id = 1,
                 IsActive = true
             };
 

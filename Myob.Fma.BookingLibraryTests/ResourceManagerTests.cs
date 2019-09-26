@@ -26,7 +26,7 @@ namespace Myob.Fma.BookingLibraryTests
             var id = 1;
 
             //Act
-            var bookIsAvailable = _resourceManager.IsResourceAvailable(id);
+            var bookIsAvailable = _resourceManager.IsResourceAvailableToBorrow(id);
 
             // Assert
             Assert.False(bookIsAvailable);
@@ -41,7 +41,7 @@ namespace Myob.Fma.BookingLibraryTests
             
             //Act
             _resourceManager.AddResourceToInventory(_book);
-            var bookIsAvailable = _resourceManager.IsResourceAvailable(id);
+            var bookIsAvailable = _resourceManager.IsResourceAvailableToBorrow(id);
 
             // Assert
             Assert.True(bookIsAvailable);

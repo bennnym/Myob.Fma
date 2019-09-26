@@ -3,29 +3,69 @@ using Myob.Fma.BookingLibrary;
 using Myob.Fma.BookingLibrary.BorrowingItems;
 using Myob.Fma.BookingLibrary.Exceptions;
 using Myob.Fma.BookingLibrary.Memberships;
+using Myob.Fma.BookingLibrary.Memberships.MembershipStatus;
 using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
 
 namespace Myob.Fma.BookingLibraryTests
 {
-    public class LibraryTests
+    public class LibraryBorrowingTests
     {
-        public LibraryTests()
+        private readonly ResourceManager _resourceManager = new ResourceManager();
+        private readonly BorrowingManager _borrowingManager = new BorrowingManager();
+        private readonly MembershipManager _membershipManager = new MembershipManager();
+
+
+        private readonly Book _book = new Book()
         {
-            _library = Library.CreateLibraryWithAllManagers(_resourceManager, _membershipManager,
+            Id = 1,
+            IsAvailable = true
+        };
+
+        private readonly BoardGame _boardGame = new BoardGame()
+        {
+            Id = 2,
+            IsAvailable = true
+        };
+
+        private readonly Membership _memberWithBronzeBorrowingLimit = new Membership()
+        {
+            IsActive = true,
+            Id = 1,
+            MembershipStatus = new BronzeMembership()
+        };
+
+        private readonly Membership _normalMember = new Membership()
+        {
+            IsActive = true,
+            Id = 2,
+            MembershipStatus = new GoldMembership()
+        };
+
+        private const int NormalMember = 2;
+        private const int BronzeBorrowingLimitMember = 1;
+
+        private const int Book = 1;
+        private const int BoardGame = 2;
+        private const int NonExistentResource = 99;
+        private readonly Library _library;
+
+        public LibraryBorrowingTests()
+        {
+            _library = Library.CreateLibraryWithPreExistingManagers(_resourceManager, _membershipManager,
                 _borrowingManager);
         }
-        
+
         [Fact]
         public void Should_Throw_Exception_If_Resource_Is_Not_Available_To_Borrow()
         {
             // Arrange
             const int resourceId = NonExistentResource;
-            const int membershipId = ZeroBorrowingLimitMember;
+            const int membershipId = BronzeBorrowingLimitMember;
 
             // Assert
             var exception =
-                Assert.Throws<ResourceNotAvailableException>(() => _library.BorrowItem(resourceId, membershipId));
+                Assert.Throws<ResourceNotAvailableToBorrowException>(() => _library.BorrowItem(resourceId, membershipId));
             Assert.Same("Resource is not available", exception.Message);
         }
 
@@ -34,7 +74,7 @@ namespace Myob.Fma.BookingLibraryTests
         {
             // Arrange
             const int resourceId = Book;
-            const int membershipId = ZeroBorrowingLimitMember;
+            const int membershipId = BronzeBorrowingLimitMember;
 
             // Act
             _resourceManager.AddResourceToInventory(_book);
@@ -50,11 +90,13 @@ namespace Myob.Fma.BookingLibraryTests
         {
             // Arrange
             const int resourceId = Book;
-            const int membershipId = ZeroBorrowingLimitMember;
+            const int membershipId = BronzeBorrowingLimitMember;
 
             // Act
             _resourceManager.AddResourceToInventory(_book);
-            _membershipManager.AddMembership(_memberWithZeroBorrowingLimit);
+            _resourceManager.AddResourceToInventory(_boardGame);
+            _membershipManager.AddMembership(_memberWithBronzeBorrowingLimit);
+            _library.BorrowItem(BoardGame, membershipId);
 
             // Assert
             var exception =
@@ -63,7 +105,7 @@ namespace Myob.Fma.BookingLibraryTests
 
             Assert.Same("Members borrowing limit exceeded", exception.Message);
         }
-        
+
         [Fact]
         public void Should_Check_If_A_Resource_Becomes_Unavailable_After_It_Is_Borrowed()
         {
@@ -74,14 +116,14 @@ namespace Myob.Fma.BookingLibraryTests
             // Act
             _resourceManager.AddResourceToInventory(_book);
             _membershipManager.AddMembership(_normalMember);
-            
+
             _library.BorrowItem(resourceId, membershipId);
-            var resourceIsAvailable = _resourceManager.IsResourceAvailable(resourceId);
+            var resourceIsAvailable = _resourceManager.IsResourceAvailableToBorrow(resourceId);
 
             // Assert
             Assert.False(resourceIsAvailable);
         }
-        
+
         [Fact]
         public void Should_Have_A_Borrowed_Item_When_Borrowing_A_Resource()
         {
@@ -92,55 +134,13 @@ namespace Myob.Fma.BookingLibraryTests
             // Act
             _resourceManager.AddResourceToInventory(_book);
             _membershipManager.AddMembership(_normalMember);
-            
-            _library.BorrowItem(resourceId,membershipId);
-            var borrowedItem = _borrowingManager.GetBorrowedItemHistoryForMember(resourceId, membershipId);
+
+            _library.BorrowItem(resourceId, membershipId);
+            var borrowedItem = _borrowingManager.GetItemBorrowingHistoryForMember(resourceId, membershipId);
             var itemIsBorrowed = borrowedItem.FirstOrDefault(x => !x.IsReturned && !x.ReturnedDate.HasValue);
-            
+
             // Assert
             Assert.NotNull(itemIsBorrowed);
         }
-        
-        
-        
-             
-        private readonly ResourceManager _resourceManager = new ResourceManager();
-        private readonly BorrowingManager _borrowingManager = new BorrowingManager();
-        private readonly MembershipManager _membershipManager = new MembershipManager();
-
-
-        private readonly Book _book = new Book()
-        {
-            Id = 1,
-            IsAvailable = true
-        };
-        
-        private readonly BoardGame _boardGame = new BoardGame()
-        {
-            Id = 2,
-            IsAvailable = false
-        };
-
-        private readonly Membership _memberWithZeroBorrowingLimit = new Membership()
-        {
-            IsActive = true,
-            MembershipId = 1,
-            BorrowingLimit = 0
-        };
-        
-        private readonly Membership _normalMember = new Membership()
-        {
-            IsActive = true,
-            MembershipId = 2,
-            BorrowingLimit = 5
-        };
-
-        private const int NormalMember = 2;
-        private const int ZeroBorrowingLimitMember = 1;
-
-        private const int Book = 1;
-        private const int NonExistentResource = 99;
-        private readonly Library _library;
-        
     }
 }

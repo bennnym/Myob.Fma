@@ -12,20 +12,36 @@ namespace Myob.Fma.BookingLibrary.Resources
             _inventory.Add(resource);
         }
         
-        public void RemoveResourceToInventory(IResource resource)
+        public void RemoveResourceFromInventory(IResource resource)
         {
             _inventory.Remove(resource);
         }
 
-        public bool IsResourceAvailable(int id)
+        public bool IsResourceAvailableToBorrow(int id)
         {
             return _inventory.Any(r => r.Id == id && r.IsAvailable);
+        }
+
+        public bool IsResourceInInventory(int id)
+        {
+            return _inventory.Any(r => r.Id == id);
         }
 
         public void CheckoutResource(int resourceId)
         {
             var resource = GetResource(resourceId);
             resource.IsAvailable = false;
+        }
+
+        public void ReturnResource(int resourceId)
+        {
+            var resource = GetResource(resourceId);
+            resource.IsAvailable = true;
+        }
+
+        public int GetNewResourceId()
+        {
+            return _inventory.Last().Id + 1;
         }
 
         public IResource GetResource(int resourceId)

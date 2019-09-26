@@ -15,57 +15,96 @@ namespace Myob.Fma.BookingLibrary
         private MembershipManager _membershipManager = new MembershipManager();
         private BorrowingManager _borrowingManager = new BorrowingManager();
 
-        public static Library CreateLibraryWithResourceManager(ResourceManager resourceManager)
+        public static Library CreateLibraryWithPreExistingManagers(ResourceManager resourceManager = null,
+            MembershipManager membershipManager = null, BorrowingManager borrowingManager = null)
         {
             return new Library
             {
-                _resourceManager = resourceManager,
-            };
-        }
-
-        public static Library CreateLibraryWithMembershipManager(MembershipManager membershipManager)
-        {
-            return new Library
-            {
-                _membershipManager = membershipManager
-            };
-        }
-
-        public static Library CreateLibraryWithAllManagers(ResourceManager resourceManager,
-            MembershipManager membershipManager, BorrowingManager borrowingManager)
-        {
-            return new Library
-            {
-                _resourceManager = resourceManager,
-                _membershipManager = membershipManager,
-                _borrowingManager = borrowingManager
+                _resourceManager = resourceManager ?? new ResourceManager(),
+                _membershipManager = membershipManager ?? new MembershipManager(),
+                _borrowingManager = borrowingManager ?? new BorrowingManager()
             };
         }
 
         public void ReturnItem(int resourceId, int membershipId)
         {
+            CheckForResourceInInventory(resourceId);
+            CheckMembershipIsActive(membershipId);
+
+            _resourceManager.ReturnResource(resourceId);
+            UpdateBorrowedItemReturn(resourceId, membershipId);
         }
 
         public void BorrowItem(int resourceId, int membershipId)
         {
-            if (_resourceManager.IsResourceAvailable(resourceId) == false)
-                throw new ResourceNotAvailableException(Constant.ResourceNotAvailable);
-
-            if (_membershipManager.IsMemberActive(membershipId) == false)
-                throw new MembershipNotActiveException(Constant.MembershipNotActive);
-
-            if (_membershipManager.IsMemberUnderBorrowingLimit(membershipId) == false)
-                throw new MembersBorrowingLimitExceededException(Constant.MembersBorrowingLimitExceeded);
+            CheckResourceIsAvailableToBorrow(resourceId);
+            CheckMembershipIsActive(membershipId);
+            CheckMemberIsUnderBorrowingLimit(membershipId);
 
             _resourceManager.CheckoutResource(resourceId);
-            CreateBorrowedItem(resourceId, membershipId, DateTime.UtcNow.AddDays(7)); //TODO: Refactor the duedate
+            CreateBorrowedItem(resourceId, membershipId);
         }
 
-        private void CreateBorrowedItem(int resourceId, int membershipId, DateTime dueDate)
+        public void AddResourceToLibrary(IResource resource)
+        {
+            _resourceManager.AddResourceToInventory(resource);
+        }
+
+        public void RemoveResourceFromLibrary(IResource resource)
+        {
+            _resourceManager.RemoveResourceFromInventory(resource);
+        }
+
+        public void SignUpMember(IMembership membership)
+        {
+            _membershipManager.AddMembership(membership);
+        }
+
+        public void CancelMembership(IMembership membership)
+        {
+            _membershipManager.RemoveMembership(membership);
+        }
+
+        private void UpdateBorrowedItemReturn(int resourceId, int membershipId)
         {
             var resource = _resourceManager.GetResource(resourceId);
             var member = _membershipManager.GetMembership(membershipId);
-            _borrowingManager.BorrowItem(resource, member, dueDate);
+
+            _borrowingManager.ReturnItem(resource, member);
+        }
+
+        private void CreateBorrowedItem(int resourceId, int membershipId)
+        {
+            var resource = _resourceManager.GetResource(resourceId);
+            var member = _membershipManager.GetMembership(membershipId);
+
+            _borrowingManager.BorrowItem(resource, member);
+        }
+
+        private void CheckForResourceInInventory(int resourceId)
+        {
+            if (_resourceManager.IsResourceInInventory(resourceId) == false)
+                throw new ResourceNotInInventoryException(Constant.ResourceNotInInventory);
+        }
+
+        private void CheckMembershipIsActive(int membershipId)
+        {
+            if (_membershipManager.IsMemberActive(membershipId) == false)
+                throw new MembershipNotActiveException(Constant.MembershipNotActive);
+        }
+
+        private void CheckResourceIsAvailableToBorrow(int resourceId)
+        {
+            if (_resourceManager.IsResourceAvailableToBorrow(resourceId) == false)
+                throw new ResourceNotAvailableToBorrowException(Constant.ResourceNotAvailable);
+        }
+
+        private void CheckMemberIsUnderBorrowingLimit(int membershipId)
+        {
+            var member = _membershipManager.GetMembership(membershipId);
+
+            if (_borrowingManager.IsMemberUnderBorrowingLimit(member) == false)
+                throw new MembersBorrowingLimitExceededException(Constant.MembersBorrowingLimitExceeded);
         }
     }
 }

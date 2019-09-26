@@ -2,9 +2,9 @@ using System;
 
 namespace Myob.Fma.BookingLibrary.Exceptions
 {
-    public class ResourceNotAvailableException : Exception
+    public class ResourceNotAvailableToBorrowException : Exception
     {
-        public ResourceNotAvailableException(string message)
+        public ResourceNotAvailableToBorrowException(string message)
             : base(message)
         {
             

@@ -1,15 +1,15 @@
-using System.Collections.Generic;
-using Myob.Fma.BookingLibrary.BorrowingItems;
-using Myob.Fma.BookingLibrary.Core;
+using System;
+using Myob.Fma.BookingLibrary.Memberships.MembershipStatus;
 
 namespace Myob.Fma.BookingLibrary.Memberships
 {
     public interface IMembership
     {
-        int BorrowingLimit { get; set; }
-        int MembershipId { get; set; }
+        int Id { get; set; }
         bool IsActive { get; set; }
-
-        IEnumerable<IBorrowedItem> GetCurrentBorrowedItems();
+        IMembershipStatus MembershipStatus { get; }
+        DateTime GetMembersDueDateFromNow();
+        int GetMembersResourceBorrowingLimit();
+        void UpgradeMembershipStatus();
     }
 }
