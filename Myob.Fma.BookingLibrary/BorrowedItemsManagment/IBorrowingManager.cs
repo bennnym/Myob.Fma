@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Myob.Fma.BookingLibrary.BorrowedItems;
 using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.Resources;
 
-namespace Myob.Fma.BookingLibrary.BorrowingItems
+namespace Myob.Fma.BookingLibrary.BorrowedItemsManagment
 {
     public interface IBorrowingManager
     {

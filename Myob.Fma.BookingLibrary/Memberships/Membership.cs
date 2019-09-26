@@ -1,6 +1,6 @@
 using System;
-using Myob.Fma.BookingLibrary.Memberships.MembershipStatus;
-using Myob.Fma.BookingLibrary.Memberships.MembershipStatus.Enums;
+using Myob.Fma.BookingLibrary.MembershipStatus;
+using Myob.Fma.BookingLibrary.MembershipStatus.Enums;
 
 namespace Myob.Fma.BookingLibrary.Memberships
 {

@@ -1,9 +1,11 @@
 using System;
 using Myob.Fma.BookingLibrary;
-using Myob.Fma.BookingLibrary.BorrowingItems;
+using Myob.Fma.BookingLibrary.BorrowedItemsManagment;
+using Myob.Fma.BookingLibrary.MembershipManagment;
 using Myob.Fma.BookingLibrary.Memberships;
-using Myob.Fma.BookingLibrary.Memberships.MembershipStatus;
-using Myob.Fma.BookingLibrary.Memberships.MembershipStatus.Enums;
+using Myob.Fma.BookingLibrary.MembershipStatus;
+using Myob.Fma.BookingLibrary.MembershipStatus.Enums;
+using Myob.Fma.BookingLibrary.ResourceManagment;
 using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
 using Xunit.Sdk;

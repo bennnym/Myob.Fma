@@ -1,5 +1,5 @@
 using System;
-using Myob.Fma.BookingLibrary.Memberships.MembershipStatus;
+using Myob.Fma.BookingLibrary.MembershipStatus;
 
 namespace Myob.Fma.BookingLibrary.Memberships
 {

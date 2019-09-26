@@ -1,3 +1,4 @@
+using Myob.Fma.BookingLibrary.MembershipManagment;
 using Myob.Fma.BookingLibrary.Memberships;
 using Xunit;
 

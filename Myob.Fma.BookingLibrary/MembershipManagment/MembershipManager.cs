@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Myob.Fma.BookingLibrary.Constants;
 using Myob.Fma.BookingLibrary.Exceptions;
+using Myob.Fma.BookingLibrary.Memberships;
 
-namespace Myob.Fma.BookingLibrary.Memberships
+namespace Myob.Fma.BookingLibrary.MembershipManagment
 {
     public class MembershipManager : IMembershipManager
     {

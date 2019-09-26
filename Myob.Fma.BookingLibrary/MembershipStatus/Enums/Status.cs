@@ -1,4 +1,4 @@
-namespace Myob.Fma.BookingLibrary.Memberships.MembershipStatus.Enums
+namespace Myob.Fma.BookingLibrary.MembershipStatus.Enums
 {
     public enum Status
     {

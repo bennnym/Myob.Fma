@@ -1,3 +1,4 @@
+using Myob.Fma.BookingLibrary.ResourceManagment;
 using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
 

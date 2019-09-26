@@ -1,7 +1,7 @@
 using Myob.Fma.BookingLibrary.Constants;
-using Myob.Fma.BookingLibrary.Memberships.MembershipStatus.Enums;
+using Myob.Fma.BookingLibrary.MembershipStatus.Enums;
 
-namespace Myob.Fma.BookingLibrary.Memberships.MembershipStatus
+namespace Myob.Fma.BookingLibrary.MembershipStatus
 {
     public class BronzeMembership : IMembershipStatus
     {

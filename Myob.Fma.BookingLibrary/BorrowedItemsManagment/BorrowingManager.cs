@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Myob.Fma.BookingLibrary.BorrowedItems;
 using Myob.Fma.BookingLibrary.Constants;
 using Myob.Fma.BookingLibrary.Exceptions;
 using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.Resources;
 
-namespace Myob.Fma.BookingLibrary.BorrowingItems
+namespace Myob.Fma.BookingLibrary.BorrowedItemsManagment
 {
     public class BorrowingManager : IBorrowingManager
     {
