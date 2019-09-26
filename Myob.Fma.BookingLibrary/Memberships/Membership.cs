@@ -10,7 +10,7 @@ namespace Myob.Fma.BookingLibrary.Memberships
         public bool IsActive { get; set; }
         public IMembershipStatus MembershipStatus { get; set; }
 
-        public DateTime GetMembersDueDateFromNow()
+        public DateTime GetDateMemberCanBorrowTill()
         {
             return DateTime.UtcNow.AddDays(MembershipStatus.BorrowingTimeLimitInDays);
         }

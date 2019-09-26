@@ -8,7 +8,7 @@ namespace Myob.Fma.BookingLibrary.Memberships
         int Id { get; set; }
         bool IsActive { get; set; }
         IMembershipStatus MembershipStatus { get; }
-        DateTime GetMembersDueDateFromNow();
+        DateTime GetDateMemberCanBorrowTill();
         int GetMembersResourceBorrowingLimit();
         void UpgradeMembershipStatus();
     }

@@ -18,7 +18,7 @@ namespace Myob.Fma.BookingLibrary.BorrowingItems
             {
                 Resource = resource,
                 Member = membership,
-                DueDate = membership.GetMembersDueDateFromNow(),
+                DueDate = membership.GetDateMemberCanBorrowTill(),
                 BorrowedDate = DateTime.UtcNow,
             };
 

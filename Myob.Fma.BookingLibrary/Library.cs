@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Myob.Fma.BookingLibrary.BorrowingItems;
-using Myob.Fma.BookingLibrary.Constants;
-using Myob.Fma.BookingLibrary.Exceptions;
+﻿using Myob.Fma.BookingLibrary.BorrowingItems;
 using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.Resources;
 

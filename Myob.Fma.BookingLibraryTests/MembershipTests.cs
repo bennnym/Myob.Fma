@@ -33,7 +33,7 @@ namespace Myob.Fma.BookingLibraryTests
         public void Should_Return_DateTime_Adjusted_For_Membership_Status()
         {
             // Act
-            var dueDate = _member.GetMembersDueDateFromNow().ToString("dd/mm/yyyy");
+            var dueDate = _member.GetDateMemberCanBorrowTill().ToString("dd/mm/yyyy");
             var timeSevenDaysFromNow = DateTime.UtcNow.AddDays(7).ToString("dd/mm/yyyy");
 
             // Assert
