@@ -1,9 +1,9 @@
 using System;
 using Myob.Fma.BookingLibrary;
-using Myob.Fma.BookingLibrary.BorrowedItemsManagment;
-using Myob.Fma.BookingLibrary.MembershipManagment;
+using Myob.Fma.BookingLibrary.BorrowedItemsManagement;
+using Myob.Fma.BookingLibrary.MembershipManagement;
 using Myob.Fma.BookingLibrary.Memberships;
-using Myob.Fma.BookingLibrary.ResourceManagment;
+using Myob.Fma.BookingLibrary.ResourceManagement;
 using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
 

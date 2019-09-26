@@ -1,7 +1,7 @@
-﻿using Myob.Fma.BookingLibrary.BorrowedItemsManagment;
-using Myob.Fma.BookingLibrary.MembershipManagment;
+﻿using Myob.Fma.BookingLibrary.BorrowedItemsManagement;
+using Myob.Fma.BookingLibrary.MembershipManagement;
 using Myob.Fma.BookingLibrary.Memberships;
-using Myob.Fma.BookingLibrary.ResourceManagment;
+using Myob.Fma.BookingLibrary.ResourceManagement;
 using Myob.Fma.BookingLibrary.Resources;
 
 namespace Myob.Fma.BookingLibrary
@@ -61,7 +61,7 @@ namespace Myob.Fma.BookingLibrary
         {
             _membershipManager.RemoveMembership(membership);
         }
-
+        
         private void UpdateBorrowedItemReturn(int resourceId, int membershipId)
         {
             var resource = _resourceManager.GetResource(resourceId);
@@ -75,9 +75,8 @@ namespace Myob.Fma.BookingLibrary
             var resource = _resourceManager.GetResource(resourceId);
             var member = _membershipManager.GetMembership(membershipId);
 
-            _borrowingManager.BorrowItem(resource, member);
+            _borrowingManager.AddEntryToBorrowedItemsHistory(resource, member);
         }
-
 
         private void CheckMembersBorrowingLimit(int membershipId)
         {

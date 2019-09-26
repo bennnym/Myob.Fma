@@ -1,4 +1,5 @@
-using Myob.Fma.BookingLibrary.ResourceManagment;
+using Myob.Fma.BookingLibrary.Exceptions;
+using Myob.Fma.BookingLibrary.ResourceManagement;
 using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
 
@@ -21,31 +22,14 @@ namespace Myob.Fma.BookingLibraryTests
         }
         
         [Fact]
-        public void Should_Return_False_When_No_Resources_Are_In_The_Inventory()
+        public void Should_Throw_CheckResourceIsAvailableToBorrow_Exception_When_Resource_Is_Not_In_Inventory()
         {
             // Arrange
             var id = 1;
-
-            //Act
-            var bookIsAvailable = _resourceManager.IsResourceAvailableToBorrow(id);
-
-            // Assert
-            Assert.False(bookIsAvailable);
-        }
-
-        [Fact]
-        public void Should_Return_True_When_A_Resource_Is_Added_To_The_Inventory()
-        {
-            // Arrange
-            var id = 1;
-
             
-            //Act
-            _resourceManager.AddResourceToInventory(_book);
-            var bookIsAvailable = _resourceManager.IsResourceAvailableToBorrow(id);
-
             // Assert
-            Assert.True(bookIsAvailable);
+            Assert.Throws<ResourceNotAvailableToBorrowException>(() =>
+                _resourceManager.CheckResourceIsAvailableToBorrow(id));
         }
     }
 }

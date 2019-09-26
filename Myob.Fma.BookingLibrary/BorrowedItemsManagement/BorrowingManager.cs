@@ -7,29 +7,23 @@ using Myob.Fma.BookingLibrary.Exceptions;
 using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.Resources;
 
-namespace Myob.Fma.BookingLibrary.BorrowedItemsManagment
+namespace Myob.Fma.BookingLibrary.BorrowedItemsManagement
 {
     public class BorrowingManager : IBorrowingManager
     {
-        private readonly List<IBorrowedItem> _borrowedItems = new List<IBorrowedItem>();
+        private readonly List<IBorrowedItem> _borrowedItemsHistory = new List<IBorrowedItem>();
 
-        public void BorrowItem(IResource resource, IMembership membership)
+        public void AddEntryToBorrowedItemsHistory(IResource resource, IMembership membership)
         {
-            var borrowedItem = new BorrowedItem()
-            {
-                Resource = resource,
-                Member = membership,
-                DueDate = membership.GetDateMemberCanBorrowTill(),
-                BorrowedDate = DateTime.UtcNow,
-            };
+            var borrowedItem = CreateBorrowedItem(resource, membership);
 
-            _borrowedItems.Add(borrowedItem);
+            _borrowedItemsHistory.Add(borrowedItem);
         }
 
         public void ReturnItem(IResource resource, IMembership membership)
         {
             var returnedItem =
-                _borrowedItems.First(i =>
+                _borrowedItemsHistory.First(i =>
                     i.Resource.Id == resource.Id && i.Member.Id == membership.Id && !i.IsReturned);
 
             returnedItem.IsReturned = true;
@@ -38,7 +32,7 @@ namespace Myob.Fma.BookingLibrary.BorrowedItemsManagment
 
         public IEnumerable<IBorrowedItem> GetItemBorrowingHistoryForMember(int resourceId, int membershipId)
         {
-            return _borrowedItems
+            return _borrowedItemsHistory
                 .Where(i =>
                     i.Member.Id == membershipId && i.Resource.Id == resourceId);
         }
@@ -49,9 +43,20 @@ namespace Myob.Fma.BookingLibrary.BorrowedItemsManagment
                 throw new MembersBorrowingLimitExceededException(Constant.MembersBorrowingLimitExceeded);
         }
 
+        private IBorrowedItem CreateBorrowedItem(IResource resource, IMembership membership)
+        {
+            return new BorrowedItem
+            {
+                Resource = resource,
+                Member = membership,
+                DueDate = membership.GetDateMemberCanBorrowTill(),
+                BorrowedDate = DateTime.UtcNow,
+            };
+        }
+
         private int GetNumberOfBorrowedItems(int membershipId)
         {
-            return _borrowedItems.Count(i => i.IsReturned == false && i.Member.Id == membershipId);
+            return _borrowedItemsHistory.Count(i => i.IsReturned == false && i.Member.Id == membershipId);
         }
         
         private bool IsMemberUnderBorrowingLimit(IMembership membership)

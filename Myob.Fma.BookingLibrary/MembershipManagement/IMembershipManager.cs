@@ -1,6 +1,6 @@
 using Myob.Fma.BookingLibrary.Memberships;
 
-namespace Myob.Fma.BookingLibrary.MembershipManagment
+namespace Myob.Fma.BookingLibrary.MembershipManagement
 {
     public interface IMembershipManager
     {

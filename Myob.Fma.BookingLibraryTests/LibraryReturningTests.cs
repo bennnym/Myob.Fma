@@ -1,11 +1,11 @@
 using System.Linq;
 using Myob.Fma.BookingLibrary;
-using Myob.Fma.BookingLibrary.BorrowedItemsManagment;
+using Myob.Fma.BookingLibrary.BorrowedItemsManagement;
 using Myob.Fma.BookingLibrary.Exceptions;
-using Myob.Fma.BookingLibrary.MembershipManagment;
+using Myob.Fma.BookingLibrary.MembershipManagement;
 using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.MembershipStatus;
-using Myob.Fma.BookingLibrary.ResourceManagment;
+using Myob.Fma.BookingLibrary.ResourceManagement;
 using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
 
@@ -76,7 +76,7 @@ namespace Myob.Fma.BookingLibraryTests
             var resourceId = _book.Id;
             _resourceManager.AddResourceToInventory(_book);
             _membershipManager.AddMembership(_normalMember);
-            _borrowingManager.BorrowItem(_book, _normalMember);
+            _borrowingManager.AddEntryToBorrowedItemsHistory(_book, _normalMember);
 
             // Act
             _library.ReturnItem(resourceId,membershipId);
@@ -90,7 +90,7 @@ namespace Myob.Fma.BookingLibraryTests
         public void Should_Change_State_Of_Borrowed_Item_To_IsReturned()
         {
             // Arrange
-            _borrowingManager.BorrowItem(_book, _normalMember);
+            _borrowingManager.AddEntryToBorrowedItemsHistory(_book, _normalMember);
             _resourceManager.AddResourceToInventory(_book);
             _membershipManager.AddMembership(_normalMember);
             

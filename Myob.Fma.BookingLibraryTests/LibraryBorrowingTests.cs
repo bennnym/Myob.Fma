@@ -1,11 +1,11 @@
 using System.Linq;
 using Myob.Fma.BookingLibrary;
-using Myob.Fma.BookingLibrary.BorrowedItemsManagment;
+using Myob.Fma.BookingLibrary.BorrowedItemsManagement;
 using Myob.Fma.BookingLibrary.Exceptions;
-using Myob.Fma.BookingLibrary.MembershipManagment;
+using Myob.Fma.BookingLibrary.MembershipManagement;
 using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.MembershipStatus;
-using Myob.Fma.BookingLibrary.ResourceManagment;
+using Myob.Fma.BookingLibrary.ResourceManagement;
 using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
 
@@ -67,7 +67,8 @@ namespace Myob.Fma.BookingLibraryTests
 
             // Assert
             var exception =
-                Assert.Throws<ResourceNotAvailableToBorrowException>(() => _library.BorrowItem(resourceId, membershipId));
+                Assert.Throws<ResourceNotAvailableToBorrowException>(
+                    () => _library.BorrowItem(resourceId, membershipId));
             Assert.Same("Resource is not available", exception.Message);
         }
 
@@ -109,7 +110,7 @@ namespace Myob.Fma.BookingLibraryTests
         }
 
         [Fact]
-        public void Should_Check_If_A_Resource_Becomes_Unavailable_After_It_Is_Borrowed()
+        public void Should_Throw_An_Exception_When_Resource_Becomes_Unavailable_After_It_Is_Borrowed()
         {
             // Arrange
             const int resourceId = Book;
@@ -120,10 +121,8 @@ namespace Myob.Fma.BookingLibraryTests
             _membershipManager.AddMembership(_normalMember);
 
             _library.BorrowItem(resourceId, membershipId);
-            var resourceIsAvailable = _resourceManager.IsResourceAvailableToBorrow(resourceId);
-
-            // Assert
-            Assert.False(resourceIsAvailable);
+            var exception =
+                    Assert.Throws<ResourceNotAvailableToBorrowException>(() => _library.BorrowItem(resourceId, membershipId));
         }
 
         [Fact]

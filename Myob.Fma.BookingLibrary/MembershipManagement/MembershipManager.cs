@@ -4,16 +4,11 @@ using Myob.Fma.BookingLibrary.Constants;
 using Myob.Fma.BookingLibrary.Exceptions;
 using Myob.Fma.BookingLibrary.Memberships;
 
-namespace Myob.Fma.BookingLibrary.MembershipManagment
+namespace Myob.Fma.BookingLibrary.MembershipManagement
 {
     public class MembershipManager : IMembershipManager
     {
         private readonly List<IMembership> _members = new List<IMembership>();
-        
-        public bool IsMemberActive(int id)
-        {
-            return _members.Any(m => m.Id == id && m.IsActive);
-        }
 
         public void AddMembership(IMembership membership)
         {
@@ -35,6 +30,11 @@ namespace Myob.Fma.BookingLibrary.MembershipManagment
         {
             if (IsMemberActive(membershipId) == false)
                 throw new MembershipNotActiveException(Constant.MembershipNotActive);
+        }
+        
+        public bool IsMemberActive(int id)
+        {
+            return _members.Any(m => m.Id == id && m.IsActive);
         }
     }
 }

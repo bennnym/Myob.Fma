@@ -4,7 +4,7 @@ using Myob.Fma.BookingLibrary.Constants;
 using Myob.Fma.BookingLibrary.Exceptions;
 using Myob.Fma.BookingLibrary.Resources;
 
-namespace Myob.Fma.BookingLibrary.ResourceManagment
+namespace Myob.Fma.BookingLibrary.ResourceManagement
 {
     public class ResourceManager : IResourceManager
     {
@@ -18,16 +18,6 @@ namespace Myob.Fma.BookingLibrary.ResourceManagment
         public void RemoveResourceFromInventory(IResource resource)
         {
             _inventory.Remove(resource);
-        }
-
-        public bool IsResourceAvailableToBorrow(int id)
-        {
-            return _inventory.Any(r => r.Id == id && r.IsAvailable);
-        }
-
-        public bool IsResourceInInventory(int id)
-        {
-            return _inventory.Any(r => r.Id == id);
         }
 
         public void CheckoutResource(int resourceId)
@@ -57,6 +47,15 @@ namespace Myob.Fma.BookingLibrary.ResourceManagment
         {
             if (IsResourceInInventory(resourceId) == false)
                 throw new ResourceNotInInventoryException(Constant.ResourceNotInInventory);
+        }
+        private bool IsResourceInInventory(int id)
+        {
+            return _inventory.Any(r => r.Id == id);
+        }
+        
+        private bool IsResourceAvailableToBorrow(int id)
+        {
+            return _inventory.Any(r => r.Id == id && r.IsAvailable);
         }
     }
 }
