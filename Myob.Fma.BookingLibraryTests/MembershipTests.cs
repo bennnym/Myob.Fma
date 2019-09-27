@@ -15,9 +15,9 @@ namespace Myob.Fma.BookingLibraryTests
     public class MembershipTests
     {
         private readonly Membership _member;
-        private IBorrowingManager _borrowingManager;
-        private IMembershipManager _membershipManager;
-        private IResourceManager _resourceManager;
+        private readonly IBorrowingManager _borrowingManager;
+        private readonly IMembershipManager _membershipManager;
+        private readonly IResourceManager _resourceManager;
 
         public MembershipTests()
         {
