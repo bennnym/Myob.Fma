@@ -18,7 +18,7 @@ namespace Myob.Fma.BookingLibraryTests
         private readonly MembershipManager _membershipManager = new MembershipManager();
         private Library _library;
 
-        private readonly Membership _normalMember = new Membership()
+        private readonly Membership _normalMember = new Membership() //TODO: look into test fixture
         {
             IsActive = true,
             Id = 1,

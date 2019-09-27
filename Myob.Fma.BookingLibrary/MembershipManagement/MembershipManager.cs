@@ -8,7 +8,12 @@ namespace Myob.Fma.BookingLibrary.MembershipManagement
 {
     public class MembershipManager : IMembershipManager
     {
-        private readonly List<IMembership> _members = new List<IMembership>();
+        private readonly List<IMembership> _members;
+
+        public MembershipManager()
+        {
+            _members = new List<IMembership>();
+        }
 
         public void AddMembership(IMembership membership)
         {

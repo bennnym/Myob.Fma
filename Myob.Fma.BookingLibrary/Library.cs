@@ -8,19 +8,29 @@ namespace Myob.Fma.BookingLibrary
 {
     public class Library
     {
-        private IResourceManager _resourceManager = new ResourceManager();
-        private IMembershipManager _membershipManager = new MembershipManager();
-        private IBorrowingManager _borrowingManager = new BorrowingManager();
+        private readonly IResourceManager _resourceManager;
+        private readonly IMembershipManager _membershipManager;
+        private readonly IBorrowingManager _borrowingManager;
+
+        public Library()
+        {
+            _resourceManager = new ResourceManager();
+            _membershipManager = new MembershipManager();
+            _borrowingManager = new BorrowingManager();
+        }
+
+        public Library(IResourceManager resourceManager,
+            IMembershipManager membershipManager, IBorrowingManager borrowingManager)
+        {
+            _resourceManager = resourceManager;
+            _membershipManager = membershipManager;
+            _borrowingManager = borrowingManager;
+        }
 
         public static Library CreateLibraryWithPreExistingManagers(IResourceManager resourceManager = null,
             IMembershipManager membershipManager = null, IBorrowingManager borrowingManager = null)
         {
-            return new Library
-            {
-                _resourceManager = resourceManager ?? new ResourceManager(),
-                _membershipManager = membershipManager ?? new MembershipManager(),
-                _borrowingManager = borrowingManager ?? new BorrowingManager()
-            };
+            return new Library(resourceManager, membershipManager, borrowingManager);
         }
 
         public void ReturnItem(int resourceId, int membershipId)

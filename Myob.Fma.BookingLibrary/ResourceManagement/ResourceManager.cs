@@ -8,7 +8,12 @@ namespace Myob.Fma.BookingLibrary.ResourceManagement
 {
     public class ResourceManager : IResourceManager
     {
-        private readonly List<IResource> _inventory = new List<IResource>();
+        private readonly List<IResource> _inventory;
+
+        public ResourceManager()
+        {
+            _inventory = new List<IResource>();
+        }
 
         public void AddResourceToInventory(IResource resource)
         {
