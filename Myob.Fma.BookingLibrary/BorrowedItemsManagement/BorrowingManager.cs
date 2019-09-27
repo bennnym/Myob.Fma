@@ -22,9 +22,7 @@ namespace Myob.Fma.BookingLibrary.BorrowedItemsManagement
 
         public void ReturnItem(IResource resource, IMembership membership)
         {
-            var returnedItem =
-                _borrowedItemsHistory.First(i =>
-                    i.Resource.Id == resource.Id && i.Member.Id == membership.Id && !i.IsReturned);
+            var returnedItem = GetOutstandingBorrowedItem(resource, membership);
 
             returnedItem.IsReturned = true;
             returnedItem.ReturnedDate = DateTime.UtcNow;
@@ -64,6 +62,12 @@ namespace Myob.Fma.BookingLibrary.BorrowedItemsManagement
             var currentBorrowedItems = GetNumberOfBorrowedItems(membership.Id);
 
             return membership.GetMembersResourceBorrowingLimit() > currentBorrowedItems;
+        }
+
+        private IBorrowedItem GetOutstandingBorrowedItem(IResource resource, IMembership membership)
+        {
+            return _borrowedItemsHistory
+                .First(i => i.Resource.Id == resource.Id && i.Member.Id == membership.Id && !i.IsReturned);
         }
     }
 }
