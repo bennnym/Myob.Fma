@@ -8,91 +8,65 @@ namespace Myob.Fma.BookingLibrary
 {
     public class Library
     {
-        private readonly IResourceManager _resourceManager;
-        private readonly IMembershipManager _membershipManager;
-        private readonly IBorrowingManager _borrowingManager;
-
         public Library()
         {
-            _resourceManager = new ResourceManager();
-            _membershipManager = new MembershipManager();
-            _borrowingManager = new BorrowingManager();
+            ResourceManager = new ResourceManager();
+            MembershipManager = new MembershipManager();
+            BorrowingManager = new BorrowingManager();
         }
 
         public Library(IResourceManager resourceManager,
             IMembershipManager membershipManager, IBorrowingManager borrowingManager)
         {
-            _resourceManager = resourceManager;
-            _membershipManager = membershipManager;
-            _borrowingManager = borrowingManager;
+            ResourceManager = resourceManager;
+            MembershipManager = membershipManager;
+            BorrowingManager = borrowingManager;
         }
 
-        public static Library CreateLibraryWithPreExistingManagers(IResourceManager resourceManager = null,
-            IMembershipManager membershipManager = null, IBorrowingManager borrowingManager = null)
-        {
-            return new Library(resourceManager, membershipManager, borrowingManager);
-        }
+        public IResourceManager ResourceManager { get; }
+        public IMembershipManager MembershipManager { get; }
+        public IBorrowingManager BorrowingManager { get; }
 
         public void ReturnItem(int resourceId, int membershipId)
         {
-            _resourceManager.CheckForResourceInInventory(resourceId);
-            _membershipManager.CheckMembershipIsActive(membershipId);
+            ResourceManager.CheckForResourceInInventory(resourceId);
+            MembershipManager.CheckMembershipIsActive(membershipId);
 
-            _resourceManager.ReturnResource(resourceId);
+            ResourceManager.ReturnBorrowedResource(resourceId);
             UpdateBorrowedItemReturn(resourceId, membershipId);
         }
 
         public void BorrowItem(int resourceId, int membershipId)
         {
-            _resourceManager.CheckResourceIsAvailableToBorrow(resourceId);
-            _membershipManager.CheckMembershipIsActive(membershipId);
+            ResourceManager.CheckResourceIsAvailableToBorrow(resourceId);
+            MembershipManager.CheckMembershipIsActive(membershipId);
             CheckMembersBorrowingLimit(membershipId);
 
-            _resourceManager.CheckoutResource(resourceId);
+            ResourceManager.CheckoutResource(resourceId);
             CreateBorrowedItem(resourceId, membershipId);
         }
 
-        public void AddResourceToLibrary(IResource resource)
-        {
-            _resourceManager.AddResourceToInventory(resource);
-        }
-
-        public void RemoveResourceFromLibrary(IResource resource)
-        {
-            _resourceManager.RemoveResourceFromInventory(resource);
-        }
-
-        public void AddMember(IMembership membership)
-        {
-            _membershipManager.AddMembership(membership);
-        }
-
-        public void RemoveMembership(IMembership membership)
-        {
-            _membershipManager.RemoveMembership(membership);
-        }
-        
         private void UpdateBorrowedItemReturn(int resourceId, int membershipId)
         {
-            var resource = _resourceManager.GetResource(resourceId);
-            var member = _membershipManager.GetMembership(membershipId);
+            var resource = ResourceManager.GetResource(resourceId);
+            var member = MembershipManager.GetMembership(membershipId);
 
-            _borrowingManager.ReturnItem(resource, member);
+            BorrowingManager.ReturnItem(resource, member);
         }
 
         private void CreateBorrowedItem(int resourceId, int membershipId)
         {
-            var resource = _resourceManager.GetResource(resourceId);
-            var member = _membershipManager.GetMembership(membershipId);
+            var resource = ResourceManager.GetResource(resourceId);
+            var member = MembershipManager.GetMembership(membershipId);
 
-            _borrowingManager.AddEntryToBorrowedItemsHistory(resource, member);
+            BorrowingManager.AddEntryToBorrowedItemsHistory(resource, member);
         }
 
         private void CheckMembersBorrowingLimit(int membershipId)
         {
-            var member = _membershipManager.GetMembership(membershipId);
+            var member = MembershipManager.GetMembership(membershipId);
 
-            _borrowingManager.CheckMemberIsUnderBorrowingLimit(member);
+            BorrowingManager.CheckMemberIsUnderBorrowingLimit(member);
         }
     }
 }

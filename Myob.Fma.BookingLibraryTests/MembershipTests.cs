@@ -6,9 +6,7 @@ using Myob.Fma.BookingLibrary.Memberships;
 using Myob.Fma.BookingLibrary.MembershipStatus;
 using Myob.Fma.BookingLibrary.MembershipStatus.Enums;
 using Myob.Fma.BookingLibrary.ResourceManagement;
-using Myob.Fma.BookingLibrary.Resources;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Myob.Fma.BookingLibraryTests
 {
@@ -56,10 +54,14 @@ namespace Myob.Fma.BookingLibraryTests
         public void Should_Remove_Member_From_Members_List()
         {
             // Arrange
-            var library = Library.CreateLibraryWithPreExistingManagers(_resourceManager, _membershipManager, _borrowingManager);
+            var library = new Library(
+                _resourceManager,
+                _membershipManager,
+                _borrowingManager
+            );
             // Act
-            library.AddMember(_member);
-            library.RemoveMembership(_member);
+            library.MembershipManager.AddMembership(_member);
+            library.MembershipManager.RemoveMembership(_member);
 
             // Assert
             Assert.Null(_membershipManager.GetMembership(_member.Id));

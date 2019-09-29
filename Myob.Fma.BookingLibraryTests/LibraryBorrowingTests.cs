@@ -54,8 +54,11 @@ namespace Myob.Fma.BookingLibraryTests
 
         public LibraryBorrowingTests()
         {
-            _library = Library.CreateLibraryWithPreExistingManagers(_resourceManager, _membershipManager,
-                _borrowingManager);
+            _library = new Library(
+                _resourceManager,
+                _membershipManager,
+                _borrowingManager
+                );
         }
 
         [Fact]
@@ -122,7 +125,8 @@ namespace Myob.Fma.BookingLibraryTests
 
             _library.BorrowItem(resourceId, membershipId);
             var exception =
-                    Assert.Throws<ResourceNotAvailableToBorrowException>(() => _library.BorrowItem(resourceId, membershipId));
+                Assert.Throws<ResourceNotAvailableToBorrowException>(
+                    () => _library.BorrowItem(resourceId, membershipId));
         }
 
         [Fact]

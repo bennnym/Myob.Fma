@@ -7,7 +7,7 @@ namespace Myob.Fma.BookingLibrary.ResourceManagement
         void AddResourceToInventory(IResource resource);
         void RemoveResourceFromInventory(IResource resource);
         void CheckoutResource(int resourceId);
-        void ReturnResource(int resourceId);
+        void ReturnBorrowedResource(int resourceId);
         IResource GetResource(int resourceId);
         void CheckResourceIsAvailableToBorrow(int resourceId);
         void CheckForResourceInInventory(int resourceId);

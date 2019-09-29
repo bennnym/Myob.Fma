@@ -33,8 +33,11 @@ namespace Myob.Fma.BookingLibraryTests
 
         public LibraryReturningTests()
         {
-            _library = Library.CreateLibraryWithPreExistingManagers(_resourceManager, _membershipManager,
-                _borrowingManager);
+            _library = new Library(
+                _resourceManager,
+                _membershipManager,
+                _borrowingManager
+            );
         }
 
         [Fact]

@@ -31,7 +31,7 @@ namespace Myob.Fma.BookingLibrary.ResourceManagement
             resource.IsAvailable = false;
         }
 
-        public void ReturnResource(int resourceId)
+        public void ReturnBorrowedResource(int resourceId)
         {
             var resource = GetResource(resourceId);
             resource.IsAvailable = true;
