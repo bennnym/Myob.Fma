@@ -45,10 +45,10 @@ namespace Myob.Fma.Mastermind
         private void SetMatchesWithIncorrectPositions(GuessColour[] userGuess)
         {
             var computerSelection = _computerPlayer.GetCodeSelection();
-            
-            var unmatchedComputerSelection = computerSelection.Where((guess, index) => guess != userGuess[index]).ToList();
-            var unmatchedUserSelection = userGuess.Where((guess, index) => guess != computerSelection[index]).ToList();
 
+            var unmatchedComputerSelection = GetListItemsThatDontHaveExactMatches(computerSelection, userGuess);
+            var unmatchedUserSelection = GetListItemsThatDontHaveExactMatches(userGuess, computerSelection);
+                
             foreach (var guess in unmatchedUserSelection)
             {
                 if (unmatchedComputerSelection.Contains(guess))
@@ -57,7 +57,11 @@ namespace Myob.Fma.Mastermind
                     unmatchedComputerSelection.Remove(guess);
                 }
             }
+        }
 
+        private List<GuessColour> GetListItemsThatDontHaveExactMatches(GuessColour[] arr, GuessColour[] arrToCompareTo)
+        {
+           return arr.Where((guess, index) => guess != arrToCompareTo[index]).ToList();
         }
     }
 }
