@@ -124,7 +124,6 @@ namespace Myob.Fma.BookingLibraryTests
             _membershipManager.AddMembership(_normalMember);
 
             _library.BorrowItem(resourceId, membershipId);
-            var exception =
                 Assert.Throws<ResourceNotAvailableToBorrowException>(
                     () => _library.BorrowItem(resourceId, membershipId));
         }
