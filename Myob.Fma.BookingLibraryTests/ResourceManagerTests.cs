@@ -31,15 +31,5 @@ namespace Myob.Fma.BookingLibraryTests
             Assert.Throws<ResourceNotAvailableToBorrowException>(() =>
                 _resourceManager.CheckResourceIsAvailableToBorrow(id));
         }
-
-        [Fact]
-        public void Should_Return_Resource_When_Correct_Id_Is_Searched_For()
-        {
-            // Act
-            var resource = _resourceManager.GetResource(2);
-            
-            // Assert
-            Assert.NotNull(resource);
-        }
     }
 }
