@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -10,7 +11,7 @@ namespace Myob.Fma.Mastermind
     public class Game
     {
         private readonly IPlayer _computerPlayer;
-        private readonly List<HintColour> _hints = new List<HintColour>();
+        private List<HintColour> _hints = new List<HintColour>();
 
         public Game(IPlayer computerPlayer)
         {
@@ -21,22 +22,25 @@ namespace Myob.Fma.Mastermind
         {
             _hints.Clear();
             var exactMatches = CalculateExactMatchesInUsersGuess(userGuess);
-            SetExactMatchesToList(exactMatches);
+            SetExactMatchesToHints(exactMatches);
             SetMatchesWithIncorrectPositions(userGuess);
+            ShuffleHints();
 
             return _hints.ToArray();
         }
+        
+       
 
         private int CalculateExactMatchesInUsersGuess(GuessColour[] userGuess)
         {
             var computerSelection = _computerPlayer.GetCodeSelection();
-            
+
             return computerSelection.Where((guess, index) => guess == userGuess[index]).Count();
         }
 
-        private void SetExactMatchesToList(int exactMatches)
+        private void SetExactMatchesToHints(int exactMatches)
         {
-            for (int i = 0; i < exactMatches; i++)
+            for (var i = 0; i < exactMatches; i++)
             {
                 _hints.Add(HintColour.Black);
             }
@@ -48,7 +52,19 @@ namespace Myob.Fma.Mastermind
 
             var unmatchedComputerSelection = GetListItemsThatDontHaveExactMatches(computerSelection, userGuess);
             var unmatchedUserSelection = GetListItemsThatDontHaveExactMatches(userGuess, computerSelection);
-                
+
+            SetNonExactMatchesToHints(unmatchedComputerSelection, unmatchedUserSelection);
+        }
+
+        private List<GuessColour> GetListItemsThatDontHaveExactMatches(IEnumerable<GuessColour> arr,
+            IReadOnlyList<GuessColour> arrToCompareTo)
+        {
+            return arr.Where((guess, index) => guess != arrToCompareTo[index]).ToList();
+        }
+
+        private void SetNonExactMatchesToHints(List<GuessColour> unmatchedUserSelection,
+            List<GuessColour> unmatchedComputerSelection)
+        {
             foreach (var guess in unmatchedUserSelection)
             {
                 if (unmatchedComputerSelection.Contains(guess))
@@ -59,9 +75,13 @@ namespace Myob.Fma.Mastermind
             }
         }
 
-        private List<GuessColour> GetListItemsThatDontHaveExactMatches(GuessColour[] arr, GuessColour[] arrToCompareTo)
+        private void ShuffleHints()
         {
-           return arr.Where((guess, index) => guess != arrToCompareTo[index]).ToList();
+            var random = new Random();
+
+            _hints = _hints.OrderBy(x => random.Next(Int32.MaxValue)).ToList();
         }
+
+      
     }
 }

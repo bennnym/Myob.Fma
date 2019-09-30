@@ -18,19 +18,24 @@ namespace Myob.Fma.Mastermind
         {
             var validations = new List<IValidation>()
             {
-                new ColourValidation(),
+                new GuessLimitValidation(),
                 new WordCountValidation(),
-                new GuessLimitValidation()
+                new ColourValidation()
             };
             
             var inputValidator = new InputValidator(validations);
-            var consoleServices = new ConsoleIoService();
+            var consoleService = new ConsoleIoService();
             
-            var inputProcessor = new InputProcessor(consoleServices, inputValidator);
+            var inputProcessor = new InputProcessor(consoleService, inputValidator);
 
-            var computerPlayer = ComputerPlayer.CreatePlayer();
+            var computerPlayer = ComputerPlayer.Create();
+            var game = new Game(computerPlayer);
 
+            var gamePlayer = new GamePlayer(inputProcessor, consoleService);
+            
+            gamePlayer.MasterMind(game);
 
         }
+        
     }
 }

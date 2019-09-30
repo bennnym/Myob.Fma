@@ -31,7 +31,7 @@ namespace Myob.Fma.MastermindTests
         public void Should_Return_An_Array_Of_Four_Black_Hints_If_Correct()
         {
             // Arrange
-            var computerPlayer = ComputerPlayer.CreatePlayer();
+            var computerPlayer = ComputerPlayer.Create();
 
             // Act
             var arrayIsFourElementsInSize = computerPlayer.GetCodeSelection().Length == 4;

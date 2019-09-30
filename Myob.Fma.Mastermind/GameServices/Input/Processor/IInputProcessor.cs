@@ -5,6 +5,6 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Processor
 {
     public interface IInputProcessor
     {
-        List<GuessColour> GetUsersInput();
+        GuessColour[] GetUsersInput();
     }
 }

@@ -30,7 +30,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
             return true;
         }
 
-        public List<GuessColour> GetValidColours(string usersGuess)
+        public GuessColour[] GetValidColours(string usersGuess)
         {
             var usersGuessCapitalized = usersGuess.ToUpper();
 
@@ -39,7 +39,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
             return colourMatches
                 .Matches(usersGuessCapitalized)
                 .Select(m => (GuessColour) Enum.Parse(typeof(GuessColour), m.Value))
-                .ToList();
+                .ToArray();
         }
     }
 }

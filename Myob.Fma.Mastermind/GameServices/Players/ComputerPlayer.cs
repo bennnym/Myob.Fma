@@ -10,7 +10,7 @@ namespace Myob.Fma.Mastermind.GameServices.Players
     {
         private GuessColour[] _codeSelection;
 
-        public static ComputerPlayer CreatePlayer()
+        public static ComputerPlayer Create()
         {
             return new ComputerPlayer()
             {
@@ -23,7 +23,7 @@ namespace Myob.Fma.Mastermind.GameServices.Players
             var randomNum = new Random();
             var colours = new GuessColour[4];
 
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < Constant.ComputerArrayLen; i++)
             {
                 colours[i] = (GuessColour) randomNum.Next(Constant.MinColoursRange, Constant.MaxColoursRange);
             }

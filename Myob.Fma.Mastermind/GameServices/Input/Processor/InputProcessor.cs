@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
@@ -8,20 +10,17 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Processor
 {
     public class InputProcessor : IInputProcessor
     {
-        private readonly ConsoleIoService _consoleIoService;
+        private readonly IIoService _consoleIoService;
         private readonly IInputValidator _inputValidator;
 
-        public InputProcessor(ConsoleIoService consoleIoService, IInputValidator patternValidator)
+        public InputProcessor(IIoService consoleIoService, IInputValidator inputValidator)
         {
             _consoleIoService = consoleIoService;
-            _inputValidator = patternValidator;
+            _inputValidator = inputValidator;
         }
 
-        public List<GuessColour> GetUsersInput()
+        public GuessColour[] GetUsersInput()
         {
-            _consoleIoService.DisplayOutput(Constant.Welcome);
-            _consoleIoService.DisplayOutput(Constant.Instructions);
-
             var isUserInputValid = false;
             var usersGuess = string.Empty;
 
@@ -32,9 +31,18 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Processor
                 isUserInputValid = _inputValidator.IsUsersInputValid(usersGuess, out var message);
 
                 _consoleIoService.DisplayOutput(message);
+                CheckIfGuessLimitExceeded(message);
             }
 
             return _inputValidator.GetValidColours(usersGuess);
+        }
+
+        private void CheckIfGuessLimitExceeded(string message)
+        {
+            if (message == Constant.GuessLimitExceededErrorMsg)
+            {
+                Environment.Exit(0);
+            }
         }
     }
 }
