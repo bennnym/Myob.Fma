@@ -26,9 +26,9 @@ namespace Myob.Fma.Mastermind
             
             var game = new Game(computerPlayer);
             
-            var gameStation = new GameEngine(inputProcessor, consoleService);
+            var gameEngine = new GameEngine(inputProcessor, consoleService);
             
-            gameStation.Mastermind(game);
+            gameEngine.Mastermind(game);
         }
         
     }

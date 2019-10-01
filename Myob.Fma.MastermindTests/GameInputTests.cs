@@ -108,7 +108,7 @@ namespace Myob.Fma.MastermindTests
         }
 
         [Theory]
-        [MemberData(nameof(Data))]
+        [MemberData(nameof(ValidEntryData))]
         public void Should_Return_A_List_Of_Colours_Entered_As_GuessColours_When_Valid_Colours_Are_Entered(
             string userInput,
             List<GuessColour> expectedOutput)
@@ -125,7 +125,7 @@ namespace Myob.Fma.MastermindTests
             Assert.Equal(expectedOutput, guesses);
         }
 
-        public static IEnumerable<object[]> Data =>
+        public static IEnumerable<object[]> ValidEntryData =>
             new List<object[]>
             {
                 new object[]

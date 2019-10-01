@@ -9,17 +9,17 @@ namespace Myob.Fma.Mastermind
     public class GameEngine
     {
         private readonly IInputProcessor _inputProcessor;
-        private readonly IConsoleDisplayService _ioService;
+        private readonly IConsoleDisplayService _consoleDisplayService;
 
-        public GameEngine(IInputProcessor inputProcessor, IConsoleDisplayService ioService)
+        public GameEngine(IInputProcessor inputProcessor, IConsoleDisplayService consoleDisplayService)
         {
             _inputProcessor = inputProcessor;
-            _ioService = ioService;
+            _consoleDisplayService = consoleDisplayService;
         }
 
         public void Mastermind(Game game)
         {
-            _ioService.DisplayOutput(Constant.WelcomeInstructions);
+            _consoleDisplayService.DisplayOutput(Constant.WelcomeInstructions);
             var guessClues = string.Empty;
 
             while (guessClues != Constant.WinningGuess)
@@ -28,7 +28,7 @@ namespace Myob.Fma.Mastermind
                 var hintFeedback = game.Check(userGuess);
                 guessClues = GetCluesAsAString(hintFeedback);
                 var userHintFeedback = GetHintMessage(guessClues);
-                _ioService.DisplayOutput(userHintFeedback);
+                _consoleDisplayService.DisplayOutput(userHintFeedback);
             }
         }
 
