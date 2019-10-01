@@ -22,7 +22,7 @@ namespace Myob.Fma.Mastermind
             var consoleService = new ConsoleIoService();
             
             var inputProcessor = new InputProcessor(consoleService, validator);
-            var computerPlayer = ComputerPlayer.Create();
+            var computerPlayer = new ComputerPlayer();
             
             var game = new Game(computerPlayer);
             

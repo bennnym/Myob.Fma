@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Enums;
 
@@ -8,14 +6,11 @@ namespace Myob.Fma.Mastermind.GameServices.Players
 {
     public class ComputerPlayer : IPlayer
     {
-        private GuessColour[] _codeSelection;
+        private readonly GuessColour[] _codeSelection;
 
-        public static ComputerPlayer Create()
+        public ComputerPlayer()
         {
-            return new ComputerPlayer()
-            {
-                _codeSelection = GenerateRandomColourArray()
-            };
+            _codeSelection = GenerateRandomColourArray();
         }
 
         private static GuessColour[] GenerateRandomColourArray()

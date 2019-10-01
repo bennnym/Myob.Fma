@@ -14,7 +14,7 @@ namespace Myob.Fma.MastermindTests
         public void Should_Contain_A_Code_With_Four_Elements_When_Computer_Player_Is_Created()
         {
             // Arrange
-            var computerPlayer = ComputerPlayer.Create();
+            var computerPlayer = new ComputerPlayer();
 
             // Act
             var arrayIsFourElementsInSize = computerPlayer.GetCodeSelection().Length == 4;
