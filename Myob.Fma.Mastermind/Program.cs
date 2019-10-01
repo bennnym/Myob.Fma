@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
+﻿using System.Collections.Generic;
 using Myob.Fma.Mastermind.Infrastructure;
-using Myob.Fma.Mastermind.Constants;
-using Myob.Fma.Mastermind.GameServices.Input;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;
 using Myob.Fma.Mastermind.GameServices.Input.Validations;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
 using Myob.Fma.Mastermind.GameServices.Players;
-using Constant = Myob.Fma.Mastermind.Constants.Constant;
 
 namespace Myob.Fma.Mastermind
 {
@@ -22,19 +17,18 @@ namespace Myob.Fma.Mastermind
                 new WordCountValidation(),
                 new ColourValidation()
             };
-            
-            var inputValidator = new InputValidator(validations);
+
+            var validator = new InputValidator(validations);
             var consoleService = new ConsoleIoService();
             
-            var inputProcessor = new InputProcessor(consoleService, inputValidator);
-
+            var inputProcessor = new InputProcessor(consoleService, validator);
             var computerPlayer = ComputerPlayer.Create();
-            var game = new Game(computerPlayer);
-
-            var gamePlayer = new GamePlayer(inputProcessor, consoleService);
             
-            gamePlayer.MasterMind(game);
-
+            var game = new Game(computerPlayer);
+            
+            var gameStation = new GameEngine(inputProcessor, consoleService);
+            
+            gameStation.Mastermind(game);
         }
         
     }

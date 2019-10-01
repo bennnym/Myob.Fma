@@ -25,7 +25,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
                     return false;
                 }
             }
-
+            
             message = Constant.ValidGuessMsg;
             return true;
         }

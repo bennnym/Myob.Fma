@@ -11,24 +11,7 @@ namespace Myob.Fma.MastermindTests
     public class ComputerPlayerTests
     {
         [Fact]
-        public void Should_Return_An_Array_Of_Four_Items()
-        {
-            // Arrange
-            var computerPlayer = new FakeComputerPlayer();
-            var game = new Game(computerPlayer);
-            var usersGuess = new GuessColour[] {GuessColour.RED, GuessColour.RED, GuessColour.RED, GuessColour.RED};
-
-            // Act
-            var codeHints = game.Check(usersGuess);
-
-
-            // Assert
-            Assert.Equal(new HintColour[] {HintColour.Black, HintColour.Black, HintColour.Black, HintColour.Black},
-                codeHints);
-        }
-
-        [Fact]
-        public void Should_Return_An_Array_Of_Four_Black_Hints_If_Correct()
+        public void Should_Contain_A_Code_With_Four_Elements_When_Computer_Player_Is_Created()
         {
             // Arrange
             var computerPlayer = ComputerPlayer.Create();

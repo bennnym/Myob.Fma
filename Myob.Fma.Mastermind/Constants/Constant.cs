@@ -21,10 +21,10 @@ namespace Myob.Fma.Mastermind.Constants
         public const string GuessLimitExceededErrorMsg = "Error: you are only allowed 60 guesses, game over!";
 
         public const string WinningGuess = "Black, Black, Black, Black";
-        public const string WinningFeedback = "Congratulations! You cracked the code!";
+        public const string WinningFeedback = "Congratulations! You cracked the code!\n";
 
         public const string ValidGuessMsg = "Valid guess, calculating clues...";
-        public const string IncorrectGuessClue = "You didn't get guess any correct colours!";
+        public const string IncorrectGuessClue = "You didn't guess any correct colours!\n";
         public const string CluePrompt = "The clues for your guess are: ";
 
         public const string RegexColourPattern = @"BLUE|RED|GREEN|ORANGE|PURPLE|YELLOW";
@@ -35,5 +35,6 @@ namespace Myob.Fma.Mastermind.Constants
         public const int MaxColoursRange = 5;
         public const int ComputerArrayLen = 4;
         public const string SpaceCommaDelimiter = ", ";
+        public const string NewLine = "\n";
     }
 }

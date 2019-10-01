@@ -1,8 +1,8 @@
 namespace Myob.Fma.Mastermind.Infrastructure
 {
-    public interface IIoService
+    public interface IConsoleDisplayService
     {
         void DisplayOutput(string message);
-        string GetUserInput();
+        string GetConsoleInput();
     }
 }

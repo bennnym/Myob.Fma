@@ -1,21 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Players;
-using Constant = Myob.Fma.Mastermind.Constants.Constant;
 
 namespace Myob.Fma.Mastermind
 {
     public class Game
     {
         private readonly IPlayer _computerPlayer;
-        private List<HintColour> _hints = new List<HintColour>();
+        private List<HintColour> _hints;
 
         public Game(IPlayer computerPlayer)
         {
             _computerPlayer = computerPlayer;
+            _hints = new List<HintColour>();
         }
 
         public HintColour[] Check(GuessColour[] userGuess)
@@ -28,13 +27,10 @@ namespace Myob.Fma.Mastermind
 
             return _hints.ToArray();
         }
-        
-       
 
         private int CalculateExactMatchesInUsersGuess(GuessColour[] userGuess)
         {
             var computerSelection = _computerPlayer.GetCodeSelection();
-
             return computerSelection.Where((guess, index) => guess == userGuess[index]).Count();
         }
 
@@ -79,9 +75,7 @@ namespace Myob.Fma.Mastermind
         {
             var random = new Random();
 
-            _hints = _hints.OrderBy(x => random.Next(Int32.MaxValue)).ToList();
+            _hints = _hints.OrderBy(x => random.Next(int.MaxValue)).ToList();
         }
-
-      
     }
 }

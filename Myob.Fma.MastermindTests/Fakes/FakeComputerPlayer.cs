@@ -7,11 +7,11 @@ namespace Myob.Fma.MastermindTests.Fakes
 {
     public class FakeComputerPlayer : IPlayer
     {
-        private GuessColour[] _codeSelection;
+        private readonly GuessColour[] _codeSelection;
 
         public FakeComputerPlayer()
         {
-            _codeSelection = new GuessColour[] {GuessColour.RED, GuessColour.RED, GuessColour.RED, GuessColour.RED};
+            _codeSelection = new [] {GuessColour.RED, GuessColour.RED, GuessColour.RED, GuessColour.RED};
         }
 
         public GuessColour[] GetCodeSelection()

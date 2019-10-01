@@ -2,14 +2,14 @@ using System;
 
 namespace Myob.Fma.Mastermind.Infrastructure
 {
-    public class ConsoleIoService : IIoService
+    public class ConsoleIoService : IConsoleDisplayService
     {
         public void DisplayOutput(string message)
         {
             Console.WriteLine(message);
         }
 
-        public virtual string GetUserInput()
+        public virtual string GetConsoleInput()
         {
             return Console.ReadLine();
         }
