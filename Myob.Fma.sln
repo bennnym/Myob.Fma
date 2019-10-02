@@ -52,6 +52,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.Composition.Tests", "Myob.Fma.Composition.Tests\Myob.Fma.Composition.Tests.csproj", "{93DB50CA-01FB-46CE-926C-239B60B57B85}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.RefactoringKata", "Myob.Fma.RefactoringKata\Myob.Fma.RefactoringKata.csproj", "{3B3B5F44-7C3C-44CE-8E47-711B2B51E348}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.BookingLibrary", "Myob.Fma.BookingLibrary\Myob.Fma.BookingLibrary.csproj", "{868E85D3-33C9-4847-9558-CB23866725CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myob.Fma.BookingLibraryTests", "Myob.Fma.BookingLibraryTests\Myob.Fma.BookingLibraryTests.csproj", "{11A5A039-FDEE-4AA1-A684-48E23B347FE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,5 +165,13 @@ Global
 		{93DB50CA-01FB-46CE-926C-239B60B57B85}.Release|Any CPU.Build.0 = Release|Any CPU
 
 
+		{868E85D3-33C9-4847-9558-CB23866725CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868E85D3-33C9-4847-9558-CB23866725CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868E85D3-33C9-4847-9558-CB23866725CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868E85D3-33C9-4847-9558-CB23866725CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11A5A039-FDEE-4AA1-A684-48E23B347FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11A5A039-FDEE-4AA1-A684-48E23B347FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11A5A039-FDEE-4AA1-A684-48E23B347FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11A5A039-FDEE-4AA1-A684-48E23B347FE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
