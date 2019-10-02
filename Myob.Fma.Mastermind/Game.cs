@@ -19,7 +19,7 @@ namespace Myob.Fma.Mastermind
 
         public HintColour[] Check(GuessColour[] usersGuess)
         {
-            _hints.Clear();
+            _hints.Clear(); // make a hint object? dont make a global var instantiate a new one each time
             SetExactMatchesToHints(usersGuess);
             SetIncorrectPositionMatchesToHints(usersGuess);
             ShuffleHints();

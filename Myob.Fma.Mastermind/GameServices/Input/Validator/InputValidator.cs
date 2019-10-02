@@ -17,11 +17,11 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
         }
         public bool IsUsersInputValid(string usersGuess, out string message)
         {
-            foreach (var validityCheck in _validations)
+            foreach (var validation in _validations)
             {
-                if (validityCheck.IsValid(usersGuess) == false)
+                if (validation.IsValid(usersGuess) == false)
                 {
-                    message = validityCheck.GetErrorMessage();
+                    message = validation.GetErrorMessage();
                     return false;
                 }
             }

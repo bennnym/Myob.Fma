@@ -22,13 +22,13 @@ namespace Myob.Fma.Mastermind
             var consoleService = new ConsoleIoService();
             
             var inputProcessor = new InputProcessor(consoleService, validator);
-            var computerPlayer = new ComputerPlayer();
             
+            var computerPlayer = new ComputerPlayer();
             var game = new Game(computerPlayer);
             
             var gameEngine = new GameEngine(inputProcessor, consoleService);
             
-            gameEngine.Mastermind(game);
+            gameEngine.Mastermind(game); // method should be a verb!
         }
         
     }
