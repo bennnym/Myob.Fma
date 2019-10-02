@@ -25,11 +25,11 @@ namespace Myob.Fma.Mastermind
             ShuffleHints();
             return _hints.ToArray();
         }
-        
+
         private void SetExactMatchesToHints(GuessColour[] usersGuess)
         {
             var numberOfExactMatches = CalculateExactMatchesInUsersGuess(usersGuess);
-            
+
             for (var i = 0; i < numberOfExactMatches; i++)
             {
                 _hints.Add(HintColour.Black);
@@ -43,30 +43,30 @@ namespace Myob.Fma.Mastermind
             var unmatchedComputerSelection = GetListItemsThatDontHaveExactMatches(computerSelection, userGuess);
             var unmatchedUserSelection = GetListItemsThatDontHaveExactMatches(userGuess, computerSelection);
 
-            SetNonExactMatchesToHints(unmatchedComputerSelection, unmatchedUserSelection);
+            UpdateIncorrectPositionMatchHints(unmatchedComputerSelection, unmatchedUserSelection);
         }
-        
+
         private int CalculateExactMatchesInUsersGuess(GuessColour[] userGuess)
         {
             var computerSelection = _computerPlayer.GetCodeSelection();
-            return computerSelection.Where((guess, index) => guess == userGuess[index]).Count();
+            return userGuess.Where((colour, index) => colour == computerSelection[index]).Count();
         }
 
-        private List<GuessColour> GetListItemsThatDontHaveExactMatches(IEnumerable<GuessColour> arr,
-            IReadOnlyList<GuessColour> arrToCompareTo)
+        private List<GuessColour> GetListItemsThatDontHaveExactMatches(IEnumerable<GuessColour> guessColours,
+            IReadOnlyList<GuessColour> comparingList)
         {
-            return arr.Where((guess, index) => guess != arrToCompareTo[index]).ToList();
+            return guessColours.Where((colour, index) => colour != comparingList[index]).ToList();
         }
 
-        private void SetNonExactMatchesToHints(List<GuessColour> unmatchedUserSelection,
-            List<GuessColour> unmatchedComputerSelection)
+        private void UpdateIncorrectPositionMatchHints(List<GuessColour> userSelection,
+            List<GuessColour> computerSelection)
         {
-            foreach (var guess in unmatchedUserSelection)
+            foreach (var guess in userSelection)
             {
-                if (unmatchedComputerSelection.Contains(guess))
+                if (computerSelection.Contains(guess))
                 {
                     _hints.Add(HintColour.White);
-                    unmatchedComputerSelection.Remove(guess);
+                    computerSelection.Remove(guess);
                 }
             }
         }
