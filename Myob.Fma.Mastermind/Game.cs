@@ -9,41 +9,42 @@ namespace Myob.Fma.Mastermind
     public class Game
     {
         private readonly IPlayer _computerPlayer;
-        private List<HintColour> _hints;
 
         public Game(IPlayer computerPlayer)
         {
             _computerPlayer = computerPlayer;
-            _hints = new List<HintColour>();
         }
 
         public HintColour[] Check(GuessColour[] usersGuess)
         {
-            _hints.Clear(); // make a hint object? dont make a global var instantiate a new one each time
-            SetExactMatchesToHints(usersGuess);
-            SetIncorrectPositionMatchesToHints(usersGuess);
-            ShuffleHints();
-            return _hints.ToArray();
+             // make a hint object? dont make a global var instantiate a new one each time
+            var hints = SetExactMatchesToHints(usersGuess);
+            hints = SetIncorrectPositionMatchesToHints(usersGuess, hints);
+            hints = ShuffleHints(hints);
+            return hints.ToArray();
         }
 
-        private void SetExactMatchesToHints(GuessColour[] usersGuess)
+        private List<HintColour> SetExactMatchesToHints(GuessColour[] usersGuess)
         {
+            var hints = new List<HintColour>();
             var numberOfExactMatches = CalculateExactMatchesInUsersGuess(usersGuess);
 
             for (var i = 0; i < numberOfExactMatches; i++)
             {
-                _hints.Add(HintColour.Black);
+                hints.Add(HintColour.Black);
             }
+
+            return hints;
         }
 
-        private void SetIncorrectPositionMatchesToHints(GuessColour[] userGuess)
+        private List<HintColour> SetIncorrectPositionMatchesToHints(GuessColour[] userGuess, List<HintColour> hints)
         {
             var computerSelection = _computerPlayer.GetCodeSelection();
 
             var unmatchedComputerSelection = GetListItemsThatDontHaveExactMatches(computerSelection, userGuess);
             var unmatchedUserSelection = GetListItemsThatDontHaveExactMatches(userGuess, computerSelection);
 
-            UpdateIncorrectPositionMatchHints(unmatchedComputerSelection, unmatchedUserSelection);
+            return AddWhiteHintsToList(unmatchedComputerSelection, unmatchedUserSelection, hints);
         }
 
         private int CalculateExactMatchesInUsersGuess(GuessColour[] userGuess)
@@ -58,24 +59,26 @@ namespace Myob.Fma.Mastermind
             return guessColours.Where((colour, index) => colour != comparingList[index]).ToList();
         }
 
-        private void UpdateIncorrectPositionMatchHints(List<GuessColour> userSelection,
-            List<GuessColour> computerSelection)
+        private List<HintColour> AddWhiteHintsToList(List<GuessColour> userSelection,
+            List<GuessColour> computerSelection, List<HintColour> hints)
         {
             foreach (var guess in userSelection)
             {
                 if (computerSelection.Contains(guess))
                 {
-                    _hints.Add(HintColour.White);
+                    hints.Add(HintColour.White);
                     computerSelection.Remove(guess);
                 }
             }
+
+            return hints;
         }
 
-        private void ShuffleHints()
+        private List<HintColour> ShuffleHints(List<HintColour> hints)
         {
             var random = new Random();
 
-            _hints = _hints.OrderBy(x => random.Next(int.MaxValue)).ToList();
+            return hints.OrderBy(x => random.Next(int.MaxValue)).ToList();
         }
     }
 }
