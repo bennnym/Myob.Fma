@@ -19,7 +19,7 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Processor
 
         public GuessColour[] GetUsersColourGuess()
         {
-            var isUserInputValid = false;
+            bool isUserInputValid = false;
             var usersGuess = string.Empty;
 
             while (isUserInputValid == false)
