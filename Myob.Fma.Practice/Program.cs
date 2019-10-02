@@ -11,19 +11,12 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            var tester = "//[*1*][%]\n1*1*2%3";
+            var singletonExample = SingletonExample.Instance;
 
-            var update = tester.Replace("//", "YOLO");
-
-            var regexSearch = new Regex(@"(?<=\])(\n).*");
-
-            var match = regexSearch.Match(tester);
-
-            Console.WriteLine(match);
-
-
+            var same = SingletonExample.Instance;
 
 
         }
+        
     }
 }
