@@ -17,32 +17,26 @@ namespace Myob.Fma.Mastermind
             _hints = new List<HintColour>();
         }
 
-        public HintColour[] Check(GuessColour[] userGuess)
+        public HintColour[] Check(GuessColour[] usersGuess)
         {
             _hints.Clear();
-            var exactMatches = CalculateExactMatchesInUsersGuess(userGuess);
-            SetExactMatchesToHints(exactMatches);
-            SetMatchesWithIncorrectPositions(userGuess);
+            SetExactMatchesToHints(usersGuess);
+            SetIncorrectPositionMatchesToHints(usersGuess);
             ShuffleHints();
-
             return _hints.ToArray();
         }
-
-        private int CalculateExactMatchesInUsersGuess(GuessColour[] userGuess)
+        
+        private void SetExactMatchesToHints(GuessColour[] usersGuess)
         {
-            var computerSelection = _computerPlayer.GetCodeSelection();
-            return computerSelection.Where((guess, index) => guess == userGuess[index]).Count();
-        }
-
-        private void SetExactMatchesToHints(int exactMatches)
-        {
-            for (var i = 0; i < exactMatches; i++)
+            var numberOfExactMatches = CalculateExactMatchesInUsersGuess(usersGuess);
+            
+            for (var i = 0; i < numberOfExactMatches; i++)
             {
                 _hints.Add(HintColour.Black);
             }
         }
 
-        private void SetMatchesWithIncorrectPositions(GuessColour[] userGuess)
+        private void SetIncorrectPositionMatchesToHints(GuessColour[] userGuess)
         {
             var computerSelection = _computerPlayer.GetCodeSelection();
 
@@ -50,6 +44,12 @@ namespace Myob.Fma.Mastermind
             var unmatchedUserSelection = GetListItemsThatDontHaveExactMatches(userGuess, computerSelection);
 
             SetNonExactMatchesToHints(unmatchedComputerSelection, unmatchedUserSelection);
+        }
+        
+        private int CalculateExactMatchesInUsersGuess(GuessColour[] userGuess)
+        {
+            var computerSelection = _computerPlayer.GetCodeSelection();
+            return computerSelection.Where((guess, index) => guess == userGuess[index]).Count();
         }
 
         private List<GuessColour> GetListItemsThatDontHaveExactMatches(IEnumerable<GuessColour> arr,
