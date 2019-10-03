@@ -163,6 +163,12 @@ namespace Myob.Fma.MastermindTests
                     new[] {GuessColour.YELLOW, GuessColour.BLUE, GuessColour.RED, GuessColour.ORANGE},
                     new[] {HintColour.White, HintColour.White, HintColour.White, HintColour.White}
                 },
+                new object[]
+                {
+                    new[] {GuessColour.RED, GuessColour.PURPLE, GuessColour.BLUE, GuessColour.GREEN},
+                    new[] {GuessColour.BLUE, GuessColour.BLUE, GuessColour.ORANGE, GuessColour.YELLOW},
+                    new[] {HintColour.White}
+                },
             };
 
         public static IEnumerable<object[]> MixOfMatches =>

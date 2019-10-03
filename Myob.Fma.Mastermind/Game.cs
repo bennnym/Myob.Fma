@@ -23,7 +23,7 @@ namespace Myob.Fma.Mastermind
             return hints.ToArray();
         }
 
-        private List<HintColour> SetExactMatchesToHints(IEnumerable<GuessColour> usersGuess)
+        private List<HintColour> SetExactMatchesToHints(GuessColour[] usersGuess)
         {
             var hints = new List<HintColour>();
             var numberOfExactMatches = CalculateExactMatchesInUsersGuess(usersGuess);
@@ -38,7 +38,6 @@ namespace Myob.Fma.Mastermind
 
         private List<HintColour> SetIncorrectPositionMatchesToHints(IReadOnlyList<GuessColour> userGuess, List<HintColour> hints)
         {
-            if (userGuess == null) throw new ArgumentNullException(nameof(userGuess));
             var computerSelection = _computerPlayer.GetCodeSelection();
 
             var unmatchedComputerSelection = GetListItemsThatDontHaveExactMatches(computerSelection, userGuess);
@@ -62,6 +61,7 @@ namespace Myob.Fma.Mastermind
         private List<HintColour> AddWhiteHintsToList(IEnumerable<GuessColour> userSelection,
             ICollection<GuessColour> computerSelection, List<HintColour> hints)
         {
+            
             foreach (var guess in userSelection)
             {
                 if (computerSelection.Contains(guess))

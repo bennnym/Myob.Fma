@@ -31,7 +31,6 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Processor
                 isUserInputValid = validationResult.IsValid;
 
                 _consoleIoService.DisplayOutput(validationResult.ErrorMessage);
-//                CheckIfGuessLimitExceeded(message);
             }
 
             return _inputValidator.GetValidColours(usersGuess);
