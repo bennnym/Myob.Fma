@@ -154,13 +154,13 @@ namespace Myob.Fma.MastermindTests
                 new object[]
                 {
                     new[] {GuessColour.RED, GuessColour.YELLOW, GuessColour.BLUE, GuessColour.RED},
-                    new[] {GuessColour.YELLOW, GuessColour.RED, GuessColour.RED, GuessColour.ORANGE},
+                    new[] {GuessColour.YELLOW, GuessColour.BLUE, GuessColour.RED, GuessColour.ORANGE},
                     new[] {HintColour.White, HintColour.White, HintColour.White}
                 },
                 new object[]
                 {
                     new[] {GuessColour.RED, GuessColour.YELLOW, GuessColour.BLUE, GuessColour.RED},
-                    new[] {GuessColour.YELLOW, GuessColour.BLUE, GuessColour.RED, GuessColour.ORANGE},
+                    new[] {GuessColour.YELLOW, GuessColour.RED, GuessColour.RED, GuessColour.ORANGE},
                     new[] {HintColour.White, HintColour.White, HintColour.White}
                 },
                 new object[]

@@ -23,16 +23,20 @@ namespace Myob.Fma.Mastermind
             return hints.ToArray();
         }
 
-        private List<HintColour> SetExactMatchesToHints(IEnumerable<GuessColour> usersGuess)
+        private List<HintColour> SetExactMatchesToHints(GuessColour[] usersGuess)
         {
             var hints = new List<HintColour>();
             var numberOfExactMatches = CalculateExactMatchesInUsersGuess(usersGuess);
 
-            return GetUpdatedHints(hints, HintColour.Black, numberOfExactMatches);
+            for (var i = 0; i < numberOfExactMatches; i++)
+            {
+                hints.Add(HintColour.Black);
+            }
+
+            return hints;
         }
 
-        private List<HintColour> SetIncorrectPositionMatchesToHints(IReadOnlyList<GuessColour> userGuess,
-            List<HintColour> hints)
+        private List<HintColour> SetIncorrectPositionMatchesToHints(IReadOnlyList<GuessColour> userGuess, List<HintColour> hints)
         {
             var computerSelection = _computerPlayer.GetCodeSelection();
 
@@ -55,22 +59,25 @@ namespace Myob.Fma.Mastermind
         }
 
         private List<HintColour> AddWhiteHintsToList(IEnumerable<GuessColour> userSelection,
-            IEnumerable<GuessColour> computerSelection, List<HintColour> hints)
+            ICollection<GuessColour> computerSelection, List<HintColour> hints)
         {
-            var whiteHintCount = userSelection.Intersect(computerSelection).Count();
-            return GetUpdatedHints(hints, HintColour.White, whiteHintCount);
+            
+            foreach (var guess in userSelection)
+            {
+                if (computerSelection.Contains(guess))
+                {
+                    hints.Add(HintColour.White);
+                    computerSelection.Remove(guess);
+                }
+            }
+
+            return hints;
         }
 
-        private List<HintColour> GetUpdatedHints(IEnumerable<HintColour> hints, HintColour hintColour,
-            int hintCountToAdd)
-        {
-            var newHintsToAdd = Enumerable.Repeat(hintColour, hintCountToAdd);
-            return hints.Concat(newHintsToAdd).ToList();
-        }
-
-        private List<HintColour> ShuffleHints(IEnumerable<HintColour> hints)
+        private List<HintColour> ShuffleHints(List<HintColour> hints)
         {
             var random = new Random();
+
             return hints.OrderBy(x => random.Next(int.MaxValue)).ToList();
         }
     }
