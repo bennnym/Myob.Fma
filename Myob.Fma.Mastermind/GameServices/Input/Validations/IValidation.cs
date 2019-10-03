@@ -1,4 +1,4 @@
-namespace Myob.Fma.Mastermind.GameServices.Input.Validator
+namespace Myob.Fma.Mastermind.GameServices.Input.Validations
 {
     public interface IValidation
     {

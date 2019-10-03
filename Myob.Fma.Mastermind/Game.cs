@@ -17,14 +17,13 @@ namespace Myob.Fma.Mastermind
 
         public HintColour[] Check(GuessColour[] usersGuess)
         {
-             // make a hint object? dont make a global var instantiate a new one each time
             var hints = SetExactMatchesToHints(usersGuess);
             hints = SetIncorrectPositionMatchesToHints(usersGuess, hints);
             hints = ShuffleHints(hints);
             return hints.ToArray();
         }
 
-        private List<HintColour> SetExactMatchesToHints(GuessColour[] usersGuess)
+        private List<HintColour> SetExactMatchesToHints(IEnumerable<GuessColour> usersGuess)
         {
             var hints = new List<HintColour>();
             var numberOfExactMatches = CalculateExactMatchesInUsersGuess(usersGuess);
@@ -37,8 +36,9 @@ namespace Myob.Fma.Mastermind
             return hints;
         }
 
-        private List<HintColour> SetIncorrectPositionMatchesToHints(GuessColour[] userGuess, List<HintColour> hints)
+        private List<HintColour> SetIncorrectPositionMatchesToHints(IReadOnlyList<GuessColour> userGuess, List<HintColour> hints)
         {
+            if (userGuess == null) throw new ArgumentNullException(nameof(userGuess));
             var computerSelection = _computerPlayer.GetCodeSelection();
 
             var unmatchedComputerSelection = GetListItemsThatDontHaveExactMatches(computerSelection, userGuess);
@@ -47,7 +47,7 @@ namespace Myob.Fma.Mastermind
             return AddWhiteHintsToList(unmatchedComputerSelection, unmatchedUserSelection, hints);
         }
 
-        private int CalculateExactMatchesInUsersGuess(GuessColour[] userGuess)
+        private int CalculateExactMatchesInUsersGuess(IEnumerable<GuessColour> userGuess)
         {
             var computerSelection = _computerPlayer.GetCodeSelection();
             return userGuess.Where((colour, index) => colour == computerSelection[index]).Count();
@@ -59,8 +59,8 @@ namespace Myob.Fma.Mastermind
             return guessColours.Where((colour, index) => colour != comparingList[index]).ToList();
         }
 
-        private List<HintColour> AddWhiteHintsToList(List<GuessColour> userSelection,
-            List<GuessColour> computerSelection, List<HintColour> hints)
+        private List<HintColour> AddWhiteHintsToList(IEnumerable<GuessColour> userSelection,
+            ICollection<GuessColour> computerSelection, List<HintColour> hints)
         {
             foreach (var guess in userSelection)
             {

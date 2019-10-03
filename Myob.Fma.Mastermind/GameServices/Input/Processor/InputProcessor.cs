@@ -26,21 +26,16 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Processor
             {
                 usersGuess = _consoleIoService.GetConsoleInput();
 
-                isUserInputValid = _inputValidator.IsUsersInputValid(usersGuess, out var message); // return class?
+                var validationResult = _inputValidator.GetValidationResults(usersGuess);
 
-                _consoleIoService.DisplayOutput(message);
-                CheckIfGuessLimitExceeded(message);
+                isUserInputValid = validationResult.IsValid;
+
+                _consoleIoService.DisplayOutput(validationResult.ErrorMessage);
+//                CheckIfGuessLimitExceeded(message);
             }
 
             return _inputValidator.GetValidColours(usersGuess);
         }
 
-        private void CheckIfGuessLimitExceeded(string message) // move this to guess limit validations?
-        {
-            if (message == Constant.GuessLimitExceededErrorMsg)
-            {
-                Environment.Exit(0); // bound to console - add to its class
-            }
-        }
     }
 }

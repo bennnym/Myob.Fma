@@ -4,5 +4,6 @@ namespace Myob.Fma.Mastermind.Infrastructure
     {
         void DisplayOutput(string message);
         string GetConsoleInput();
+        void ExitApplication();
     }
 }

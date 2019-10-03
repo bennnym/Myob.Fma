@@ -9,9 +9,14 @@ namespace Myob.Fma.Mastermind.Infrastructure
             Console.WriteLine(message);
         }
 
-        public virtual string GetConsoleInput()
+        public string GetConsoleInput()
         {
             return Console.ReadLine();
+        }
+
+        public void ExitApplication() // move this to guess limit validations?
+        {
+            Environment.Exit(0); // bound to console - add to its class
         }
     }
 }

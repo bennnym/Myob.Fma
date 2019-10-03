@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Moq;
-using Myob.Fma.Mastermind;
-using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Enums;
-using Myob.Fma.Mastermind.GameServices.Input;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;
 using Myob.Fma.Mastermind.GameServices.Input.Validations;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
@@ -44,12 +40,11 @@ namespace Myob.Fma.MastermindTests
         public void Should_Return_True_If_The_User_Has_Entered_Four_Words(string input)
         {
             // Act
-            var userHasEnteredFourColours =
-                _inputValidatorWordLength.IsUsersInputValid(input, out var message);
+            var validationResult =
+                _inputValidatorWordLength.GetValidationResults(input);
 
             // Assert
-            Assert.True(userHasEnteredFourColours);
-            Assert.Equal(Constant.ValidGuessMsg, message);
+            Assert.True(validationResult.IsValid);
         }
 
         [Theory]
@@ -60,12 +55,11 @@ namespace Myob.Fma.MastermindTests
         public void Should_Return_False_If_The_User_Has_Entered_Less_Or_More_Than_Four_Words(string input)
         {
             // Act
-            var userHasEnteredFourColours =
-                _inputValidatorWordLength.IsUsersInputValid(input, out var message);
+            var validationResults =
+                _inputValidatorWordLength.GetValidationResults(input);
 
             // Assert
-            Assert.False(userHasEnteredFourColours);
-            Assert.Equal(Constant.IncorrectNumberOfColoursErrorMsg, message);
+            Assert.False(validationResults.IsValid);
         }
 
         [Fact]
@@ -79,12 +73,11 @@ namespace Myob.Fma.MastermindTests
                 });
 
             // Act
-            var userHasMadeLessThanSixtyGuesses =
-                inputValidatorGuessCount.IsUsersInputValid("red red red red", out var message);
+            var validationResult =
+                inputValidatorGuessCount.GetValidationResults("red red red red");
 
             // Assert
-            Assert.False(userHasMadeLessThanSixtyGuesses);
-            Assert.Equal(Constant.GuessLimitExceededErrorMsg, message);
+            Assert.False(validationResult.IsValid);
         }
 
         [Theory]
@@ -100,11 +93,10 @@ namespace Myob.Fma.MastermindTests
                 });
 
             // Act
-            var coloursValid = inputValidatorColor.IsUsersInputValid(input, out string message);
+            var validationResult = inputValidatorColor.GetValidationResults(input);
 
             // Assert
-            Assert.True(coloursValid);
-            Assert.Equal(Constant.ValidGuessMsg, message);
+            Assert.True(validationResult.IsValid);
         }
 
         [Theory]
@@ -114,7 +106,7 @@ namespace Myob.Fma.MastermindTests
             List<GuessColour> expectedOutput)
         {
             // Arrange
-            var mockConsoleService = new Mock<ConsoleIoService>();
+            var mockConsoleService = new Mock<IConsoleDisplayService>();
             var inputReader = new InputProcessor(mockConsoleService.Object, _inputValidator);
             mockConsoleService.Setup(i => i.GetConsoleInput()).Returns(userInput);
 
