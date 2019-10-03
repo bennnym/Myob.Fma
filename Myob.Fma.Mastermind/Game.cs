@@ -23,17 +23,12 @@ namespace Myob.Fma.Mastermind
             return hints.ToArray();
         }
 
-        private List<HintColour> SetExactMatchesToHints(GuessColour[] usersGuess)
+        private List<HintColour> SetExactMatchesToHints(IEnumerable<GuessColour> usersGuess)
         {
             var hints = new List<HintColour>();
             var numberOfExactMatches = CalculateExactMatchesInUsersGuess(usersGuess);
 
-            for (var i = 0; i < numberOfExactMatches; i++)
-            {
-                hints.Add(HintColour.Black);
-            }
-
-            return hints;
+            return GetUpdatedHints(hints, HintColour.Black, numberOfExactMatches);
         }
 
         private List<HintColour> SetIncorrectPositionMatchesToHints(IReadOnlyList<GuessColour> userGuess, List<HintColour> hints)
@@ -61,23 +56,19 @@ namespace Myob.Fma.Mastermind
         private List<HintColour> AddWhiteHintsToList(IEnumerable<GuessColour> userSelection,
             ICollection<GuessColour> computerSelection, List<HintColour> hints)
         {
-            
-            foreach (var guess in userSelection)
-            {
-                if (computerSelection.Contains(guess))
-                {
-                    hints.Add(HintColour.White);
-                    computerSelection.Remove(guess);
-                }
-            }
+            var whiteHintCount = userSelection.Intersect(computerSelection).Count();
+            return GetUpdatedHints(hints, HintColour.White, whiteHintCount);
+        }
 
-            return hints;
+        private List<HintColour> GetUpdatedHints(List<HintColour> hints, HintColour hintColour, int hintCountToAdd)
+        {
+            var newHintsToAdd = Enumerable.Repeat(hintColour, hintCountToAdd);
+            return hints.Concat(newHintsToAdd).ToList();
         }
 
         private List<HintColour> ShuffleHints(List<HintColour> hints)
         {
             var random = new Random();
-
             return hints.OrderBy(x => random.Next(int.MaxValue)).ToList();
         }
     }
