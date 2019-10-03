@@ -11,9 +11,15 @@ namespace Myob.Fma.Practice
     {
         static void Main(string[] args)
         {
-            var singletonExample = SingletonExample.Instance;
+            int[] numbers1 = { 1, 2, 3,3 };
+            int[] numbers2 = { 3, 4, 5,3 };
 
-            var same = SingletonExample.Instance;
+            var result = numbers1.Intersect(numbers2);
+
+            foreach (var num in result)
+            {
+                Console.WriteLine(num);
+            }
 
 
         }
