@@ -6,12 +6,5 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validations
     {
         public bool IsValid { get; set; }
         public string ErrorMessage { get; set; }
-
-        public ValidationResult()
-        {
-            
-            IsValid = true;
-            ErrorMessage = Constant.ValidGuessMsg;
-        }
     }
 }

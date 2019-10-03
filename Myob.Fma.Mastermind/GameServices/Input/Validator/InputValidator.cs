@@ -16,20 +16,25 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
         {
             _validations = validations;
         }
+
         public IValidationResult GetValidationResults(string usersGuess)
         {
-            var validationResult = new ValidationResult();
-            
             foreach (var validation in _validations)
             {
                 if (!validation.IsValid(usersGuess))
                 {
-                    validationResult.IsValid = false;
-                    validationResult.ErrorMessage = validation.GetErrorMessage();
-                    return validationResult;
+                    return new ValidationResult()
+                    {
+                        IsValid = false,
+                        ErrorMessage = validation.GetErrorMessage()
+                    };
                 }
             }
-            return validationResult;
+            return new ValidationResult()
+            {
+                IsValid = true,
+                ErrorMessage = Constant.ValidGuessMsg
+            };
         }
 
         public GuessColour[] GetValidColours(string usersGuess)
