@@ -35,8 +35,7 @@ namespace Myob.Fma.Mastermind.GameServices.Counter
         {
             _consoleDisplayService.DisplayOutput(Constant.GuessCountPrompt + _guessCount);
             _consoleDisplayService.DisplayOutput(
-                Constant.RemainingGuessesPrompt + (Constant.GuessLimit - _guessCount));
-            _consoleDisplayService.DisplayOutput(Constant.NewLine);
+                Constant.RemainingGuessesPrompt + (Constant.GuessLimit - _guessCount) + Constant.NewLine);
         }
     }
 }

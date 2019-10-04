@@ -1,4 +1,4 @@
-namespace Myob.Fma.Mastermind.GameServices.Input.Validations
+namespace Myob.Fma.Mastermind.GameServices.Input.Validations.ValidationResults
 {
     public class FailingValidation : IValidationResult
     {

@@ -6,5 +6,6 @@ namespace Myob.Fma.Mastermind.GameServices.Players
     public interface IComputerPlayer
     {
         GuessColour[] GetCodeSelection();
+        void SetHiddenCode();
     }
 }

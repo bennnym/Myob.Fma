@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Enums;
 
-namespace Myob.Fma.Mastermind.GameServices.Input.Validations
+namespace Myob.Fma.Mastermind.GameServices.Input.Validations.InputValidations
 {
     public class ColourValidation : IValidation
     {

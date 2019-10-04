@@ -21,6 +21,8 @@ namespace Myob.Fma.Mastermind
         {
             _consoleDisplayService.DisplayOutput(Constant.WelcomeInstructions);
             var guessClues = string.Empty;
+            
+            game.ComputerPlayer.SetHiddenCode();
 
             while (guessClues != Constant.WinningGuess)
             {

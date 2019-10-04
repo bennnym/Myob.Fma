@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Moq;
 using Myob.Fma.Mastermind;
 using Myob.Fma.Mastermind.Enums;
@@ -11,28 +10,30 @@ using Xunit;
 
 namespace Myob.Fma.MastermindTests
 {
-    public class GameTests
+    public class GameCheckMethodTests
     {
-        private ConsoleIoService _consoleService;
-        private GuessCounter _guessCounter;
+        private readonly GuessCounter _guessCounter;
+        private Mock<IComputerPlayer> _computerPlayer;
+        private Game _game;
 
-        public GameTests()
+        public GameCheckMethodTests()
         {
-            _consoleService = new ConsoleIoService();
-            _guessCounter = new GuessCounter(_consoleService);
+            _guessCounter = new GuessCounter(new ConsoleIoService());
+            _computerPlayer = new Mock<IComputerPlayer>();
+            _game = new Game(_computerPlayer.Object, _guessCounter);
         }
 
         [Fact]
         public void Should_Return_An_Empty_Array_When_No_Matches_Are_Found()
         {
             // Arrange
-            var computerPlayer = new Mock<IComputerPlayer>();
-            var game = new Game(computerPlayer.Object,_guessCounter);
+  
+            var allRedCode = new[] {GuessColour.RED, GuessColour.RED, GuessColour.RED, GuessColour.RED};
+            var allBlueGuess = new[] {GuessColour.BLUE, GuessColour.BLUE, GuessColour.BLUE, GuessColour.BLUE};
 
             // Act
-            computerPlayer.Setup(i => i.GetCodeSelection()).Returns(new[]
-                {GuessColour.RED, GuessColour.RED, GuessColour.RED, GuessColour.RED});
-            var hints = game.Check(new[] {GuessColour.BLUE, GuessColour.BLUE, GuessColour.BLUE, GuessColour.BLUE});
+            _computerPlayer.Setup(i => i.GetCodeSelection()).Returns(allRedCode);
+            var hints = _game.Check(allBlueGuess);
 
             // Assert
             Assert.Empty(hints);
@@ -44,12 +45,10 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, HintColour[] expectedHint)
         {
             // Arrange
-            var computerPlayer = new Mock<IComputerPlayer>();
-            var game = new Game(computerPlayer.Object,_guessCounter);
-
+            _computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
+            
             // Act
-            computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
-            var hints = game.Check(playerGuess);
+            var hints = _game.Check(playerGuess);
 
             // Assert
             Assert.Equal(expectedHint, hints);
@@ -61,12 +60,10 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, HintColour[] expectedHint)
         {
             // Arrange
-            var computerPlayer = new Mock<IComputerPlayer>();
-            var game = new Game(computerPlayer.Object,_guessCounter);
+            _computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
 
             // Act
-            computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
-            var hints = game.Check(playerGuess);
+            var hints = _game.Check(playerGuess);
 
             // Assert
             Assert.Equal(expectedHint, hints);
@@ -78,12 +75,10 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, int expectedBlackHints, int expectedWhiteHints)
         {
             // Arrange
-            var computerPlayer = new Mock<IComputerPlayer>();
-            var game = new Game(computerPlayer.Object,_guessCounter);
+            _computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
 
             // Act
-            computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
-            var hints = game.Check(playerGuess);
+            var hints = _game.Check(playerGuess);
             var numberOfBlackHints = hints.Count(g => g == HintColour.Black);
             var numberOfWhiteHints = hints.Count(g => g == HintColour.White);
 

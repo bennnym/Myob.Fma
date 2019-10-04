@@ -10,20 +10,17 @@ namespace Myob.Fma.Mastermind.GameServices.Players
 
         public ComputerPlayer()
         {
-            _codeSelection = GenerateRandomColourArray();
+            _codeSelection = new GuessColour[4];
         }
 
-        private static GuessColour[] GenerateRandomColourArray()
+        public void SetHiddenCode()
         {
             var randomNum = new Random();
-            var colours = new GuessColour[4];
 
             for (var i = 0; i < Constant.ComputerArrayLen; i++)
             {
-                colours[i] = (GuessColour) randomNum.Next(Constant.MinColoursRange, Constant.MaxColoursRange);
+                _codeSelection[i] = (GuessColour) randomNum.Next(Constant.MinColoursRange, Constant.MaxColoursRange);
             }
-
-            return colours;
         }
 
         public  GuessColour[] GetCodeSelection()

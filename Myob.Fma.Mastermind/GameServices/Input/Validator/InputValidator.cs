@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Input.Validations;
+using Myob.Fma.Mastermind.GameServices.Input.Validations.InputValidations;
+using Myob.Fma.Mastermind.GameServices.Input.Validations.ValidationResults;
 
 namespace Myob.Fma.Mastermind.GameServices.Input.Validator
 {

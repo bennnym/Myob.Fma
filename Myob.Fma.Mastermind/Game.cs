@@ -9,16 +9,16 @@ namespace Myob.Fma.Mastermind
 {
     public class Game
     {
-        private readonly IComputerPlayer _computerPlayer;
 
         public Game(IComputerPlayer computerPlayer, IGuessCounter guessCounter)
         {
-            _computerPlayer = computerPlayer;
+            ComputerPlayer = computerPlayer;
             GuessCounter = guessCounter;
         }
         
         public IGuessCounter GuessCounter { get; }
-        
+        public  IComputerPlayer ComputerPlayer { get; }
+
         public HintColour[] Check(GuessColour[] usersGuess)
         {
             var hints = SetExactMatchesToHints(usersGuess);
@@ -35,14 +35,14 @@ namespace Myob.Fma.Mastermind
         
         private int CalculateExactMatchesInUsersGuess(IEnumerable<GuessColour> userGuess)
         {
-            var computerSelection = _computerPlayer.GetCodeSelection();
+            var computerSelection = ComputerPlayer.GetCodeSelection();
             return userGuess.Where((colour, index) => colour == computerSelection[index]).Count();
         }
 
         private List<HintColour> SetNonPositionMatchesToHints(IReadOnlyList<GuessColour> userGuess,
             List<HintColour> hints)
         {
-            var computerSelection = _computerPlayer.GetCodeSelection();
+            var computerSelection = ComputerPlayer.GetCodeSelection();
 
             var unmatchedComputerSelection = GetListItemsThatDontHaveExactMatches(computerSelection, userGuess);
             var unmatchedUserSelection = GetListItemsThatDontHaveExactMatches(userGuess, computerSelection);
