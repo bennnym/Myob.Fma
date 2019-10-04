@@ -20,18 +20,18 @@ namespace Myob.Fma.Mastermind.GamePlay
         public void Mastermind(Game game)
         {
             _consoleDisplayService.DisplayOutput(Constant.WelcomeInstructions);
-            var guessClues = string.Empty;
+            var guessHint = string.Empty;
             
             game.ComputerPlayer.SetHiddenCode();
 
-            while (guessClues != Constant.WinningGuess)
+            while (guessHint != Constant.WinningGuess)
             {
                 game.GuessCounter.DisplayCountMessage();
                 var userGuess = _inputProcessor.GetUsersColourGuess();
                 var hintFeedback = game.Check(userGuess);
                 game.GuessCounter.IncrementCount();
-                guessClues = GetCluesAsAString(hintFeedback);
-                var userHintFeedback = GetHintMessage(guessClues);
+                guessHint = GetCluesAsAString(hintFeedback);
+                var userHintFeedback = GetHintMessage(guessHint);
                 _consoleDisplayService.DisplayOutput(userHintFeedback);
             }
         }
