@@ -6,6 +6,7 @@ using Myob.Fma.Mastermind.GameServices.Input.Processor;
 using Myob.Fma.Mastermind.GameServices.Input.Validations;
 using Myob.Fma.Mastermind.GameServices.Input.Validations.InputValidations;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
+using Myob.Fma.Mastermind.GameServices.Output;
 using Myob.Fma.Mastermind.GameServices.Players;
 
 namespace Myob.Fma.Mastermind
@@ -26,10 +27,11 @@ namespace Myob.Fma.Mastermind
             var inputProcessor = new InputProcessor(consoleService, validator);
             
             var computerPlayer = new ComputerPlayer();
-            var guessCounter = new GuessCounter(consoleService);
+            var guessCounter = new GuessCounter();
             var game = new Game(computerPlayer, guessCounter);
-            
-            var gameEngine = new GameEngine(inputProcessor, consoleService);
+
+            var messageFormatter = new MessageFormatter();
+            var gameEngine = new GameEngine(inputProcessor, consoleService, messageFormatter);
             
             gameEngine.Mastermind(game); // method should be a verb!
         }

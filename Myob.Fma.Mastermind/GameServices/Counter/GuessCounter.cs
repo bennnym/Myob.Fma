@@ -6,36 +6,21 @@ namespace Myob.Fma.Mastermind.GameServices.Counter
     public class GuessCounter : IGuessCounter
     {
         private int _guessCount;
-        private readonly IConsoleDisplayService _consoleDisplayService;
 
-        public GuessCounter(IConsoleDisplayService consoleDisplayService)
-        {
-            _consoleDisplayService = consoleDisplayService;
-        }
+        public string DisplayMessage =>
+            _guessCount <= Constant.GuessLimit - 1 ? CurrentGuessCount() : Constant.GuessLimitExceededErrorMsg;
+
+        public bool IsGameOver => _guessCount >= 60;
 
         public void IncrementCount()
         {
             _guessCount += 1;
         }
 
-        public void DisplayCountMessage()
+        private string CurrentGuessCount()
         {
-            if (_guessCount <= 59)
-            {
-                DisplayCurrentGuessCount();
-            }
-            else
-            {
-                _consoleDisplayService.DisplayOutput(Constant.GuessLimitExceededErrorMsg);
-                _consoleDisplayService.ExitApplication();
-            }
-        }
-
-        private void DisplayCurrentGuessCount()
-        {
-            _consoleDisplayService.DisplayOutput(Constant.GuessCountPrompt + _guessCount);
-            _consoleDisplayService.DisplayOutput(
-                Constant.RemainingGuessesPrompt + (Constant.GuessLimit - _guessCount) + Constant.NewLine);
+            return Constant.GuessCountPrompt + _guessCount + Constant.NewLine + Constant.RemainingGuessesPrompt +
+                   (Constant.GuessLimit - _guessCount) + Constant.NewLine;
         }
     }
 }
