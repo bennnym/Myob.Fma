@@ -29,7 +29,6 @@ namespace Myob.Fma.MastermindTests
                 {
                     new WordCountValidation(),
                     new ColourValidation(),
-                    new GuessLimitValidation()
                 });
         }
 

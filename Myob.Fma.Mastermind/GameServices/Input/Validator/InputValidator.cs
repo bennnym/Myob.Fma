@@ -23,18 +23,14 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
             {
                 if (!validation.IsValid(usersGuess))
                 {
-                    return new ValidationResult()
+                    return new FailingValidation() 
                     {
-                        IsValid = false,
                         ErrorMessage = validation.GetErrorMessage()
                     };
                 }
             }
-            return new ValidationResult()
-            {
-                IsValid = true,
-                ErrorMessage = Constant.ValidGuessMsg
-            };
+
+            return new SuccessfulValidation();
         }
 
         public GuessColour[] GetValidColours(string usersGuess)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.Infrastructure;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;
 using Myob.Fma.Mastermind.GameServices.Input.Validations;
@@ -13,7 +14,6 @@ namespace Myob.Fma.Mastermind
         {
             var validations = new List<IValidation>()
             {
-                new GuessLimitValidation(),
                 new WordCountValidation(),
                 new ColourValidation()
             };
@@ -24,7 +24,8 @@ namespace Myob.Fma.Mastermind
             var inputProcessor = new InputProcessor(consoleService, validator);
             
             var computerPlayer = new ComputerPlayer();
-            var game = new Game(computerPlayer);
+            var guessCounter = new GuessCounter(consoleService);
+            var game = new Game(computerPlayer, guessCounter);
             
             var gameEngine = new GameEngine(inputProcessor, consoleService);
             

@@ -2,19 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Myob.Fma.Mastermind.Enums;
+using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.GameServices.Players;
 
 namespace Myob.Fma.Mastermind
 {
     public class Game
     {
-        private readonly IPlayer _computerPlayer;
+        private readonly IComputerPlayer _computerPlayer;
 
-        public Game(IPlayer computerPlayer)
+        public Game(IComputerPlayer computerPlayer, IGuessCounter guessCounter)
         {
             _computerPlayer = computerPlayer;
+            GuessCounter = guessCounter;
         }
-
+        
+        public IGuessCounter GuessCounter { get; }
+        
         public HintColour[] Check(GuessColour[] usersGuess)
         {
             var hints = SetExactMatchesToHints(usersGuess);
@@ -22,7 +26,7 @@ namespace Myob.Fma.Mastermind
             hints = ShuffleHints(hints);
             return hints.ToArray();
         }
-
+        
         private List<HintColour> SetExactMatchesToHints(IEnumerable<GuessColour> usersGuess)
         {
             var numberOfExactMatches = CalculateExactMatchesInUsersGuess(usersGuess);
@@ -46,13 +50,13 @@ namespace Myob.Fma.Mastermind
             return AddWhiteHintsToList(unmatchedComputerSelection, unmatchedUserSelection, hints);
         }
         
-        private List<GuessColour> GetListItemsThatDontHaveExactMatches(IEnumerable<GuessColour> guessColours,
+        private static List<GuessColour> GetListItemsThatDontHaveExactMatches(IEnumerable<GuessColour> guessColours,
             IReadOnlyList<GuessColour> comparingList)
         {
             return guessColours.Where((colour, index) => colour != comparingList[index]).ToList();
         }
 
-        private List<HintColour> AddWhiteHintsToList(IEnumerable<GuessColour> userSelection,
+        private static List<HintColour> AddWhiteHintsToList(IEnumerable<GuessColour> userSelection,
             ICollection<GuessColour> computerSelection, List<HintColour> hints)
         {
             foreach (var guess in userSelection)

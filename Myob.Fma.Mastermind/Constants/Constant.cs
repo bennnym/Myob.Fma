@@ -19,6 +19,8 @@ namespace Myob.Fma.Mastermind.Constants
         public const string InvalidColourErrorMsg = "Error: you have given an invalid colour!" +
                                                     "\nTry again:";
         public const string GuessLimitExceededErrorMsg = "Error: you are only allowed 60 guesses, game over!";
+        public const string GuessCountPrompt = "Number of Guesses so far: ";
+        public const string RemainingGuessesPrompt = "Guesses Remaining: ";
 
         public const string WinningGuess = "Black, Black, Black, Black";
         public const string WinningFeedback = "Congratulations! You cracked the code!\n";

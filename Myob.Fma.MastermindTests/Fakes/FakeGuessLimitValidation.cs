@@ -1,6 +1,5 @@
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.GameServices.Input.Validations;
-using Myob.Fma.Mastermind.GameServices.Input.Validator;
 
 namespace Myob.Fma.MastermindTests.Fakes
 {

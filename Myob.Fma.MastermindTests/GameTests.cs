@@ -4,21 +4,30 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Moq;
 using Myob.Fma.Mastermind;
 using Myob.Fma.Mastermind.Enums;
+using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.GameServices.Players;
-using Myob.Fma.MastermindTests.Fakes;
+using Myob.Fma.Mastermind.Infrastructure;
 using Xunit;
 
 namespace Myob.Fma.MastermindTests
 {
     public class GameTests
     {
+        private ConsoleIoService _consoleService;
+        private GuessCounter _guessCounter;
+
+        public GameTests()
+        {
+            _consoleService = new ConsoleIoService();
+            _guessCounter = new GuessCounter(_consoleService);
+        }
 
         [Fact]
         public void Should_Return_An_Empty_Array_When_No_Matches_Are_Found()
         {
             // Arrange
-            var computerPlayer = new Mock<IPlayer>();
-            var game = new Game(computerPlayer.Object);
+            var computerPlayer = new Mock<IComputerPlayer>();
+            var game = new Game(computerPlayer.Object,_guessCounter);
 
             // Act
             computerPlayer.Setup(i => i.GetCodeSelection()).Returns(new[]
@@ -35,8 +44,8 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, HintColour[] expectedHint)
         {
             // Arrange
-            var computerPlayer = new Mock<IPlayer>();
-            var game = new Game(computerPlayer.Object);
+            var computerPlayer = new Mock<IComputerPlayer>();
+            var game = new Game(computerPlayer.Object,_guessCounter);
 
             // Act
             computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
@@ -52,8 +61,8 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, HintColour[] expectedHint)
         {
             // Arrange
-            var computerPlayer = new Mock<IPlayer>();
-            var game = new Game(computerPlayer.Object);
+            var computerPlayer = new Mock<IComputerPlayer>();
+            var game = new Game(computerPlayer.Object,_guessCounter);
 
             // Act
             computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
@@ -69,8 +78,8 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, int expectedBlackHints, int expectedWhiteHints)
         {
             // Arrange
-            var computerPlayer = new Mock<IPlayer>();
-            var game = new Game(computerPlayer.Object);
+            var computerPlayer = new Mock<IComputerPlayer>();
+            var game = new Game(computerPlayer.Object,_guessCounter);
 
             // Act
             computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);

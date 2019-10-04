@@ -24,15 +24,17 @@ namespace Myob.Fma.Mastermind
 
             while (guessClues != Constant.WinningGuess)
             {
+                game.GuessCounter.DisplayCountMessage();
                 var userGuess = _inputProcessor.GetUsersColourGuess();
                 var hintFeedback = game.Check(userGuess);
+                game.GuessCounter.IncrementCount();
                 guessClues = GetCluesAsAString(hintFeedback);
                 var userHintFeedback = GetHintMessage(guessClues);
                 _consoleDisplayService.DisplayOutput(userHintFeedback);
             }
         }
 
-        private string GetHintMessage(string hintFeedback)
+        private static string GetHintMessage(string hintFeedback)
         {
             if (hintFeedback == string.Empty)
             {
@@ -47,7 +49,7 @@ namespace Myob.Fma.Mastermind
             return Constant.CluePrompt + hintFeedback + Constant.NewLine;
         }
 
-        private string GetCluesAsAString(IEnumerable<HintColour> hintColours)
+        private static string GetCluesAsAString(IEnumerable<HintColour> hintColours)
         {
             return string.Join(Constant.SpaceCommaDelimiter, hintColours);
         }

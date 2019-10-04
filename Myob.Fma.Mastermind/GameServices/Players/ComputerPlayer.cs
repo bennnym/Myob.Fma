@@ -4,7 +4,7 @@ using Myob.Fma.Mastermind.Enums;
 
 namespace Myob.Fma.Mastermind.GameServices.Players
 {
-    public class ComputerPlayer : IPlayer
+    public class ComputerPlayer : IComputerPlayer
     {
         private readonly GuessColour[] _codeSelection;
 

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Enums;
-using Myob.Fma.Mastermind.GameServices.Input.Validator;
 
 namespace Myob.Fma.Mastermind.GameServices.Input.Validations
 {
