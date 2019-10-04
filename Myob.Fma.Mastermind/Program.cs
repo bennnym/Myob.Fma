@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Myob.Fma.Mastermind.GamePlay;
 using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.Infrastructure;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;

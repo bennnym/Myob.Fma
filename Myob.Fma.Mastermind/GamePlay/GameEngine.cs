@@ -4,7 +4,7 @@ using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;
 using Myob.Fma.Mastermind.Infrastructure;
 
-namespace Myob.Fma.Mastermind
+namespace Myob.Fma.Mastermind.GamePlay
 {
     public class GameEngine
     {

@@ -3,6 +3,7 @@ using System.Linq;
 using Moq;
 using Myob.Fma.Mastermind;
 using Myob.Fma.Mastermind.Enums;
+using Myob.Fma.Mastermind.GamePlay;
 using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.GameServices.Players;
 using Myob.Fma.Mastermind.Infrastructure;
@@ -12,15 +13,13 @@ namespace Myob.Fma.MastermindTests
 {
     public class GameCheckMethodTests
     {
-        private readonly GuessCounter _guessCounter;
-        private Mock<IComputerPlayer> _computerPlayer;
-        private Game _game;
+        private readonly Mock<IComputerPlayer> _computerPlayer;
+        private readonly Game _game;
 
         public GameCheckMethodTests()
         {
-            _guessCounter = new GuessCounter(new ConsoleIoService());
             _computerPlayer = new Mock<IComputerPlayer>();
-            _game = new Game(_computerPlayer.Object, _guessCounter);
+            _game = new Game(_computerPlayer.Object, new GuessCounter(new ConsoleIoService()));
         }
 
         [Fact]

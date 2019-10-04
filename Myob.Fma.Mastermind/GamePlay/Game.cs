@@ -5,11 +5,10 @@ using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.GameServices.Players;
 
-namespace Myob.Fma.Mastermind
+namespace Myob.Fma.Mastermind.GamePlay
 {
-    public class Game
+    public class Game : IGame
     {
-
         public Game(IComputerPlayer computerPlayer, IGuessCounter guessCounter)
         {
             ComputerPlayer = computerPlayer;
@@ -19,7 +18,7 @@ namespace Myob.Fma.Mastermind
         public IGuessCounter GuessCounter { get; }
         public  IComputerPlayer ComputerPlayer { get; }
 
-        public HintColour[] Check(GuessColour[] usersGuess)
+        public IEnumerable<HintColour> Check(GuessColour[] usersGuess)
         {
             var hints = SetExactMatchesToHints(usersGuess);
             hints = SetNonPositionMatchesToHints(usersGuess, hints);
