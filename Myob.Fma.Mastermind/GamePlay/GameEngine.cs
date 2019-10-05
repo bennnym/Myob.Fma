@@ -30,12 +30,11 @@ namespace Myob.Fma.Mastermind.GamePlay
 
             while (guessHint != Constant.WinningGuess)
             {
-                var remainingGuessesMessage = game.GuessCounter.DisplayMessage;
-                _consoleDisplayService.DisplayOutput(remainingGuessesMessage);
-                CheckForEndOfGame(game.GuessCounter.IsGameOver);
+                var guessStatusMessage = game.GuessCounter.RemainingGuessesMessage;
+                _consoleDisplayService.DisplayOutput(guessStatusMessage);
+                CheckForEndOfGame(game.GuessCounter.IsGuessLimitExceeded);
                 
                 var userGuess = _inputProcessor.GetUsersColourGuess();
-                
                 var hintFeedback = game.Check(userGuess);
                 
                 game.GuessCounter.IncrementCount();
@@ -46,9 +45,9 @@ namespace Myob.Fma.Mastermind.GamePlay
             }
         }
 
-        private void CheckForEndOfGame(bool isGameOver)
+        private void CheckForEndOfGame(bool isTheGameOver)
         {
-            if (isGameOver)
+            if (isTheGameOver)
             {
                 _consoleDisplayService.ExitApplication();
             }

@@ -7,10 +7,10 @@ namespace Myob.Fma.Mastermind.GameServices.Counter
     {
         private int _guessCount;
 
-        public string DisplayMessage =>
+        public string RemainingGuessesMessage =>
             _guessCount <= Constant.GuessLimit - 1 ? CurrentGuessCount() : Constant.GuessLimitExceededErrorMsg;
 
-        public bool IsGameOver => _guessCount >= 60;
+        public bool IsGuessLimitExceeded => _guessCount >= 60;
 
         public void IncrementCount()
         {
