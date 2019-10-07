@@ -36,6 +36,7 @@ namespace Myob.Fma.Mastermind.Constants
         public const int MinColoursRange = 0;
         public const int MaxColoursRange = 6;
         public const int ComputerArrayLen = 4;
+        public const int BlackHintsRequiredToWin = 4;
         public const string SpaceCommaDelimiter = ", ";
         public const string NewLine = "\n";
     }

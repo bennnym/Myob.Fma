@@ -6,22 +6,24 @@ namespace Myob.Fma.Mastermind.GameServices.Output
 {
     public class MessageFormatter : IMessageFormatter
     {
-        public string GetHintMessage(string hintFeedback)
+        public string GetHintMessage(IEnumerable<HintColour> hintColours)
         {
-            if (hintFeedback == string.Empty)
+            var hintString = TransformHintColourEnumerableToString(hintColours);
+            
+            if (hintString == string.Empty)
             {
                 return Constant.IncorrectGuessClue + Constant.NewLine;
             }
 
-            if (hintFeedback == Constant.WinningGuess)
+            if (hintString == Constant.WinningGuess)
             {
                 return Constant.WinningFeedback + Constant.NewLine;
             }
 
-            return Constant.CluePrompt + hintFeedback + Constant.NewLine;
+            return Constant.CluePrompt + hintString + Constant.NewLine;
         }
 
-        public string TransformHintColourEnumerableToString(IEnumerable<HintColour> hintColours)
+        private static string TransformHintColourEnumerableToString(IEnumerable<HintColour> hintColours)
         {
             return string.Join(Constant.SpaceCommaDelimiter, hintColours);
         }

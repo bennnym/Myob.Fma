@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Enums;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;
@@ -12,7 +15,7 @@ namespace Myob.Fma.Mastermind.GamePlay
         private readonly IInputProcessor _inputProcessor;
         private readonly IConsoleDisplayService _consoleDisplayService;
         private readonly IMessageFormatter _messageFormatter;
-
+        
         public GameEngine(IInputProcessor inputProcessor, IConsoleDisplayService consoleDisplayService,
             IMessageFormatter messageFormatter)
         {
@@ -24,23 +27,22 @@ namespace Myob.Fma.Mastermind.GamePlay
         public void Mastermind(Game game)
         {
             _consoleDisplayService.DisplayOutput(Constant.WelcomeInstructions);
-            var guessHint = string.Empty;
+            var hints = Enumerable.Empty<HintColour>();
 
             game.ComputerPlayer.SetHiddenCode();
 
-            while (guessHint != Constant.WinningGuess)
+            while (IsAWinningCombination(hints))
             {
                 var guessStatusMessage = game.GuessCounter.RemainingGuessesMessage;
                 _consoleDisplayService.DisplayOutput(guessStatusMessage);
                 CheckForEndOfGame(game.GuessCounter.IsGuessLimitExceeded);
                 
                 var userGuess = _inputProcessor.GetUsersColourGuess();
-                var hintFeedback = game.Check(userGuess);
+                hints = game.Check(userGuess);
                 
                 game.GuessCounter.IncrementCount();
                 
-                guessHint = _messageFormatter.TransformHintColourEnumerableToString(hintFeedback);
-                var userHintFeedback = _messageFormatter.GetHintMessage(guessHint);
+                var userHintFeedback = _messageFormatter.GetHintMessage(hints);
                 _consoleDisplayService.DisplayOutput(userHintFeedback);
             }
         }
@@ -51,6 +53,11 @@ namespace Myob.Fma.Mastermind.GamePlay
             {
                 _consoleDisplayService.ExitApplication();
             }
+        }
+
+        private static bool IsAWinningCombination(IEnumerable<HintColour> hints)
+        {
+            return hints.Count(hc => hc == HintColour.Black) == Constant.BlackHintsRequiredToWin;
         }
     }
 }
