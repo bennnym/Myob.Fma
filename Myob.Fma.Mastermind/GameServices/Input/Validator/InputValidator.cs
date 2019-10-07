@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Enums;
+using Myob.Fma.Mastermind.GameServices.Input.Validations;
+using Myob.Fma.Mastermind.GameServices.Input.Validations.InputValidations;
+using Myob.Fma.Mastermind.GameServices.Input.Validations.ValidationResults;
 
 namespace Myob.Fma.Mastermind.GameServices.Input.Validator
 {
@@ -15,19 +18,21 @@ namespace Myob.Fma.Mastermind.GameServices.Input.Validator
         {
             _validations = validations;
         }
-        public bool IsUsersInputValid(string usersGuess, out string message)
+
+        public IValidationResult GetValidationResults(string usersGuess)
         {
             foreach (var validation in _validations)
             {
-                if (validation.IsValid(usersGuess) == false)
+                if (!validation.IsValid(usersGuess))
                 {
-                    message = validation.GetErrorMessage();
-                    return false;
+                    return new FailingValidation() 
+                    {
+                        ErrorMessage = validation.GetErrorMessage()
+                    };
                 }
             }
-            
-            message = Constant.ValidGuessMsg;
-            return true;
+
+            return new SuccessfulValidation();
         }
 
         public GuessColour[] GetValidColours(string usersGuess)

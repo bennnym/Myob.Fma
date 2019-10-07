@@ -3,8 +3,9 @@ using Myob.Fma.Mastermind.Enums;
 
 namespace Myob.Fma.Mastermind.GameServices.Players
 {
-    public interface IPlayer
+    public interface IComputerPlayer
     {
         GuessColour[] GetCodeSelection();
+        void SetHiddenCode();
     }
 }

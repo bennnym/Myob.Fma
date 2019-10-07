@@ -1,29 +1,38 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Moq;
 using Myob.Fma.Mastermind;
 using Myob.Fma.Mastermind.Enums;
+using Myob.Fma.Mastermind.GamePlay;
+using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.GameServices.Players;
-using Myob.Fma.MastermindTests.Fakes;
+using Myob.Fma.Mastermind.Infrastructure;
 using Xunit;
 
 namespace Myob.Fma.MastermindTests
 {
-    public class GameTests
+    public class GameCheckMethodTests
     {
+        private readonly Mock<IComputerPlayer> _computerPlayer;
+        private readonly Game _game;
+
+        public GameCheckMethodTests()
+        {
+            _computerPlayer = new Mock<IComputerPlayer>();
+            _game = new Game(_computerPlayer.Object, new GuessCounter());
+        }
 
         [Fact]
         public void Should_Return_An_Empty_Array_When_No_Matches_Are_Found()
         {
             // Arrange
-            var computerPlayer = new Mock<IPlayer>();
-            var game = new Game(computerPlayer.Object);
+  
+            var allRedCode = new[] {GuessColour.RED, GuessColour.RED, GuessColour.RED, GuessColour.RED};
+            var allBlueGuess = new[] {GuessColour.BLUE, GuessColour.BLUE, GuessColour.BLUE, GuessColour.BLUE};
 
             // Act
-            computerPlayer.Setup(i => i.GetCodeSelection()).Returns(new[]
-                {GuessColour.RED, GuessColour.RED, GuessColour.RED, GuessColour.RED});
-            var hints = game.Check(new[] {GuessColour.BLUE, GuessColour.BLUE, GuessColour.BLUE, GuessColour.BLUE});
+            _computerPlayer.Setup(i => i.GetCodeSelection()).Returns(allRedCode);
+            var hints = _game.Check(allBlueGuess);
 
             // Assert
             Assert.Empty(hints);
@@ -35,12 +44,10 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, HintColour[] expectedHint)
         {
             // Arrange
-            var computerPlayer = new Mock<IPlayer>();
-            var game = new Game(computerPlayer.Object);
-
+            _computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
+            
             // Act
-            computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
-            var hints = game.Check(playerGuess);
+            var hints = _game.Check(playerGuess);
 
             // Assert
             Assert.Equal(expectedHint, hints);
@@ -52,12 +59,10 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, HintColour[] expectedHint)
         {
             // Arrange
-            var computerPlayer = new Mock<IPlayer>();
-            var game = new Game(computerPlayer.Object);
+            _computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
 
             // Act
-            computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
-            var hints = game.Check(playerGuess);
+            var hints = _game.Check(playerGuess);
 
             // Assert
             Assert.Equal(expectedHint, hints);
@@ -69,12 +74,10 @@ namespace Myob.Fma.MastermindTests
             GuessColour[] playerGuess, int expectedBlackHints, int expectedWhiteHints)
         {
             // Arrange
-            var computerPlayer = new Mock<IPlayer>();
-            var game = new Game(computerPlayer.Object);
+            _computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
 
             // Act
-            computerPlayer.Setup(i => i.GetCodeSelection()).Returns(computerGuess);
-            var hints = game.Check(playerGuess);
+            var hints = _game.Check(playerGuess);
             var numberOfBlackHints = hints.Count(g => g == HintColour.Black);
             var numberOfWhiteHints = hints.Count(g => g == HintColour.White);
 
@@ -159,9 +162,21 @@ namespace Myob.Fma.MastermindTests
                 },
                 new object[]
                 {
+                    new[] {GuessColour.RED, GuessColour.YELLOW, GuessColour.BLUE, GuessColour.RED},
+                    new[] {GuessColour.YELLOW, GuessColour.RED, GuessColour.RED, GuessColour.ORANGE},
+                    new[] {HintColour.White, HintColour.White, HintColour.White}
+                },
+                new object[]
+                {
                     new[] {GuessColour.RED, GuessColour.YELLOW, GuessColour.ORANGE, GuessColour.BLUE},
                     new[] {GuessColour.YELLOW, GuessColour.BLUE, GuessColour.RED, GuessColour.ORANGE},
                     new[] {HintColour.White, HintColour.White, HintColour.White, HintColour.White}
+                },
+                new object[]
+                {
+                    new[] {GuessColour.RED, GuessColour.PURPLE, GuessColour.BLUE, GuessColour.GREEN},
+                    new[] {GuessColour.BLUE, GuessColour.BLUE, GuessColour.ORANGE, GuessColour.YELLOW},
+                    new[] {HintColour.White}
                 },
             };
 

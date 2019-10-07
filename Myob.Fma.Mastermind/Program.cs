@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using Myob.Fma.Mastermind.GamePlay;
+using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.Infrastructure;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;
 using Myob.Fma.Mastermind.GameServices.Input.Validations;
+using Myob.Fma.Mastermind.GameServices.Input.Validations.InputValidations;
 using Myob.Fma.Mastermind.GameServices.Input.Validator;
+using Myob.Fma.Mastermind.GameServices.Output;
 using Myob.Fma.Mastermind.GameServices.Players;
 
 namespace Myob.Fma.Mastermind
@@ -13,7 +17,6 @@ namespace Myob.Fma.Mastermind
         {
             var validations = new List<IValidation>()
             {
-                new GuessLimitValidation(),
                 new WordCountValidation(),
                 new ColourValidation()
             };
@@ -24,9 +27,11 @@ namespace Myob.Fma.Mastermind
             var inputProcessor = new InputProcessor(consoleService, validator);
             
             var computerPlayer = new ComputerPlayer();
-            var game = new Game(computerPlayer);
-            
-            var gameEngine = new GameEngine(inputProcessor, consoleService);
+            var guessCounter = new GuessCounter();
+            var game = new Game(computerPlayer, guessCounter);
+
+            var messageFormatter = new MessageFormatter();
+            var gameEngine = new GameEngine(inputProcessor, consoleService, messageFormatter);
             
             gameEngine.Mastermind(game); // method should be a verb!
         }
