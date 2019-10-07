@@ -23,10 +23,10 @@ namespace Myob.Fma.Mastermind.Constants
         public const string RemainingGuessesPrompt = "Guesses Remaining: ";
 
         public const string WinningGuess = "Black, Black, Black, Black";
-        public const string WinningFeedback = "Congratulations! You cracked the code!\n";
+        public const string WinningFeedback = "Congratulations! You cracked the code!\n\n";
 
         public const string ValidGuessMsg = "Valid guess, calculating clues...";
-        public const string IncorrectGuessClue = "You didn't guess any correct colours!\n";
+        public const string NoCluesPresent = "You didn't guess any correct colours!\n\n";
         public const string CluePrompt = "The clues for your guess are: ";
 
         public const string RegexColourPattern = @"BLUE|RED|GREEN|ORANGE|PURPLE|YELLOW";

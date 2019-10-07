@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Myob.Fma.Mastermind.Constants;
 using Myob.Fma.Mastermind.Enums;
+using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.GameServices.Input.Processor;
 using Myob.Fma.Mastermind.GameServices.Output;
 using Myob.Fma.Mastermind.Infrastructure;
@@ -15,7 +14,7 @@ namespace Myob.Fma.Mastermind.GamePlay
         private readonly IInputProcessor _inputProcessor;
         private readonly IConsoleDisplayService _consoleDisplayService;
         private readonly IMessageFormatter _messageFormatter;
-        
+
         public GameEngine(IInputProcessor inputProcessor, IConsoleDisplayService consoleDisplayService,
             IMessageFormatter messageFormatter)
         {
@@ -24,38 +23,29 @@ namespace Myob.Fma.Mastermind.GamePlay
             _messageFormatter = messageFormatter;
         }
 
-        public void Mastermind(Game game)
+        public void Mastermind(IGame game)
         {
             _consoleDisplayService.DisplayOutput(Constant.WelcomeInstructions);
             var hints = Enumerable.Empty<HintColour>();
+            var guessCounter = new GuessCounter();
 
-            game.ComputerPlayer.SetHiddenCode();
+            game.SetComputerPlayersCode();
 
-            while (IsAWinningCombination(hints))
+            while (IsNotWinningCombination(hints))
             {
-                var guessStatusMessage = game.GuessCounter.RemainingGuessesMessage;
-                _consoleDisplayService.DisplayOutput(guessStatusMessage);
-                CheckForEndOfGame(game.GuessCounter.IsGuessLimitExceeded);
-                
-                var userGuess = _inputProcessor.GetUsersColourGuess();
-                hints = game.Check(userGuess);
-                
-                game.GuessCounter.IncrementCount();
-                
-                var userHintFeedback = _messageFormatter.GetHintMessage(hints);
-                _consoleDisplayService.DisplayOutput(userHintFeedback);
+                _consoleDisplayService.DisplayOutput(guessCounter.GetRemainingGuessMessage());
+
+                if (guessCounter.IsGuessLimitExceeded()) _consoleDisplayService.ExitApplication();
+
+                hints = game.Check(_inputProcessor.GetUsersColourGuess());
+
+                guessCounter.IncrementCount();
+
+                _consoleDisplayService.DisplayOutput(_messageFormatter.GetHintMessage(hints));
             }
         }
 
-        private void CheckForEndOfGame(bool isTheGameOver)
-        {
-            if (isTheGameOver)
-            {
-                _consoleDisplayService.ExitApplication();
-            }
-        }
-
-        private static bool IsAWinningCombination(IEnumerable<HintColour> hints)
+        private static bool IsNotWinningCombination(IEnumerable<HintColour> hints)
         {
             return hints.Count(hc => hc == HintColour.Black) == Constant.BlackHintsRequiredToWin;
         }

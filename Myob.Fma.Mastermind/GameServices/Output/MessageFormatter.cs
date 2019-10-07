@@ -12,12 +12,12 @@ namespace Myob.Fma.Mastermind.GameServices.Output
             
             if (hintString == string.Empty)
             {
-                return Constant.IncorrectGuessClue + Constant.NewLine;
+                return Constant.NoCluesPresent;
             }
 
             if (hintString == Constant.WinningGuess)
             {
-                return Constant.WinningFeedback + Constant.NewLine;
+                return Constant.WinningFeedback;
             }
 
             return Constant.CluePrompt + hintString + Constant.NewLine;

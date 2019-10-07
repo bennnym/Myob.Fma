@@ -7,8 +7,7 @@ namespace Myob.Fma.Mastermind.GamePlay
 {
     public interface IGame
     {
-        IGuessCounter GuessCounter { get; }
-        IComputerPlayer ComputerPlayer { get; }
+        void SetComputerPlayersCode();
         IEnumerable<HintColour> Check(GuessColour[] usersGuess);
     }
 }

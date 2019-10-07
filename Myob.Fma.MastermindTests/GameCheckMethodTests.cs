@@ -19,7 +19,7 @@ namespace Myob.Fma.MastermindTests
         public GameCheckMethodTests()
         {
             _computerPlayer = new Mock<IComputerPlayer>();
-            _game = new Game(_computerPlayer.Object, new GuessCounter());
+            _game = new Game(_computerPlayer.Object);
         }
 
         [Fact]

@@ -2,28 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Myob.Fma.Mastermind.Enums;
-using Myob.Fma.Mastermind.GameServices.Counter;
 using Myob.Fma.Mastermind.GameServices.Players;
 
 namespace Myob.Fma.Mastermind.GamePlay
 {
     public class Game : IGame
     {
-        public Game(IComputerPlayer computerPlayer, IGuessCounter guessCounter)
+        private readonly IComputerPlayer _computerPlayer;
+        public Game(IComputerPlayer computerPlayer)
         {
-            ComputerPlayer = computerPlayer;
-            GuessCounter = guessCounter;
+            _computerPlayer = computerPlayer;
         }
         
-        public IGuessCounter GuessCounter { get; }
-        public  IComputerPlayer ComputerPlayer { get; }
-
         public IEnumerable<HintColour> Check(GuessColour[] usersGuess)
         {
             var hints = SetExactMatchesToHints(usersGuess);
-            hints = SetNonPositionMatchesToHints(usersGuess, hints);
-            hints = ShuffleHints(hints);
-            return hints.ToArray();
+            SetNonPositionMatchesToHints(usersGuess,ref hints);
+            return ShuffleHints(hints);
+        }
+
+        public void SetComputerPlayersCode()
+        {
+            _computerPlayer.SetHiddenCode();
         }
         
         private List<HintColour> SetExactMatchesToHints(IEnumerable<GuessColour> usersGuess)
@@ -34,19 +34,19 @@ namespace Myob.Fma.Mastermind.GamePlay
         
         private int CalculateExactMatchesInUsersGuess(IEnumerable<GuessColour> userGuess)
         {
-            var computerSelection = ComputerPlayer.GetCodeSelection();
+            var computerSelection = _computerPlayer.GetCodeSelection();
             return userGuess.Where((colour, index) => colour == computerSelection[index]).Count();
         }
 
-        private List<HintColour> SetNonPositionMatchesToHints(IReadOnlyList<GuessColour> userGuess,
-            List<HintColour> hints)
+        private void SetNonPositionMatchesToHints(IReadOnlyList<GuessColour> userGuess,
+            ref List<HintColour> hints)
         {
-            var computerSelection = ComputerPlayer.GetCodeSelection();
+            var computerSelection = _computerPlayer.GetCodeSelection();
 
             var unmatchedComputerSelection = GetListItemsThatDontHaveExactMatches(computerSelection, userGuess);
             var unmatchedUserSelection = GetListItemsThatDontHaveExactMatches(userGuess, computerSelection);
 
-            return AddWhiteHintsToList(unmatchedComputerSelection, unmatchedUserSelection, hints);
+            AddWhiteHintsToList(unmatchedComputerSelection, unmatchedUserSelection,ref hints);
         }
         
         private static List<GuessColour> GetListItemsThatDontHaveExactMatches(IEnumerable<GuessColour> guessColours,
@@ -55,8 +55,8 @@ namespace Myob.Fma.Mastermind.GamePlay
             return guessColours.Where((colour, index) => colour != comparingList[index]).ToList();
         }
 
-        private static List<HintColour> AddWhiteHintsToList(IEnumerable<GuessColour> userSelection,
-            ICollection<GuessColour> computerSelection, List<HintColour> hints)
+        private static void AddWhiteHintsToList(IEnumerable<GuessColour> userSelection,
+            ICollection<GuessColour> computerSelection,ref List<HintColour> hints)
         {
             foreach (var guess in userSelection)
             {
@@ -66,13 +66,12 @@ namespace Myob.Fma.Mastermind.GamePlay
                     computerSelection.Remove(guess);
                 }
             }
-            return hints;
         }
 
-        private List<HintColour> ShuffleHints(List<HintColour> hints)
+        private IEnumerable<HintColour> ShuffleHints(IEnumerable<HintColour> hints)
         {
             var random = new Random();
-            return hints.OrderBy(x => random.Next(int.MaxValue)).ToList();
+            return hints.OrderBy(x => random.Next(int.MaxValue));
         }
     }
 }

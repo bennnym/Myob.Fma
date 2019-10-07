@@ -27,8 +27,7 @@ namespace Myob.Fma.Mastermind
             var inputProcessor = new InputProcessor(consoleService, validator);
             
             var computerPlayer = new ComputerPlayer();
-            var guessCounter = new GuessCounter();
-            var game = new Game(computerPlayer, guessCounter);
+            var game = new Game(computerPlayer);
 
             var messageFormatter = new MessageFormatter();
             var gameEngine = new GameEngine(inputProcessor, consoleService, messageFormatter);

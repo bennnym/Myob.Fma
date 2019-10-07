@@ -7,7 +7,7 @@ namespace Myob.Fma.MastermindTests
 {
     public class WordCountValidationTests
     {
-        private InputValidator _inputValidatorWordLength;
+        private readonly InputValidator _inputValidatorWordLength;
 
         public WordCountValidationTests()
         {
