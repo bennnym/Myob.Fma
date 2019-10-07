@@ -17,10 +17,11 @@ namespace Myob.Fma.Mastermind.GameServices.Output
             {
                 return Constant.WinningFeedback + Constant.NewLine;
             }
-            
-            return Constant.CluePrompt + hintFeedback + Constant.NewLine;        }
 
-        public string GetHintColoursAsAString(IEnumerable<HintColour> hintColours)
+            return Constant.CluePrompt + hintFeedback + Constant.NewLine;
+        }
+
+        public string TransformHintColourEnumerableToString(IEnumerable<HintColour> hintColours)
         {
             return string.Join(Constant.SpaceCommaDelimiter, hintColours);
         }

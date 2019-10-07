@@ -39,7 +39,7 @@ namespace Myob.Fma.Mastermind.GamePlay
                 
                 game.GuessCounter.IncrementCount();
                 
-                guessHint = _messageFormatter.GetHintColoursAsAString(hintFeedback);
+                guessHint = _messageFormatter.TransformHintColourEnumerableToString(hintFeedback);
                 var userHintFeedback = _messageFormatter.GetHintMessage(guessHint);
                 _consoleDisplayService.DisplayOutput(userHintFeedback);
             }

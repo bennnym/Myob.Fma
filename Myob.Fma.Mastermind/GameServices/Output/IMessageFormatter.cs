@@ -6,6 +6,6 @@ namespace Myob.Fma.Mastermind.GameServices.Output
     public interface IMessageFormatter
     {
         string GetHintMessage(string hintFeedback);
-        string GetHintColoursAsAString(IEnumerable<HintColour> hintColours);
+        string TransformHintColourEnumerableToString(IEnumerable<HintColour> hintColours);
     }
 }
