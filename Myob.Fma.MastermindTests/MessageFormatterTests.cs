@@ -9,7 +9,7 @@ namespace Myob.Fma.MastermindTests
 {
     public class MessageFormatterTests
     {
-        private MessageFormatter _messageFormatter;
+        private readonly MessageFormatter _messageFormatter;
 
         public MessageFormatterTests()
         {
